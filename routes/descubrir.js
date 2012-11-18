@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Biljet :: Eventos' });
+  res.render('index', { title: 'Biljet :: Descubrir Eventos' });
 };

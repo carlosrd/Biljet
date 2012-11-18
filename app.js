@@ -7,7 +7,8 @@ var express = require('express'),
     routes = require('./routes'),
     user = require('./routes/user'),
     social = require('./routes/social'),
-    eventos = require('./routes/eventos'),
+    descubrir = require('./routes/descubrir'),
+    crear = require('./routes/crear'),
     http = require('http'),
     path = require('path');
 
@@ -32,7 +33,8 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/social', social.index);
-app.get('/eventos', eventos.eventos);
+app.get('/descubrir', descubrir.index);
+app.get('/crear', crear.index);
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){

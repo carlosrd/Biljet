@@ -1,7 +1,7 @@
-#Sublime files
+# Sublime files
 *.sublime*
 
-#Mac OS X files
+# Mac OS X files
 *.DS_Store
 
 lib-cov

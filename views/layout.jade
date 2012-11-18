@@ -1,7 +1,24 @@
 doctype 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+
+    block titleBlock
+    
+    .left
+        .header
+            ul.nav
+                li.active
+                    a(href="/") Home
+                li
+                    a(href="/social") Social
+                li
+                    a(href="/descubrir") Descubrir
+                li
+                    a(href="/crear") Crear Evento
+
+    .right
+
+        block contentBlock
