@@ -1,5 +1,22 @@
 extends layout
 
-block titleBlock
-  h1= title
-  p Welcome to #{subtitle}
+block contentBlock
+    
+    .content
+        h1 Bienvenido a Biljet
+        p
+            | Lo primero que te preguntaras será...¿Qué es Biljet?. Biljet es la herramienta con la que podrás
+            | tener siempre un plan para salir, ofrecemos miles de eventos (conciertos,fiestas,actuaciones, etc) cerca de ti.
+            | para acudir a un evento "Biljet" lo único que tendrás que hacer será crear tu cuenta "Biljet" confirmar tu
+            | asistencias al evento y acudir llevando solo y unicamente ¡Tu movil!, ¡no necesitas ninguna entrada nunca más!
+            | ¿No solo eso! También podrás crear tus propios eventos "Biljet", saber a que eventos irán tus amigos, poder
+            | compartirlo por las redes sociales y mucho más... Descargate ya nuestra aplicacion android "BiljetApp" de
+            | Play Store para experimentar la "experiencia Biljet" completa.
+        p.registro
+            | Registrate no te arrepentiras
+            a(href='#registro', title='crea un cuenta nueva') Únete
+        .eventos
+            p
+                | Estos son algunos de los eventos que puedes encontrar en Bilject:
+                | aqui van una lista de imagenes de eventos que existan en la web
+

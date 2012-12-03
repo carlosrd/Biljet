@@ -1,24 +1,31 @@
-doctype 5
+!!! 5
 html
     head
-        title= title
-        link(rel='stylesheet', href='/stylesheets/style.css')
+        title Biljet
+        link(rel='stylesheet', type='text/css', href='/stylesheets/estiloBiljet.css')
+        meta(name='keywords', content='HTML , CSS')
+        meta(name='descripcion', content='web de gestion de entradas')
+        meta(name='autor', content='grupo de IS this IS sparta')
     body
-
-    block titleBlock
+        .menuInicio
+            ul.listaLogin
+                li.logo Biljet
+              
+            form
+                li.login
+                    input(type='submit', value='Entrar')
+                li.login
+                    input(type='password', name='pass', value='Contraseña', size='26')
+                    br
+                    | ¿Olvidaste la contraseña?
+                li.login
+                    input(type='text', name='nombreUsuario', value='Nombre de usuario', size='26')
+                    br
+                    input(type='checkbox', name='recordar', value='recordar')
+                    | Recordar contraseña
     
-    .left
-        .header
-            ul.nav
-                li.active
-                    a(href="/") Home
-                li
-                    a(href="/social") Social
-                li
-                    a(href="/descubrir") Descubrir
-                li
-                    a(href="/crear") Crear Evento
+block contentBlock
 
-    .right
-
-        block contentBlock
+        .pieDePagina
+            p
+                | Creado por el grupo This IS sparta (añadir mas cosas si fuera necesario)
