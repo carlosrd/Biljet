@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Biljet :: Social' });
+  res.render('social', { title: 'Biljet :: Social', subtitle: 'Social section' });
 };

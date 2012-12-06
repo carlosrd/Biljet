@@ -5,6 +5,7 @@
 
 var express = require('express'),
     routes = require('./routes'),
+    index = require('./routes'),
     user = require('./routes/user'),
     social = require('./routes/social'),
     descubrir = require('./routes/descubrir'),

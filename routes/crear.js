@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Biljet :: Crear Evento' });
+  res.render('crear', { title: 'Biljet :: Crear Evento', subtitle: 'Crear Evento section' });
 };

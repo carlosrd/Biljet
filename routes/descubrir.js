@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Biljet :: Descubrir Eventos' });
+  res.render('descubrir', { title: 'Biljet :: Descubrir Eventos', subtitle: 'Descubrir Eventos section' });
 };
