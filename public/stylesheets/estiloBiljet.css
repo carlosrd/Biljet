@@ -31,8 +31,8 @@ body{
     
     width:auto;
     padding:20px;
-    margin-top:35px
-
+    margin-top:35px;
+   
 }
 
 .ImagenPerfil{
@@ -128,4 +128,40 @@ text-align:center
 
 }
 
+/*css de social */
+.amigosRecomendados {
+    float:right;
+    width:300px;
+    height: 100%;
+}
 
+.amigosRecomendados ul {
+    list-style:none;
+}
+
+.tablon{
+    margin-left: 30px;
+    width: 80%;
+}
+
+.notificacion {
+    height:200px;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+}
+
+.fotoTablonPerfil{
+    float:left;
+    width:80px; 
+    height:80px;
+}
+
+.fotoTablonEvento{
+    width:80px; 
+    height:80px;
+}
+
+.fotoRecomendados{
+    width:80px; 
+    height:80px;
+}
