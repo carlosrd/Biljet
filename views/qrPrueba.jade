@@ -1,0 +1,15 @@
+extends layout
+
+block contentBlock
+
+	.contenido
+		h1 hola
+		//if ie
+			script(type='/node_modules/qrcode/text/javascript', src='excanvas.js')
+		script(src='qrcode.js')
+		script
+			var QRCode = require('qrcode');
+			QRCode.toDataURL('i am a pony!',function(err,url){
+			console.log(url);
+			});
+		h1 hola
