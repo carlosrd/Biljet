@@ -8,6 +8,7 @@ var express = require('express'),
     index = require('./routes'),
     user = require('./routes/user'),
     social = require('./routes/social'),
+    qrPrueba = require('./routes/qrPrueba'),
     descubrir = require('./routes/descubrir'),
     crear = require('./routes/crear'),
     http = require('http'),
@@ -34,6 +35,7 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/social', social.index);
+app.get('/qrPrueba', qrPrueba.index);
 app.get('/descubrir', descubrir.index);
 app.get('/crear', crear.index);
 app.get('/users', user.list);
