@@ -5,11 +5,15 @@ block contentBlock
 	.contenido
 		h1 hola
 		//if ie
-			script(type='/node_modules/qrcode/text/javascript', src='excanvas.js')
-		script(src='qrcode.js')
+			script(type='text/javascript', src='/vendors/excanvas/excanvas.js')
+		script(src='/build/qrcode.js')
+		canvas#test
 		script
-			var QRCode = require('qrcode');
-			QRCode.toDataURL('i am a pony!',function(err,url){
-			console.log(url);
+			var qrcodedraw = new qrcodelib.qrcodedraw();
+			qrcodedraw.draw(document.getElementByID('test'),"this text will be in the code!",function(error,canvas){
+			if(error) {
+			return console.log('Error =( ',error);
+			}
+			console.log('success!');
 			});
 		h1 hola
