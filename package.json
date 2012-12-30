@@ -12,6 +12,7 @@
     "canvas": "*",
     "canvasutil": "*",
     "qrcode": "*",
-    "mongodb": "*"
+    "mongodb": "*",
+    "mongoose": "*"
   }
 }
