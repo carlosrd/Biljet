@@ -20,5 +20,5 @@ results
 # Node modules. To install: npm install. This 
 # command will install the dependencies founded
 # in package.json
-node-modules/
+node_modules/
 npm-debug.log
