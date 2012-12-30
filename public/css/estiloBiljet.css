@@ -165,3 +165,48 @@ text-align:center
     width:80px; 
     height:80px;
 }
+
+
+
+/* css de descubrir */
+
+.sp{
+	margin-bottom:10px;
+	padding-left: 20px;
+	font-size:12px;
+	font-style:italic;
+}
+
+.pEvento{
+	margin-top: -320px;
+	padding-left: 300px;
+	font-size:18px;
+	font-style:bold;
+}
+
+.botonBuscar{
+	margin-top:20px;
+	padding-left:30px;
+	background:transparent;
+	color:blue;
+}
+
+.botonAdd{
+	margin-top:20px;
+	padding-left:1000px;
+	background:transparent;
+	color:blue;
+}
+
+.linea {
+    margin-top: -280px;
+	height:300px;
+    margin-left:250px;
+	border-left-width: 2px;
+    border-left-style: solid;
+}
+
+.tablonEventosEncontrados{
+    margin-left: 100px;
+    width: 80%;
+}
