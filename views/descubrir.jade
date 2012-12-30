@@ -1,7 +1,46 @@
 extends layout
-
+//By Alex
 block contentBlock
 
-    .contenido
-        p
-          | formulario de buscador de eventos con diferentes filtros
+	.content
+		.opcionesDescubrir
+		.botonAdd
+			input(type='button', value='Añadir a mis eventos/compartir')
+		h1 Quieres descubrir eventos nuevos?
+		
+		div.tablon
+			p 
+				|Busca nuevos eventos por :
+							
+			li
+				form.descubrirLugar
+					input(type='text', name='buscarLugar', value='Introduce un lugar', size='30%')
+			.sp	
+				|Madrid, Barcelona, Valencia...
+			li
+				form.descubrirPrecio
+					input(type='text', name='buscarPrecio', value='Introduce un rango de precios', size='30%')
+			.sp 
+				|Menos de 30, entre 10 y 20...
+			li
+				form.descubrirFecha
+					input(type='text', name='buscarFecha', value='Introduce una fecha', size='30%')	
+			.sp 
+				|Esta semana, el proximo mes,
+			.sp
+				|una fecha en concreto...
+			li
+				form.descubrirTipo
+					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')	
+			.sp
+				|Festival, Concierto...
+				
+			.botonBuscar
+				input(type='button', value='Buscar coincidencias')
+			
+		div.tablonEventosEncontrados
+			.linea
+			.pEvento
+				|Resultados de la busqueda:
+			
+			
