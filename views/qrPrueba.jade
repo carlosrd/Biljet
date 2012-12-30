@@ -4,13 +4,14 @@ block contentBlock
 
 	.contenido
 		h1 hola
-		//if ie
-			script(type='text/javascript', src='/vendors/excanvas/excanvas.js')
-		script(src='/build/qrcode.js')
+		//en el canvas se va meter el qr
 		canvas#test
 		script
-			var qrcodedraw = new qrcodelib.qrcodedraw();
-			qrcodedraw.draw(document.getElementByID('test'),"this text will be in the code!",function(error,canvas){
+			//costructor
+			var qrcodedraw = new QRCodeLib.QRCodeDraw(); 
+			//el que pinta el qr
+			//la funcion document.getElementById es para meter el q dentro del canvas
+			qrcodedraw.draw(document.getElementById('test'),"SI FUNCIONAN LOS QR!!",function(error,canvas){
 			if(error) {
 			return console.log('Error =( ',error);
 			}
