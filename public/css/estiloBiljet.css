@@ -1,24 +1,122 @@
-
+/*-----------------------------------------------------*/
 body{
 /*eliminar las mierdas de saltos y blancos*/
     margin:0;
+    padding: 0px;
     display:inline;
-    font-size: 1em;
-    font-family: arial,sans-serif;
-    background-color:#B0E5FF;
+    font-size: 0.8em;
+    background-color:#F1F99D;
+    font-weight: 300;    
 }
+
+
 /*
 .Encapsulado{
     display: inline;
     width:100%;
     height:100%;
     margin:0px;
-    
+*/    
+
+
+.enlace { /*pestañas*/
+margin: -10px;
+min-heigth: 1000px;
+position:absolute;
+width: 1000px;
+}
+.enlace ul{
+	list-style:none
+	line-height: normal;
+	text-align: center;
+}
+.enlace li{
+display: inline-block;
+}
+.enlace a{
+
+	display: block;
+	text-decoration: none;
+	margin:10px;
+	background-color:#F7D358;
+	border-radius: 3px;
+	padding: 15px 15px 15px 15px;
+    	font-weight: 300; 
+    	text-transform:uppercase;
+	font-family: 'Oswald',sans-serif;
+	color : #000000;
+	border: 2px;
+	
+}
+
+.enlace a:hover{
+	background-color: #F7FE2E;
+}
+.enlace a:active {
+   background: #FFFFFF;
+}
+
+h5{ /*titulo Biljet*/
+font-size: 5em;
+font-family:'Verdana',sans-serif;
+position: absolute;
+margin: 0px;
+padding:0px;
+font-weight: 1000;
+color: #FFFFFF;
+}
+
+/*texto encima del link a play Store*/
+
+.Descarga{
+font-size: 1em;
+font-style:Verdana,sans-serif;
+margin: 0px;
+padding:0px;
+font-weight: 1000;
+color: #000000;
+}
+
+/*link para la descarga de Play Store en el pie de pagina*/
+.linkAndroid{
+position: absolute;
+padding:0px 590px;
+width: 100px;
+
+}	
+.linkAndroid a{
+
+	display: block;
+	text-decoration: none;
+	background-color:#F7D358;
+	border-radius: 1px;
+    	font-weight: 200; 
+    	text-transform:uppercase;
+	font-family: 'Oswald',sans-serif;
+	color : #000000;
+	border: none;
+	
+}
+.linkAndroid a:hover{
+	background-color: #F7FE2E;
+}
+
+
+/*.contenidoTab { /*intento de animacion*/
+/*opacity:0;
+
+-moz-transform: translateX(-100%);
+-webkit-transform: translateX(-100%);
+-o-transform: translateX(-100%);
+
+-moz-transition: all 0.6s ease;
+-webkit-transition: all 0.6s ease;
+-o-transition: all 0.6s ease;
 }*/
 
 .menu {
     
-    background-color: #000000;
+    background-color: #FFFFFF;
     position: fixed;
     padding:0;
     margin:0;
@@ -75,32 +173,35 @@ body{
     text-align:center
 }
 
+
+
 .menuInicio{
     display:inline-table;
     width:100%;
-    background-color: #000000;
+    background-color: #FF8000;
     padding:0;
-    margin:0;
-    height:70px;
-    min-width:900px
+    margin:3000;
+    height:50px;
+    min-width:100px;
     
+   
 }
 
 .listaLogin{
     padding-top: 0px;
     padding-left: 10px; 
     padding-right: 10px; 
-    padding-bottom: 10px; 
+    padding-bottom: 500px; 
     margin-right: 30px;
     color: #ffffff;
-    text-align: center;
+    text-align: rigth;
 }
 
 
 .logo {
     display:inline;
     font-size: 4em;
-    float: left
+    float: left;
 }
 
 .login {
@@ -124,7 +225,12 @@ border-radius: 10px
 }
 
 .pieDePagina{
-text-align:center
+text-align:center;
+overflow:hidden;
+color: #FFFFFF;
+margin:0 auto;
+border-top: 1 px dashed #063000; 
+background-color: #FF8000;
 
 }
 
