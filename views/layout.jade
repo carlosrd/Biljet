@@ -6,29 +6,55 @@ html
         meta(name='keywords', content='HTML , CSS')
         meta(name='descripcion', content='web de gestion de entradas')
         meta(name='autor', content='grupo de IS this IS sparta')
-        //if ie
-            script(type='text/javascript', src='qrcode/vendors/excanvas/excanvas.js')
-        script(src='qrcode.js')
-    body
-        .menuInicio
-            ul.listaLogin
-                li.logo Biljet
-              
-            form
-                li.login
-                    input(type='submit', value='Entrar')
-                li.login
-                    input(type='password', name='pass', value='Contraseña', size='26')
-                    br
-                    | ¿Olvidaste la contraseña?
-                li.login
-                    input(type='text', name='nombreUsuario', value='Nombre de usuario', size='26')
-                    br
-                    input(type='checkbox', name='recordar', value='recordar')
-                    | Recordar contraseña
-    
-block contentBlock
+   
+body  
 
-        .pieDePagina
-            p
-                | Creado por el grupo This IS sparta (añadir mas cosas si fuera necesario)
+.menuInicio
+      h5 BILJET
+      br
+      br
+      br
+      br
+      br
+      br
+      ul.enlace
+        li.tab
+          a(href='/') home
+        li.tab
+          a(href='/social') social
+        li.tab
+          a(href='/descubrir') descubrir
+        li.tab
+          a(href='/crear') crear		
+                
+      form
+        li.login
+          input(type='submit', value='Entrar')
+        li.login
+          input(type='password', name='pass', value='Contraseña', size='26')
+          br
+          | ¿Olvidaste la contraseña?
+         li.login
+          input(type='text', name='nombreUsuario', value='Nombre de usuario', size='26')
+          br
+          input(type='checkbox', name='recordar', value='recordar')
+          | Recordar contraseña
+
+
+.contenidoTab
+      block contentBlock
+      br
+      br
+      br
+      br
+.pieDePagina
+      p
+      
+      br
+      img.Android(src='img/android.png',width = '50',height=50,alt= '') 
+      .Descarga Para descargarte nuestra Aplicación Móvil para Android visita: 
+      .linkAndroid
+        a(href='https://play.google.com/store?hl=es') PlayStore
+      br
+      br
+      | Creado por el grupo This IS sparta (añadir mas cosas si fuera necesario)
