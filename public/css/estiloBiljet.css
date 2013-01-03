@@ -210,3 +210,28 @@ text-align:center
     margin-left: 100px;
     width: 80%;
 }
+
+/*css de home*/
+.content{
+    margin-left: 30px;
+    margin-right:50px;
+}
+.aplicacion{
+    float:right;
+    width:300px;
+    height: 100%;
+    font-size:10px;
+}
+.descripcion{
+    text-align:justify;
+    font-size: 15px;
+}
+
+.eventos{
+    text-align:left;
+    font-size: 13px;
+}
+.imagEvent{
+    font-size: 16px;
+    text-align:center;
+}
