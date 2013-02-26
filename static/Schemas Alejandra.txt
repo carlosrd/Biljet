@@ -11,7 +11,7 @@ var Users_Schema = new Schema({
   name: String,
   surname: String,
   password: String, 
-  avatar: // DUDA: ObjectId,
+  avatar: String,
   avatarFilename: String, 
   email: String, 
   twitter: String,
@@ -32,7 +32,7 @@ var Users_Schema = new Schema({
 var Users  = mongoose.model('Users', Users_Schema);
 ////////////////////////////////////////
 
-
+//Comentario prueba.
 
 
 ////////////////////////////////////////
@@ -62,13 +62,14 @@ var Events_Schema = new Schema({
   people_follow: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
   people_signup: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
   followers: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
-  location: // DUDA: String,
+  location: String,
   comments: { type: Schema.Types.ObjectId, ref: 'Comments_Events' },
-  QR: // DUDA:  [{ type: Schema.Types.ObjectId, ref: 'QR' }]  
+  QR: [{ type: Schema.Types.ObjectId, ref: 'QR' }]  
 
 });
 
-var Events  = mongoose.model('Events', Events_Schema);
+module.exports = Events_Schema;
+//var Events  = mongoose.model('Events', Events_Schema);
 ////////////////////////////////////////
 
 
@@ -113,7 +114,7 @@ var Comments_Events  = mongoose.model('Comments_Events', Comments_Events_Schema)
 // Schema correspondiente a Likes:
 
 var Likes_Schema = new Schema({
-  comment: // DUDA EVENTS O USERS: { type: Schema.Types.ObjectId, ref: 'Comments_??????' },
+  comment: { type: Schema.Types.ObjectId, ref: 'Comments_Events' },
   user: { type: Schema.Types.ObjectId, ref: 'Users' },
   value: Number
 });
