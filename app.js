@@ -48,8 +48,8 @@ app.get('/descubrir', descubrir.index);
 app.get('/crear', crear.index);
 app.get('/users', user.list);
 
-// nuevo
-
+// nuevo 
+//prueba
 
 var effectHandlers = {};
 
