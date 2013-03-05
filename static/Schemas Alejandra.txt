@@ -1,0 +1,123 @@
+var mongoose = require('mongoose')
+  , Schema = mongoose.Schema
+
+
+////////////////////////////////////////
+// Schema correspondiente a Users:
+
+var Users_Schema = new Schema({
+  user_name: String,
+  empresa: Boolean,
+  name: String,
+  surname: String,
+  password: String, 
+  avatar: String,
+  avatarFilename: String, 
+  email: String, 
+  twitter: String,
+  facebook: String,
+  enabled: Boolean,
+  lastLogin: Date,
+  friends: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+  eventsSignup: [{ type: Schema.Types.ObjectId, ref: 'Eventos' }],
+  eventsFollow: [{ type: Schema.Types.ObjectId, ref: 'Eventos' }],
+  eventsOrganized: [{ type: Schema.Types.ObjectId, ref: 'Eventos' }],
+  QRs: [{ type: Schema.Types.ObjectId, ref: 'QR' }],
+  commentsUsers: [{ type: Schema.Types.ObjectId, ref: 'Comments_Users' }],
+  commentsEvents: [{ type: Schema.Types.ObjectId, ref: 'Comments_Events' }],
+  likedComments: [{ type: Schema.Types.ObjectId, ref: 'Likes' }]
+
+});
+
+var Users  = mongoose.model('Users', Users_Schema);
+////////////////////////////////////////
+
+//Comentario prueba.
+
+
+////////////////////////////////////////
+// Schema correspondiente a QR:
+
+var QR_Schema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: 'Users' },
+  path: String,
+  event: { type: Schema.Types.ObjectId, ref: 'Events' }
+
+});
+
+var QR  = mongoose.model('QR', QR_Schema);
+////////////////////////////////////////  
+
+
+
+
+////////////////////////////////////////
+// Schema correspondiente a Events:
+
+var Events_Schema = new Schema({
+  name: String,
+  date: Date,
+  price: Number,
+  creator: { type: Schema.Types.ObjectId, ref: 'Users' },
+  people_follow: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+  people_signup: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+  followers: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+  location: String,
+  comments: { type: Schema.Types.ObjectId, ref: 'Comments_Events' },
+  QR: [{ type: Schema.Types.ObjectId, ref: 'QR' }]  
+
+});
+
+module.exports = Events_Schema;
+//var Events  = mongoose.model('Events', Events_Schema);
+////////////////////////////////////////
+
+
+
+
+////////////////////////////////////////
+// Schema correspondiente a Comments_Users:
+
+var Comments_Users_Schema = new Schema({
+  comment: String,
+  destinatary: { type: Schema.Types.ObjectId, ref: 'Users' },
+  created: Date,
+  updated: Date,
+  likes: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
+
+});
+
+var Comments_Users  = mongoose.model('Comments_Users', Comments_Users_Schema);
+////////////////////////////////////////
+
+
+
+
+////////////////////////////////////////
+// Schema correspondiente a Comments_Events:
+
+var Comments_Events_Schema = new Schema({
+  comment: String,
+  user: { type: Schema.Types.ObjectId, ref: 'Users' },
+  created: Date,
+  updated: Date,
+  likes: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
+});
+
+var Comments_Events  = mongoose.model('Comments_Events', Comments_Events_Schema);
+////////////////////////////////////////
+
+
+
+
+////////////////////////////////////////
+// Schema correspondiente a Likes:
+
+var Likes_Schema = new Schema({
+  comment: { type: Schema.Types.ObjectId, ref: 'Comments_Events' },
+  user: { type: Schema.Types.ObjectId, ref: 'Users' },
+  value: Number
+});
+
+var Likes  = mongoose.model('Likes', Likes_Schema);
+////////////////////////////////////////
