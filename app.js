@@ -10,17 +10,30 @@ var express = require('express'),
     social = require('./routes/social'),
     qrPrueba = require('./routes/qrPrueba'),
     descubrir = require('./routes/descubrir'),
-    crear = require('./routes/crear'),
     http = require('http'),
-    path = require('path'),
-    //nuevo
-    fs = require('fs');
+    path = require('path');
+
+var APIUser = require('./routes/APIUser'),
+    APIEvent = require('./routes/APIEvent');
 
     // comment qr code
     // ,QRCode = require(__dirname + '/node_modules/qrcode/qrcode')
     // ,canvasutil = require('canvasutil')
     // ,Canvas = require('canvas')
     // ,Image = Canvas.Image;
+
+// MongoDB conection
+var mongoose = require('mongoose'),
+Schema = mongoose.Schema;
+
+// WARNING!!!
+// This line connect to the remote Mongo Database, use carefully!!
+// For testing purposes, use the localhost DB (the line commented below)
+mongoose.connect('mongodb://admin:admin@dharma.mongohq.com:10010/Biljet');
+// mongoose.connect('localhost', 'biljet');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, "Connection error: "));
 
 var app = express();
 
@@ -47,8 +60,16 @@ app.get('/', routes.index);
 app.get('/social', social.index);
 // app.get('/qrPrueba', qrPrueba.index);
 app.get('/descubrir', descubrir.index);
-app.get('/crear', crear.index);
-app.get('/users', user.list);
+
+
+
+app.post('/api/user', APIUser.save);
+app.get('/api/user', APIUser.list);
+app.get('/api/user/:username', APIUser.findByUsername);
+
+app.post('/api/event', APIEvent.save);
+app.get('/api/event', APIEvent.list);
+app.get('/api/event/:title', APIEvent.findByTitle);
 
 // nuevo 
 //prueba
