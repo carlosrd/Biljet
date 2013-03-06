@@ -5,13 +5,13 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
 var UserSchema = new Schema({
-    username: { type: String, unique: true },
+    username: { type: String, unique: true, required: true },
     name: { type: String, default: null },
     surname: { type: String, default: null },
-    password: String,
+    password: { type: String, required: true },
     avatar: { type: String, default: null },
     avatarFilename: { type: String, default: null },
-    email: String,
+    email: { type: String, unique: true, required: true },
     twitter: { type: String, default: null },
     twitterOAuthToken: { type: String, default: null },
     twitterOAuthTokenSecret: { type: String, default: null },
@@ -60,37 +60,28 @@ var UserSchema = new Schema({
 var User = mongoose.model('User', UserSchema);
 
 exports.save = function(req, res){
-    var username = req.body.username ? req.body.username : null;
     var name = req.body.name ? req.body.name : null;
     var surname = req.body.surname ? req.body.surname : null;
-    var email  = req.body.email ? req.body.email : null;
     var twitter = req.body.twitter ? req.body.twitter : null;
     var facebook = req.body.facebook ? req.body.facebook : null;
 
-    var raul = new User({
-        username: username,
+    var newUser = new User({
+        username: req.body.username,
         name: name,
         surname: surname,
-        password: 12351,
-        email: email,
+        password: req.body.password,
+        email: req.body.email,
         twitter: twitter,
         facebook: facebook,
-        lastLogin: 1234456676
+        lastLogin: new Date().getTime()
+
     });
 
-    raul.save (function (err) {
+    newUser.save (function (err) {
         if (err) {
-            User.findOne({username: raul.username}, function (err, user) {        
-                if (err) {
-                    res.send("[POST - /api/user] Error on MongoDB: unknown", 500);
-                } else if (user === null) {
-                    res.send("[POST - /api/user] Error on MongoDB: unknown", 500);
-                } else {
-                    res.send("[POST - /api/user] Error on MongoDB: username taken", 500);
-                }
-            });
+            res.send(err, 500);
         } else {
-            res.send(raul, 200);
+            res.send(newUser, 200);
         }
     });
 };
