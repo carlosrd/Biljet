@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 module.exports = function () {
-    var Events = new Schema({
+    var Event = new Schema({
         name: String,
         date: Number,
         price: Number,
@@ -27,10 +27,9 @@ module.exports = function () {
         longitude: Number,
         comments: {
             type: Schema.Types.ObjectId,
-            ref: 'Comment_Event'
-        },
-        qr: String
+            ref: 'EventComment'
+        }
     });
 
     mongoose.model('Event', Event);
-}
+};

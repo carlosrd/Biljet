@@ -7,13 +7,9 @@ module.exports = function () {
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
-        destinatary: { 
-            type: Schema.Types.ObjectId,
-            ref: 'Event'
-        },
         createdAt: Number,
         text: String
     });
 
     mongoose.model('EventComment', EventComment);
-});
+};

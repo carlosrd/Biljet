@@ -2,51 +2,58 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 module.exports = function () {
-    var User = new Schema({
+    var UserSchema = new Schema({
         username: String,
-        name: String,
-        surname: String,
+        name: { type: String, default: null },
+        surname: { type: String, default: null },
         password: String,
-        avatar: String,
-        avatarFilename: String,
+        avatar: { type: String, default: null },
+        avatarFilename: { type: String, default: null },
         email: String,
-        twitter: String,
-        twitterOAuthToken: String,
-        twitterOAuthTokenSecret: String,
-        facebook: String,
-        facebookOAuthToken: String,
-        enabled: String,
+        twitter: { type: String, default: null },
+        twitterOAuthToken: { type: String, default: null },
+        twitterOAuthTokenSecret: { type: String, default: null },
+        facebook: { type: String, default: null },
+        facebookOAuthToken: { type: String, default: null },
+        enabled: { type: Boolean, default: true },
         lastLogin: Number,
-        friends: { 
+        friends: [{
             type: Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        eventsToGo: { 
+            ref: 'User',
+            default: null
+        }],
+        eventsToGo: [{
             type: Schema.Types.ObjectId,
-            ref: 'Event'
-        },
+            ref: 'Event',
+            default: null
+        }],
 
-        eventsFollowed: { 
+        eventsFollowed: [{
             type: Schema.Types.ObjectId,
-            ref: 'Event'
-        },
-        eventsOrganized: { 
+            ref: 'Event',
+            default: null
+        }],
+        eventsOrganized: [{
             type: Schema.Types.ObjectId,
-            ref: 'Event'
-        },
-        qrs: { 
+            ref: 'Event',
+            default: null
+        }],
+        qrs: [{
             type: Schema.Types.ObjectId,
-            ref: 'QR'
-        },
-        userComments: { 
+            ref: 'QR',
+            default: null
+        }],
+        userComments: [{
             type: Schema.Types.ObjectId,
-            ref: 'UserComment'
-        },
-        eventComments: { 
+            ref: 'UserComment',
+            default: null
+        }],
+        eventComments: [{
             type: Schema.Types.ObjectId,
-            ref: 'EventComment'
-        }
+            ref: 'EventComment',
+            default: null
+        }]
     });
 
-    mongoose.model('User', User);
+    var User = mongoose.model('User', UserSchema);
 };
