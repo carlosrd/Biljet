@@ -10,6 +10,7 @@ var express = require('express'),
     social = require('./routes/social'),
     qrPrueba = require('./routes/qrPrueba'),
     descubrir = require('./routes/descubrir'),
+    crear = require('./routes/crear'),
     http = require('http'),
     path = require('path');
 
@@ -60,7 +61,7 @@ app.get('/', routes.index);
 app.get('/social', social.index);
 // app.get('/qrPrueba', qrPrueba.index);
 app.get('/descubrir', descubrir.index);
-
+app.get('/crear', crear.index);
 
 
 app.post('/api/user', APIUser.save);
