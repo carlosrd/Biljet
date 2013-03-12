@@ -3,13 +3,13 @@ var Schema = mongoose.Schema;
 
 module.exports = function () {
     var UserSchema = new Schema({
-        username: String,
+        username: { type: String, required, unique },
         name: { type: String, default: null },
         surname: { type: String, default: null },
-        password: String,
+        password: { type: String, required, unique },
         avatar: { type: String, default: null },
         avatarFilename: { type: String, default: null },
-        email: String,
+        email: {type: String, required, unique },
         twitter: { type: String, default: null },
         twitterOAuthToken: { type: String, default: null },
         twitterOAuthTokenSecret: { type: String, default: null },

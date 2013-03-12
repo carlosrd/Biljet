@@ -30,11 +30,11 @@ var EventSchema = new Schema({
     latitude: { type: Number, default: null },
     longitude: { type: Number, default: null },
     category: { type: String, required: true},
-    comments: {
+    comments: [{
         type: Schema.Types.ObjectId,
         ref: 'EventComment',
         default: null
-    }
+    }]
 });
 
 var Event = mongoose.model('Event', EventSchema);

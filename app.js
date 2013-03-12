@@ -72,8 +72,6 @@ app.post('/api/event', APIEvent.save);
 app.get('/api/event', APIEvent.list);
 app.get('/api/event/:title', APIEvent.findByTitle);
 
-// nuevo 
-//prueba
 
 // var effectHandlers = {};
 
