@@ -14,7 +14,7 @@
     "jade": "*",
     "less-middleware": "*",
     "qrcode-npm": "*",
-    "mongodb": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "mongoose-models": "*"
   }
 }
