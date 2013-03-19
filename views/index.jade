@@ -5,28 +5,31 @@ block contentBlock
     .container
         if (! username)
             h1 Bienvenido a Biljet
-            p.descripcion
-                | Lo primero que te preguntaras será...¿Qué es Biljet?. Biljet es la herramienta con la que podrás
-                | tener siempre un plan para salir, ofrecemos 
-                b miles de eventos 
-                |(conciertos,fiestas,actuaciones, etc) cerca de ti.
-                | para acudir a un evento "Biljet" lo único que tendrás que hacer será crear tu cuenta "Biljet" confirmar tu
-                | asistencias al evento y acudir llevando solo y unicamente 
-                b ¡Tu movil!, 
-                |¡no necesitas
-                b ninguna entrada 
-                | nunca más! ¿No solo eso! También podrás crear tus 
-                b propios eventos "Biljet",
-                | saber a que eventos irán tus amigos, poder compartirlo por las redes sociales y mucho más... Descargate ya nuestra aplicacion android 
-                b "BiljetApp"
-                | de Play Store para experimentar la 
-                b "experiencia Biljet" 
-                |completa.
-
-            p.registro
-                | Registrate no te arrepentiras
-                a(href='#registro', title='crea un cuenta nueva') Únete
-
+            .row
+                p.span3
+                    | Lo primero que te preguntaras será...¿Qué es Biljet?. Biljet es la herramienta con la que podrás
+                    | tener siempre un plan para salir, ofrecemos 
+                    b miles de eventos 
+                    | (conciertos,fiestas,actuaciones, etc) cerca de ti.
+                p.span3
+                    | Para acudir a un evento "Biljet" lo único que tendrás que hacer será crear tu cuenta "Biljet" confirmar tu
+                    | asistencias al evento y acudir llevando solo y unicamente 
+                    b ¡Tu movil!, 
+                    | ¡no necesitas
+                    b ninguna entrada 
+                    | nunca más!
+                p.span3
+                    | ¿No solo eso! También podrás crear tus 
+                    b propios eventos "Biljet",
+                    | saber a que eventos irán tus amigos, poder compartirlo por las redes sociales y mucho más... Descargate ya nuestra aplicacion android 
+                    b "BiljetApp"
+                    | de Play Store para experimentar la 
+                    b "experiencia Biljet" 
+                    | completa.
+                p.span2.offset1
+                    | Registrate no te arrepentiras 
+                    img(src="images/illustrations/clipboard.png", alt="Registrate")
+                    a(href='#registro', title='crea un cuenta nueva').btn.btn-large.btn-block Únete
         else
             h1 Bienvenido de nuevo, span.username USER
 
@@ -43,77 +46,77 @@ block contentBlock
                         img.fotoEvento(src='img/cinesa.jpg', alt='Foto evento', heigh="500", width="200")
                         p Película los Miserables
                 
-        .eventos
-            p 
-                 table(align='left')
-                    tr
-                        td
-                            p Estos son algunos de los eventos que puedes encontrar en Bilject en:
-                        td
-                            select(name='ciudad')
-                                option(value='barcelona') Barcelona
-                                option(value='madrid') Madrid
-                                option(value='salamanca') Salamanca
-                                option(value='sevilla') Sevilla
-                                option(value='valencia') Valencia
-                        td
-                            p el día:
-                        td
-                            select(name='dia')
-                                option(value='1') 1
-                                option(value='2') 2
-                                option(value='3') 3
-                                option(value='4') 4
-                                option(value='5') 5
-                                option(value='6') 6
-                                option(value='7') 7
-                                option(value='8') 8
-                                option(value='9') 9
-                                option(value='10') 10
-                                option(value='11') 11
-                                option(value='12') 12
-                                option(value='13') 13
-                                option(value='14') 14
-                                option(value='15') 15
-                                option(value='16') 16
-                                option(value='17') 17
-                                option(value='18') 18
-                                option(value='19') 19
-                                option(value='20') 20
-                                option(value='21') 21
-                                option(value='22') 22
-                                option(value='23') 23
-                                option(value='24') 24
-                                option(value='25') 25
-                                option(value='26') 26
-                                option(value='27') 27
-                                option(value='28') 28
-                                option(value='29') 29
-                                option(value='30') 30
-                        td
-                            p mes: 
-                        td
-                            select(name='mes')
-                                option(value='enero') Enero
-                                option(value='febrero') Febrero
-                                option(value='marzo') Marzo
-                                option(value='abril') Abril
-                                option(value='mayo') Mayo
-                                option(value='junio') Junio
-                                option(value='julio') Julio
-                                option(value='agosto') Agosto
-                                option(value='septiembre') Septiembre
-                                option(value='octubre') Octubre
-                                option(value='noviembre') Noviembre
-                                option(value='diciembre') Diciembre
-                        td
-                            p del tipo:
-                        td
-                            select(name='tipo')
-                                option(value='concierto') Concierto
-                                option(value='teatro') Teatro
-                                option(value='cine') Cine
-                                option(value='otros') Otros
+        .row
+            p Estos son algunos de los eventos que puedes encontrar en Bilject en:
+            
+        .row
+            table(align='left')
+               tr
+                   td
+                       select(name='ciudad')
+                           option(value='barcelona') Barcelona
+                           option(value='madrid') Madrid
+                           option(value='salamanca') Salamanca
+                           option(value='sevilla') Sevilla
+                           option(value='valencia') Valencia
+                   td
+                       p el día:
+                   td
+                       select(name='dia')
+                           option(value='1') 1
+                           option(value='2') 2
+                           option(value='3') 3
+                           option(value='4') 4
+                           option(value='5') 5
+                           option(value='6') 6
+                           option(value='7') 7
+                           option(value='8') 8
+                           option(value='9') 9
+                           option(value='10') 10
+                           option(value='11') 11
+                           option(value='12') 12
+                           option(value='13') 13
+                           option(value='14') 14
+                           option(value='15') 15
+                           option(value='16') 16
+                           option(value='17') 17
+                           option(value='18') 18
+                           option(value='19') 19
+                           option(value='20') 20
+                           option(value='21') 21
+                           option(value='22') 22
+                           option(value='23') 23
+                           option(value='24') 24
+                           option(value='25') 25
+                           option(value='26') 26
+                           option(value='27') 27
+                           option(value='28') 28
+                           option(value='29') 29
+                           option(value='30') 30
+                   td
+                       p mes: 
+                   td
+                       select(name='mes')
+                           option(value='enero') Enero
+                           option(value='febrero') Febrero
+                           option(value='marzo') Marzo
+                           option(value='abril') Abril
+                           option(value='mayo') Mayo
+                           option(value='junio') Junio
+                           option(value='julio') Julio
+                           option(value='agosto') Agosto
+                           option(value='septiembre') Septiembre
+                           option(value='octubre') Octubre
+                           option(value='noviembre') Noviembre
+                           option(value='diciembre') Diciembre
+                   td
+                       p del tipo:
+                   td
+                       select(name='tipo')
+                           option(value='concierto') Concierto
+                           option(value='teatro') Teatro
+                           option(value='cine') Cine
+                           option(value='otros') Otros
         .events.row
         //   table(cellpadding='25px', align='center')
         //       tr

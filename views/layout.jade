@@ -11,8 +11,11 @@ html
         meta(name='autor', content='grupo de IS this IS sparta')
         script(type="text/javascript", src='js/jquery-1.9.1.min.js')
         script(type="text/javascript", src='js/jquery.signup.js')
+        // script(type="text/javascript", src='js/jquery-ui-1.10.0.custom.min.js')
+        // script(type="text/javascript", src='js/jquery.dropkick-1.0.0.js')
         script(type="text/javascript", src='js/less-1.3.3.min.js')
         script(type="text/javascript", src='js/md5.js')
+
         script(type='text/javascript')
             less.env = "development";
             less.watch();
@@ -25,18 +28,33 @@ body
                 a(href='/')
                     img(class="logo", src="img/logo.png", alt="Biljet")
         div#nav_bar_right
-            div.item.social
-                a(href='/social') Social
-            div.item.discover
-                a(href='/discover') Descubrir
-            div.item.create-event
-                a(href='/create') Crear Evento
-            div.item.signin
-                a(href='/login')
-                    span.fui-lock-24
-                    | Login
-            div.item.signup
-                a(href='/signup') Registro
+            .navbar.navbar-inverse
+                .navbar-inner
+                    ul.nav
+                        li
+                            a(href='/')
+                                span.fui-location-24
+                                |  Home
+                        li
+                            a(href='/social')
+                                span.fui-man-24
+                                |  Social
+                        li
+                            a(href='/discover')
+                                span.fui-heart-24
+                                |  Descubrir
+                        li
+                            a(href='/create')
+                                span.fui-plus-24
+                                |  Crear Evento
+                        li
+                            a(href='/login')
+                                span.fui-lock-24
+                                |  Login
+                        li
+                            a(href='/signup')
+                                span.fui-new-24
+                                |  Registro
         div.clear
 
     .content
