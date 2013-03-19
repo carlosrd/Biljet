@@ -29,7 +29,7 @@ block contentBlock
                 p.span2.offset1
                     | Registrate no te arrepentiras 
                     img(src="images/illustrations/clipboard.png", alt="Registrate")
-                    a(href='#registro', title='crea un cuenta nueva').btn.btn-large.btn-block Únete
+                    a(href='/signup', title='crea un cuenta nueva').btn.btn-large.btn-block Únete
         else
             h1 Bienvenido de nuevo, span.username USER
 
@@ -59,8 +59,6 @@ block contentBlock
                            option(value='salamanca') Salamanca
                            option(value='sevilla') Sevilla
                            option(value='valencia') Valencia
-                   td
-                       p el día:
                    td
                        select(name='dia')
                            option(value='1') 1
@@ -92,9 +90,7 @@ block contentBlock
                            option(value='27') 27
                            option(value='28') 28
                            option(value='29') 29
-                           option(value='30') 30
-                   td
-                       p mes: 
+                           option(value='30') 30 
                    td
                        select(name='mes')
                            option(value='enero') Enero
@@ -109,8 +105,6 @@ block contentBlock
                            option(value='octubre') Octubre
                            option(value='noviembre') Noviembre
                            option(value='diciembre') Diciembre
-                   td
-                       p del tipo:
                    td
                        select(name='tipo')
                            option(value='concierto') Concierto
@@ -155,23 +149,19 @@ block javascript
                         title: 'Musical el Rey León',
                     },
                     {
-
                         img: 'img/cinesa.jpg',
                         title: 'Entradas de cines',
                     },
                     {
-
                         img: 'img/spice_girls.jpg',
                         title: 'Concierto Spice Girls',
                     },
                     {
-
                         img: 'img/coldplay.jpg',
                         title: 'Concierto Coldplay',
                         hot: true,
                     },
                     {
-
                         img: 'img/vips-2x1.jpg',
                         title: 'Promoción 2x1 en vips',
                     },

@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', {username: null});
+  res.render('home', {username: null});
 };
