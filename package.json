@@ -15,6 +15,9 @@
     "less-middleware": "*",
     "qrcode-npm": "*",
     "mongoose": "*",
-    "mongoose-models": "*"
+    "mongoose-models": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "crypto": "*"
   }
 }

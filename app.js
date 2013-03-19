@@ -4,18 +4,18 @@
  */
 
 var express = require('express'),
-    routes = require('./routes'),
-    index = require('./routes'),
-    user = require('./routes/user'),
-    social = require('./routes/social'),
-    qrPrueba = require('./routes/qrPrueba'),
-    descubrir = require('./routes/descubrir'),
-    crear = require('./routes/crear'),
+    routes = require('routes'),
+    index = require('routes'),
+    user = require('routes/user'),
+    social = require('routes/social'),
+    discover = require('routes/discover'),
+    createEvent = require('routes/createEvent'),
+    passport = require('passport'),
     http = require('http'),
     path = require('path');
 
-var APIUser = require('./routes/APIUser'),
-    APIEvent = require('./routes/APIEvent');
+var APIUser = require('routes/APIUser'),
+    APIEvent = require('routes/APIEvent');
 
 
 // MongoDB conection
@@ -44,6 +44,10 @@ app.configure(function(){
     app.use(app.router);
     app.use(require('less-middleware')({ src: __dirname + '/public' }));
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.cookieParser('your secret here'));
+    app.use(express.session());
+    app.use(passport.initialize());
+    app.use(passport.session())
 });
 
 app.configure('development', function(){
@@ -54,9 +58,8 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/social', social.index);
-// app.get('/qrPrueba', qrPrueba.index);
-app.get('/descubrir', descubrir.index);
-app.get('/crear', crear.index);
+app.get('/descubrir', discover.index);
+app.get('/createEvent', createEvent.index);
 
 
 app.post('/api/user', APIUser.save);
@@ -66,6 +69,9 @@ app.get('/api/user/:username', APIUser.findByUsername);
 app.post('/api/event', APIEvent.save);
 app.get('/api/event', APIEvent.list);
 app.get('/api/event/:title', APIEvent.findByTitle);
+
+app.get('/login', user.login);
+app.post('/login', APIUser.login);
 
 
 http.createServer(app).listen(app.get('port'), function(){

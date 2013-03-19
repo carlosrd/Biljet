@@ -1,63 +1,40 @@
 // MongoDB conection
 var mongoose = require('mongoose');
+var crypto = require('crypto');
 var Schema = mongoose.Schema;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
-var UserSchema = new Schema({
-    username: { type: String, unique: true, required: true },
-    name: { type: String, default: null },
-    surname: { type: String, default: null },
-    password: { type: String, required: true },
-    avatar: { type: String, default: null },
-    avatarFilename: { type: String, default: null },
-    email: { type: String, unique: true, required: true },
-    twitter: { type: String, default: null },
-    twitterOAuthToken: { type: String, default: null },
-    twitterOAuthTokenSecret: { type: String, default: null },
-    facebook: { type: String, default: null },
-    facebookOAuthToken: { type: String, default: null },
-    enabled: { type: Boolean, default: true },
-    lastLogin: Number,
-    friends: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        default: null
-    }],
-    eventsToGo: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Event',
-        default: null
-    }],
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var allSchemas = require('models/allSchemas');
 
-    eventsFollowed: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Event',
-        default: null
-    }],
-    eventsOrganized: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Event',
-        default: null
-    }],
-    qrs: [{
-        type: Schema.Types.ObjectId,
-        ref: 'QR',
-        default: null
-    }],
-    userComments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'UserComment',
-        default: null
-    }],
-    eventComments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'EventComment',
-        default: null
-    }]
+var User = mongoose.model('User');
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        User.findOne({ username: username }, function (err, user) {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                return done(null, false, { message: 'Incorrect username.' });
+            }
+            if (!user.validPassword(password)) {
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+            return done(null, user);
+        });
+    }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
 });
 
-var User = mongoose.model('User', UserSchema);
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+});
 
 exports.save = function(req, res){
     var name = req.body.name ? req.body.name : null;
@@ -123,3 +100,8 @@ exports.findByUsername = function (req, res) {
             }
         });
 };
+
+exports.login = function (req, res) {
+    passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })}

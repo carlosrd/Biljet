@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('crear', {title: "Crear form"});
+  res.render('createEvent', {title: "Crear form"});
 };
