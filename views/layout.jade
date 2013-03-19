@@ -16,24 +16,23 @@ html
 
 body
 
-.menuInicio
-      ul#nav_bar
-        li
-          img(class="logo", src="img/logo.png", alt="Biljet")
-        li
-          a(href='/') Home
-        li
-          a(href='/social') Social
-        li
-          a(href='/discover') Descubrir
-        li
-          a(href='/create') Crear Evento
-        li
-          a(href='/login') Login
+    .topbar
+        ul#nav_bar
+            li
+                img(class="logo", src="img/logo.png", alt="Biljet")
+            li
+                a(href='/') Home
+            li
+                a(href='/social') Social
+            li
+                a(href='/discover') Descubrir
+            li
+                a(href='/create') Crear Evento
+            li
+                a(href='/login') Login
 
-.contenidoTab
-      block contentBlock
+    block contentBlock
 
-.pieDePagina
-      p
-      | Creado por el grupo This IS sparta (añadir mas cosas si fuera necesario)
+    .footer
+        p
+        | IS - 2012/2013

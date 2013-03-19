@@ -3,40 +3,46 @@
 
 @turquoise: #1ABC9C;
 @greenSea: #16A085;
-
 @clouds: #ECF0F1;
 @silver: #BDC3C7;
 @concrete: #95A5A6;
 @asbestos: #7F8C8D;
 
-#nav_bar {
+.topbar {
+    position: fixed;
+    top: 0;
     width: 100%;
-    float: left;
-    margin: 0 0 3em 0;
-    padding: 0;
-    list-style: none;
-    background-color: @greenSea;
-    border-bottom: 1px solid #ccc; 
-    border-top: 1px solid #ccc;
-    li {
-        float: left;
-        
-        .logo {
-            width: 200px;
-        }
 
-        a {
-            display: block;
-            padding: 20px 40px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 20px;
-            color: @silver;
-            border-right: 1px solid #ccc;
-        }
-        a:hover {
-            color: @clouds;
-            background-color: @turquoise;
+    #nav_bar {
+        width: 100%;
+        float: left;
+        margin: 0 0 3em 0;
+        padding: 0;
+        list-style: none;
+        background-color: @greenSea;
+        border-bottom: 1px solid #ccc; 
+        border-top: 1px solid #ccc;
+        
+        li {
+            float: left;
+            
+            .logo {
+                width: 200px;
+            }
+
+            a {
+                display: block;
+                padding: 20px 40px;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 20px;
+                color: @silver;
+                border-right: 1px solid #ccc;
+            }
+            a:hover {
+                color: @clouds;
+                background-color: @turquoise;
+            }
         }
     }
 }
@@ -52,45 +58,6 @@
 
 
 
-
-
-
-
-
-
-
-.Descarga{
-font-size: 1em;
-font-style:Verdana,sans-serif;
-margin: 0px;
-padding:0px;
-font-weight: 1000;
-color: #000000;
-}
-
-/*link para la descarga de Play Store en el pie de pagina*/
-.linkAndroid{
-position: absolute;
-padding:0px 590px;
-width: 100px;
-
-}   
->a{
-
-    display: block;
-    text-decoration: none;
-    background-color:#F7D358;
-    border-radius: 1px;
-        font-weight: 200; 
-        text-transform:uppercase;
-    font-family: 'Oswald',sans-serif;
-    color : #000000;
-    border: none;
-    
-}
-.linkAndroid a:hover{
-    background-color: #F7FE2E;
-}
 
 
 .ImagenPerfil{
@@ -144,20 +111,7 @@ width: 100px;
     text-align: rigth;
 }
 
-
-.logo {
-    display:inline;
-    font-size: 4em;
-    float: left;
-}
-
-.login {
-    display:inline;
-    float: right;
-
-}
-
-.pieDePagina {
+.footer {
     position: fixed;
     bottom: 0;
     width: 100%;
