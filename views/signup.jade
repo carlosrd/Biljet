@@ -3,14 +3,24 @@ extends layout
 block contentBlock
     
     .container
-
-          a(href='') aaaa
-
-          form(action='/api/user', id="form_signup", method='post')
+        form(action='/api/user', id="form_signup", method='post')
             
             input(type='text', id="username", placeholder='Username')
             input(type='email', id="email", placeholder='Email')
             input(type='password', id="password", placeholder='Password')
             
-            input(type='submit', id="signup_submit",value='Log In')
+            a(href='', title='Regístrate').btn.btn-large.submit Regístrate
 
+block javascript
+    script(type='text/javascript')
+        $(document).ready(function() {
+            $('.submit').click(function () {
+                var hashPass = CryptoJS.MD5($('#password').val()).toString();
+                $('#password').val(hashPass);
+                
+                //- $.post('/api/user', function(data) {
+                //-     alert(data);
+                //- });
+            });
+
+        });

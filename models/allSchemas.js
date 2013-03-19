@@ -26,12 +26,13 @@ var eventSchema = new Schema({
     province: { type: String, required: true },
     latitude: { type: Number, default: null },
     longitude: { type: Number, default: null },
-    category: { type: String, required: true},
+    category: { type: String, required: true },
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'EventComment',
         default: null
-    }]
+    }],
+    imageName: { type: String, default: 'eventDefault.png' }
 });
 
 
