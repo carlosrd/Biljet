@@ -2,37 +2,42 @@
 html
     head
         title Biljet
-        link(rel='stylesheet', type='text/css', href='/css/style.css')
+        //- link(rel='stylesheet', type='stylesheet/css', href='/css/style.css')
+        link(rel='stylesheet/less', type='text/css', href='/css/style.less')
         meta(name='keywords', content='HTML , CSS')
         meta(name='descripcion', content='web de gestion de entradas')
         meta(name='autor', content='grupo de IS this IS sparta')
         script(type="text/javascript", src='js/jquery-1.9.1.min.js')
         script(type="text/javascript", src='js/jquery.signup.js')
+        script(type="text/javascript", src='js/less-1.3.3.min.js')
         script(type="text/javascript", src='js/md5.js')
-        //- script(type='text/javascript')
-        //-   less.env = "development";
-        //-   less.watch();
+        script(type='text/javascript')
+            less.env = "development";
+            less.watch();
 
 
 body
 
     .topbar
-        ul#nav_bar
-            li
-                img(class="logo", src="img/logo.png", alt="Biljet")
-            li
-                a(href='/') Home
-            li
+        div#nav_bar_left
+            div.item
+                a(href='/')
+                    img(class="logo", src="img/logo.png", alt="Biljet")
+        div#nav_bar_right
+            div.item.social
                 a(href='/social') Social
-            li
+            div.item.discover
                 a(href='/discover') Descubrir
-            li
+            div.item.create-event
                 a(href='/create') Crear Evento
-            li
+            div.item.signin
                 a(href='/login') Login
+            div.item.signup
+                a(href='/signup') Registro
+        div.clear
 
-    block contentBlock
+    .content
+        block contentBlock
 
-    .footer
-        p
+    .bottombar
         | IS - 2012/2013

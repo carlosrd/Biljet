@@ -6,7 +6,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
 
-var allSchemas = require('models/allSchemas');
+var allSchemas = require('../models/allSchemas');
 
 
 var User = mongoose.model('User');

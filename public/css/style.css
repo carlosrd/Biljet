@@ -1,5 +1,18 @@
 @import "flat-ui.css";
 .topbar {
+  display: block;
+  background-color: #F0F;
+}
+.topbar #nav_bar_left {
+  float: left;
+}
+.topbar #nav_bar_left img {
+  height: 20px;
+}
+.topbar #nav_bar_right {
+  float: right;
+}
+.topbar {
   position: fixed;
   top: 0;
   width: 100%;
@@ -32,140 +45,4 @@
 .topbar #nav_bar li a:hover {
   color: #ecf0f1;
   background-color: #1abc9c;
-}
-.ImagenPerfil {
-  float: right;
-}
-.listaMenu li {
-  padding: 0;
-  margin: 0;
-  display: inline;
-}
-.listaMenu li a {
-  padding-top: 0px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  height: 25px;
-  float: left;
-  color: #ffffff;
-  text-align: center;
-}
-.listaMenu li a:hover {
-  background-color: #424242;
-  margin-top: -2px;
-  padding-bottom: 12px;
-}
-.buscar {
-  padding-top: 0px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  margin-right: 30px;
-  height: 25px;
-  float: right;
-  color: #ffffff;
-  text-align: center;
-}
-.listaLogin {
-  padding-top: 0px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 500px;
-  margin-right: 30px;
-  color: #ffffff;
-  text-align: rigth;
-}
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  color: #ecf0f1;
-  background-color: #16a085;
-}
-/*css de social */
-.amigosRecomendados {
-  float: right;
-  width: 300px;
-  height: 100%;
-}
-.amigosRecomendados ul {
-  list-style: none;
-}
-.tablon {
-  margin-left: 30px;
-  width: 80%;
-}
-.notificacion {
-  height: 200px;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-}
-.fotoTablonPerfil {
-  float: left;
-  width: 80px;
-  height: 80px;
-}
-.fotoTablonEvento {
-  width: 80px;
-  height: 80px;
-}
-.fotoRecomendados {
-  width: 80px;
-  height: 80px;
-}
-/* css de descubrir */
-.sp {
-  margin-bottom: 10px;
-  padding-left: 20px;
-  font-size: 12px;
-  font-style: italic;
-}
-.pEvento {
-  margin-top: -320px;
-  padding-left: 300px;
-  font-size: 18px;
-  font-style: bold;
-}
-.botonBuscar {
-  margin-top: 20px;
-  padding-left: 30px;
-  background: transparent;
-  color: blue;
-}
-.botonAdd {
-  margin-top: 20px;
-  padding-left: 1000px;
-  background: transparent;
-  color: blue;
-}
-.linea {
-  margin-top: -280px;
-  height: 300px;
-  margin-left: 250px;
-  border-left-width: 2px;
-  border-left-style: solid;
-}
-.tablonEventosEncontrados {
-  margin-left: 100px;
-  width: 80%;
-}
-.aplicacion {
-  float: right;
-  width: 300px;
-  height: 100%;
-  font-size: 10px;
-}
-.descripcion {
-  text-align: justify;
-  font-size: 15px;
-}
-.eventos {
-  text-align: left;
-  font-size: 13px;
-}
-.imagEvent {
-  font-size: 16px;
-  text-align: center;
 }

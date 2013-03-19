@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
-var allSchemas = require('models/allSchemas.js');
+var allSchemas = require('../models/allSchemas');
 
 
 var Event = mongoose.model('Event');

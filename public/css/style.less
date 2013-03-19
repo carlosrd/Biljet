@@ -3,231 +3,98 @@
 
 @turquoise: #1ABC9C;
 @greenSea: #16A085;
+
 @clouds: #ECF0F1;
 @silver: #BDC3C7;
+
 @concrete: #95A5A6;
 @asbestos: #7F8C8D;
 
-.topbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
+@emerland: #2ECC71;
+@nephritis: #27AE60;
 
-    #nav_bar {
-        width: 100%;
+@peterRiver: #3498DB;
+@belizeHole: #2980B9;
+
+@amethyst: #9B59B6;
+@wisteria: #8E44AD;
+
+@wetAsphalt: #34495E;
+@midnightBlue: #2C3E50;
+
+@sunFlower: #F1C40F;
+@orange: #F39C12;
+
+@carrot: #E67E22;
+@pumpkin: #D35400;
+
+@alizarin: #E74C3C;
+@pomegranate: #C0392B;
+
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.clear {
+    clear: both;
+}
+
+.topbar {
+    display: block;
+    background-color: @clouds;
+    color: #bdc1c5;
+
+    border-bottom: 4px solid @silver;
+
+    height: 130px;
+    overflow: hidden;
+
+    #nav_bar_left {
         float: left;
-        margin: 0 0 3em 0;
-        padding: 0;
-        list-style: none;
-        background-color: @greenSea;
-        border-bottom: 1px solid #ccc; 
-        border-top: 1px solid #ccc;
-        
-        li {
+
+        img {
+            height: 110px;
+            padding: 8px;
+        }
+    }
+
+    #nav_bar_right {
+        float: right;
+        background-color: @turquoise;
+        color: @clouds;
+
+        .item {
             float: left;
-            
-            .logo {
-                width: 200px;
-            }
 
             a {
-                display: block;
-                padding: 20px 40px;
-                text-decoration: none;
-                font-weight: bold;
-                font-size: 20px;
-                color: @silver;
-                border-right: 1px solid #ccc;
-            }
-            a:hover {
                 color: @clouds;
-                background-color: @turquoise;
+                text-decoration: none;
+                display: block;
+                padding: 55px 75px;
+                border-right: 1px solid @silver;
+                font-size: 18px;
+                letter-spacing: 1px;
+
+                &:hover {
+                    background-color: @greenSea;
+                }
             }
         }
     }
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-.ImagenPerfil{
-    float: right
-}
-
-.listaMenu li {
-    padding:0;
-    margin:0;
-    display: inline
-    
-}
-
-.listaMenu li a {
-   
-    padding-top:0px;
-    padding-left: 10px; 
-    padding-right: 10px; 
-    padding-bottom: 10px; 
-    height: 25px;
-    float: left;
-    color:#ffffff;
-    text-align:center
-    
-}
-.listaMenu li a:hover {  
-    background-color: #424242;  
-    margin-top:-2px;  
-    padding-bottom:12px;  
-} 
-.buscar{
-    padding-top:0px;
-    padding-left: 10px; 
-    padding-right: 10px; 
-    padding-bottom: 10px; 
-    margin-right:30px;
-    height: 25px;
-    float: right;
-    color:#ffffff;
-    text-align:center
-}
-
-
-.listaLogin{
-    padding-top: 0px;
-    padding-left: 10px; 
-    padding-right: 10px; 
-    padding-bottom: 500px; 
-    margin-right: 30px;
-    color: #ffffff;
-    text-align: rigth;
-}
-
-.footer {
+.bottombar {
+    border-top: 2px solid @silver;
+    background-color: @clouds;
+    color: @greenSea;
     position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align:center;
-    // overflow:hidden;
-    color: @clouds;
-    // margin:0 auto;
-    // border-top: 1 px dashed #063000; 
-    background-color: @greenSea;
-
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 20px;
+    text-align: center;
 }
 
-/*css de social */
-.amigosRecomendados {
-    float:right;
-    width:300px;
-    height: 100%;
-}
-
-.amigosRecomendados ul {
-    list-style:none;
-}
-
-.tablon{
-    margin-left: 30px;
-    width: 80%;
-}
-
-.notificacion {
-    height:200px;
-    border-bottom-width: 2px;
-    border-bottom-style: solid;
-}
-
-.fotoTablonPerfil{
-    float:left;
-    width:80px; 
-    height:80px;
-}
-
-.fotoTablonEvento{
-    width:80px; 
-    height:80px;
-}
-
-.fotoRecomendados{
-    width:80px; 
-    height:80px;
-}
-
-
-
-/* css de descubrir */
-
-.sp{
-    margin-bottom:10px;
-    padding-left: 20px;
-    font-size:12px;
-    font-style:italic;
-}
-
-.pEvento{
-    margin-top: -320px;
-    padding-left: 300px;
-    font-size:18px;
-    font-style:bold;
-}
-
-.botonBuscar{
-    margin-top:20px;
-    padding-left:30px;
-    background:transparent;
-    color:blue;
-}
-
-.botonAdd{
-    margin-top:20px;
-    padding-left:1000px;
-    background:transparent;
-    color:blue;
-}
-
-.linea {
-    margin-top: -280px;
-    height:300px;
-    margin-left:250px;
-    border-left-width: 2px;
-    border-left-style: solid;
-}
-
-.tablonEventosEncontrados{
-    margin-left: 100px;
-    width: 80%;
-}
-
-// /*css de home*/
-// .content{
-//     margin-left: 30px;
-//     margin-right:50px;
-// }
-.aplicacion{
-    float:right;
-    width:300px;
-    height: 100%;
-    font-size:10px;
-}
-.descripcion{
-    text-align:justify;
-    font-size: 15px;
-}
-
-.eventos{
-    text-align:left;
-    font-size: 13px;
-}
-.imagEvent{
-    font-size: 16px;
-    text-align:center;
-}
