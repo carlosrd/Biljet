@@ -4,11 +4,11 @@
  */
 
 var express = require('express'),
-    home = require('routes/home'),
-    user = require('routes/user'),
-    social = require('routes/social'),
-    discover = require('routes/discover'),
-    createEvent = require('routes/createEvent'),
+    home = require('./routes/home'),
+    user = require('./routes/user'),
+    social = require('./routes/social'),
+    discover = require('./routes/discover'),
+    createEvent = require('./routes/createEvent'),
     http = require('http'),
     path = require('path');
 
