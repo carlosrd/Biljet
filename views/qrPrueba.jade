@@ -4,17 +4,4 @@ block contentBlock
 
 	.contenido
 		h1 hola
-		//en el canvas se va meter el qr
-		canvas#test
-		script
-			//costructor
-			var qrcodedraw = new QRCodeLib.QRCodeDraw(); 
-			//el que pinta el qr
-			//la funcion document.getElementById es para meter el q dentro del canvas
-			qrcodedraw.draw(document.getElementById('test'),"SI FUNCIONAN LOS QR!!",function(error,canvas){
-			if(error) {
-			return console.log('Error =( ',error);
-			}
-			console.log('success!');
-			});
-		h1 hola
+		
