@@ -12,8 +12,8 @@ var express = require('express'),
     http = require('http'),
     path = require('path');
 
-var apiUser = require('routes/apiUser'),
-    apiEvent = require('routes/apiEvent');
+var apiUser = require('./routes/apiUser'),
+    apiEvent = require('./routes/apiEvent');
 
 
 // MongoDB conection
