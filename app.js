@@ -4,7 +4,7 @@
  */
 
 var express = require('express'),
-    routes = require('./routes'),
+    // index = require('./routes'),
     home = require('./routes/home'),
     user = require('./routes/user'),
     social = require('./routes/social'),
@@ -19,6 +19,7 @@ var express = require('express'),
 // MongoDB conection
 var mongoose = require('mongoose'),
 Schema = mongoose.Schema;
+
 
 // WARNING!!!
 // This line connect to the remote Mongo Database, use carefully!!
