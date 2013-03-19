@@ -2,7 +2,9 @@
 html
     head
         title Biljet
+        //- link(rel='stylesheet', type='stylesheet/css', href='/css/bootstrap.css')
         //- link(rel='stylesheet', type='stylesheet/css', href='/css/style.css')
+        link(rel='stylesheet/less', type='text/css', href='/css/bootstrap.less')
         link(rel='stylesheet/less', type='text/css', href='/css/style.less')
         meta(name='keywords', content='HTML , CSS')
         meta(name='descripcion', content='web de gestion de entradas')
@@ -17,7 +19,6 @@ html
 
 
 body
-
     .topbar
         div#nav_bar_left
             div.item
@@ -31,7 +32,9 @@ body
             div.item.create-event
                 a(href='/create') Crear Evento
             div.item.signin
-                a(href='/login') Login
+                a(href='/login')
+                    span.fui-lock-24
+                    | Login
             div.item.signup
                 a(href='/signup') Registro
         div.clear
@@ -41,3 +44,5 @@ body
 
     .bottombar
         | IS - 2012/2013
+
+block javascript

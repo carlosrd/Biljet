@@ -2,30 +2,30 @@ extends layout
 
 block contentBlock
     
-    .content
+    .container
         if (! username)
-                h1 Bienvenido a Biljet
-                p.descripcion
-                    | Lo primero que te preguntaras será...¿Qué es Biljet?. Biljet es la herramienta con la que podrás
-                    | tener siempre un plan para salir, ofrecemos 
-                    b miles de eventos 
-                    |(conciertos,fiestas,actuaciones, etc) cerca de ti.
-                    | para acudir a un evento "Biljet" lo único que tendrás que hacer será crear tu cuenta "Biljet" confirmar tu
-                    | asistencias al evento y acudir llevando solo y unicamente 
-                    b ¡Tu movil!, 
-                    |¡no necesitas
-                    b ninguna entrada 
-                    | nunca más! ¿No solo eso! También podrás crear tus 
-                    b propios eventos "Biljet",
-                    | saber a que eventos irán tus amigos, poder compartirlo por las redes sociales y mucho más... Descargate ya nuestra aplicacion android 
-                    b "BiljetApp"
-                    | de Play Store para experimentar la 
-                    b "experiencia Biljet" 
-                    |completa.
+            h1 Bienvenido a Biljet
+            p.descripcion
+                | Lo primero que te preguntaras será...¿Qué es Biljet?. Biljet es la herramienta con la que podrás
+                | tener siempre un plan para salir, ofrecemos 
+                b miles de eventos 
+                |(conciertos,fiestas,actuaciones, etc) cerca de ti.
+                | para acudir a un evento "Biljet" lo único que tendrás que hacer será crear tu cuenta "Biljet" confirmar tu
+                | asistencias al evento y acudir llevando solo y unicamente 
+                b ¡Tu movil!, 
+                |¡no necesitas
+                b ninguna entrada 
+                | nunca más! ¿No solo eso! También podrás crear tus 
+                b propios eventos "Biljet",
+                | saber a que eventos irán tus amigos, poder compartirlo por las redes sociales y mucho más... Descargate ya nuestra aplicacion android 
+                b "BiljetApp"
+                | de Play Store para experimentar la 
+                b "experiencia Biljet" 
+                |completa.
 
-                p.registro
-                    | Registrate no te arrepentiras
-                    a(href='#registro', title='crea un cuenta nueva') Únete
+            p.registro
+                | Registrate no te arrepentiras
+                a(href='#registro', title='crea un cuenta nueva') Únete
 
         else
             h1 Bienvenido de nuevo, span.username USER
@@ -43,8 +43,6 @@ block contentBlock
                         img.fotoEvento(src='img/cinesa.jpg', alt='Foto evento', heigh="500", width="200")
                         p Película los Miserables
                 
-
-        
         .eventos
             p 
                  table(align='left')
@@ -116,27 +114,88 @@ block contentBlock
                                 option(value='teatro') Teatro
                                 option(value='cine') Cine
                                 option(value='otros') Otros
-        div.imagEvent
-
-                table(cellpadding='25px', align='center')
-                    tr
-                        th  
-                            img.fotoEvento(src='img/iuventas.jpg', alt='Foto evento', heigh="500", width="200")
-                            p Concierto Orquesta Iuventas
-                        th
-                            img.fotoEvento(src='img/reyleon.jpg', alt='Foto evento', heigh="500", width="200")
-                            p Musical el Rey León
-                        th
-                            img.fotoEvento(src='img/cinesa.jpg', alt='Foto evento', heigh="500", width="200")
-                            p Entradas de cines
-                        th
-                            img.fotoEvento(src='img/spice_girls.jpg', alt='Foto evento', heigh="500", width="200")
-                            p Concierto Spice Girls
-                    tr
-                        th  
-                            img.fotoEvento(src='img/coldplay.jpg', alt='Foto evento', heigh="500", width="200")
-                            p Concierto Coldplay
-                        th
-                            img.fotoEvento(src='img/vips-2x1.jpg', alt='Foto evento', heigh="500", width="200")
-                            p Promoción 2x1 en vips
+        .events.row
+        //   table(cellpadding='25px', align='center')
+        //       tr
+        //           th  
+        //               img.fotoEvento(src='img/iuventas.jpg', alt='Foto evento', heigh="500", width="200")
+        //               p Concierto Orquesta Iuventas
+        //           th
+        //               img.fotoEvento(src='img/reyleon.jpg', alt='Foto evento', heigh="500", width="200")
+        //               p Musical el Rey León
+        //           th
+        //               img.fotoEvento(src='img/cinesa.jpg', alt='Foto evento', heigh="500", width="200")
+        //               p Entradas de cines
+        //           th
+        //               img.fotoEvento(src='img/spice_girls.jpg', alt='Foto evento', heigh="500", width="200")
+        //               p Concierto Spice Girls
+        //       tr
+        //           th  
+        //               img.fotoEvento(src='img/coldplay.jpg', alt='Foto evento', heigh="500", width="200")
+        //               p Concierto Coldplay
+        //           th
+        //               img.fotoEvento(src='img/vips-2x1.jpg', alt='Foto evento', heigh="500", width="200")
+        //               p Promoción 2x1 en vips
                         
+
+block javascript
+    script(type='text/javascript')
+        $.getJSON('/api/event', function (data) {
+
+            var data = [
+                    {
+                        img: 'img/iuventas.jpg',
+                        title: 'Concierto Orquesta Iuventas',
+                    },
+                    {
+                        img: 'img/reyleon.jpg',
+                        title: 'Musical el Rey León',
+                    },
+                    {
+
+                        img: 'img/cinesa.jpg',
+                        title: 'Entradas de cines',
+                    },
+                    {
+
+                        img: 'img/spice_girls.jpg',
+                        title: 'Concierto Spice Girls',
+                    },
+                    {
+
+                        img: 'img/coldplay.jpg',
+                        title: 'Concierto Coldplay',
+                        hot: true,
+                    },
+                    {
+
+                        img: 'img/vips-2x1.jpg',
+                        title: 'Promoción 2x1 en vips',
+                    },
+                ];
+
+            var eventTemplate = '' +
+                '<div class="event tile">' +
+                    '<img src="#" />' +
+                    '<h4 class="title"></h4>' +
+                '</div>';
+
+            var $container = $('.events');
+            for (i in data) {
+                var event = data[i];
+                var $el = $(eventTemplate)
+
+                $el.find('img')
+                    .attr('src', event.img);
+
+                $el.find('.title')
+                    .text(event.title);
+
+                if (event.hot) {
+                    $el.addClass('tile-hot');
+                }
+
+                $container.append($el);
+            }
+
+        });

@@ -2,38 +2,27 @@ extends layout
 //By Alex
 block contentBlock
 
-	.content
-		.opcionesDescubrir
-		.botonAdd
-			input(type='button', value='Añadir a mis eventos/compartir')
+	.container
 		h1 Quieres descubrir eventos nuevos?
 		
-		div.tablon
-			p 
-				|Busca nuevos eventos por :
-							
-			li
-				form.descubrirLugar
+		div.row
+			div.span5
+				| Busca nuevos eventos por :
+				span
 					input(type='text', name='buscarLugar', value='Introduce un lugar', size='30%')
-			.sp	
-				|Madrid, Barcelona, Valencia...
-			li
-				form.descubrirPrecio
+				| Madrid, Barcelona, Valencia...
+				span
 					input(type='text', name='buscarPrecio', value='Introduce un rango de precios', size='30%')
-			.sp 
 				|Menos de 30, entre 10 y 20...
-			li
-				form.descubrirFecha
-					input(type='text', name='buscarFecha', value='Introduce una fecha', size='30%')	
-			.sp 
+				span
+					input(type='text', name='buscarFecha', value='Introduce una fecha', size='30%')
 				|Esta semana, el proximo mes,
-			.sp
 				|una fecha en concreto...
-			li
-				form.descubrirTipo
-					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')	
-			.sp
+				span
+					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')
 				|Festival, Concierto...
+				span
+					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')
 				
 			.botonBuscar
 				input(type='button', value='Buscar coincidencias')
