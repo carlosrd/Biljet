@@ -4,16 +4,16 @@
  */
 
 var express = require('express'),
+    routes = require('./routes'),
     home = require('./routes/home'),
     user = require('./routes/user'),
     social = require('./routes/social'),
     discover = require('./routes/discover'),
     createEvent = require('./routes/createEvent'),
+    apiUser = require('./routes/apiUser'),
+    apiEvent = require('./routes/apiEvent'),
     http = require('http'),
     path = require('path');
-
-var apiUser = require('./routes/apiUser'),
-    apiEvent = require('./routes/apiEvent');
 
 
 // MongoDB conection
