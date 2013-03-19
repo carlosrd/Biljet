@@ -10,6 +10,7 @@ var express = require('express'),
     social = require('./routes/social'),
     discover = require('./routes/discover'),
     createEvent = require('./routes/createEvent'),
+    qrtest = require('./routes/qrtest'),
     apiUser = require('./routes/apiUser'),
     apiEvent = require('./routes/apiEvent'),
     http = require('http'),
@@ -58,6 +59,7 @@ app.get('/', home.index);
 app.get('/social', social.index);
 app.get('/discover', discover.index);
 app.get('/create', createEvent.index);
+app.get('/qrtest', qrtest.index);
 
 
 app.post('/api/user', apiUser.save);
