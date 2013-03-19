@@ -1,0 +1,12 @@
+extends layout
+
+block contentBlock
+
+	.contenido
+		form
+			textarea(name='msg', rows='10', cols='40') Escribe aqui lo que quieras que contenga tu QR!
+			br
+			input(type='button', value='update', onclick='update_qrcode()')
+		#qr
+
+		
