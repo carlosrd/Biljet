@@ -3,39 +3,33 @@ extends layout
 block contentBlock
     
     .content
-        div.aplicacion
-            table
-                tr
-                    td
-                        p Descargate la aplicación Android desde aquí:
-                    td
-                        img.logoAndroid(src='img/android.gif', alt='Logo android', heigh="50", width="50")
-        if (false)
-            h1 Bienvenido a Biljet
-            p.descripcion
-                | Lo primero que te preguntaras será...¿Qué es Biljet?. Biljet es la herramienta con la que podrás
-                | tener siempre un plan para salir, ofrecemos 
-                b miles de eventos 
-                |(conciertos,fiestas,actuaciones, etc) cerca de ti.
-                | para acudir a un evento "Biljet" lo único que tendrás que hacer será crear tu cuenta "Biljet" confirmar tu
-                | asistencias al evento y acudir llevando solo y unicamente 
-                b ¡Tu movil!, 
-                |¡no necesitas
-                b ninguna entrada 
-                | nunca más! ¿No solo eso! También podrás crear tus 
-                b propios eventos "Biljet",
-                | saber a que eventos irán tus amigos, poder compartirlo por las redes sociales y mucho más... Descargate ya nuestra aplicacion android 
-                b "BiljetApp"
-                | de Play Store para experimentar la 
-                b "experiencia Biljet" 
-                |completa.
+        if (! username)
+                h1 Bienvenido a Biljet
+                p.descripcion
+                    | Lo primero que te preguntaras será...¿Qué es Biljet?. Biljet es la herramienta con la que podrás
+                    | tener siempre un plan para salir, ofrecemos 
+                    b miles de eventos 
+                    |(conciertos,fiestas,actuaciones, etc) cerca de ti.
+                    | para acudir a un evento "Biljet" lo único que tendrás que hacer será crear tu cuenta "Biljet" confirmar tu
+                    | asistencias al evento y acudir llevando solo y unicamente 
+                    b ¡Tu movil!, 
+                    |¡no necesitas
+                    b ninguna entrada 
+                    | nunca más! ¿No solo eso! También podrás crear tus 
+                    b propios eventos "Biljet",
+                    | saber a que eventos irán tus amigos, poder compartirlo por las redes sociales y mucho más... Descargate ya nuestra aplicacion android 
+                    b "BiljetApp"
+                    | de Play Store para experimentar la 
+                    b "experiencia Biljet" 
+                    |completa.
 
-            p.registro
-                | Registrate no te arrepentiras
-                a(href='#registro', title='crea un cuenta nueva') Únete
+                p.registro
+                    | Registrate no te arrepentiras
+                    a(href='#registro', title='crea un cuenta nueva') Únete
 
         else
-            h1 Bienvenido a Biljet Raquel
+            h1 Bienvenido de nuevo, span.username USER
+
             h2 Tus eventos 'biljet' más próximos:
             table(cellpadding='25px', align='center')
                 tr

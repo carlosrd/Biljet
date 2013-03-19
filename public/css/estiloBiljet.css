@@ -105,7 +105,7 @@ width: 100px;
 /*.contenidoTab { /*intento de animacion*/
 /*opacity:0;
 
--moz-transform: translateX(-100%);
+-moz-transform: translateX(-100%);  
 -webkit-transform: translateX(-100%);
 -o-transform: translateX(-100%);
 

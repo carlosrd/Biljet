@@ -13,11 +13,9 @@
     "express": "3.0.2",
     "jade": "*",
     "less-middleware": "*",
-    "qrcode-npm": "*",
     "mongoose": "*",
     "mongoose-models": "*",
-    "passport": "*",
-    "passport-local": "*",
-    "crypto": "*"
+    "crypto": "*",
+    "request": "*"
   }
 }

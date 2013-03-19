@@ -5,36 +5,12 @@ var Schema = mongoose.Schema;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+
 var allSchemas = require('models/allSchemas');
+
 
 var User = mongoose.model('User');
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.findOne({ username: username }, function (err, user) {
-            if (err) {
-                return done(err);
-            }
-            if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
-            }
-            if (!user.validPassword(password)) {
-                return done(null, false, { message: 'Incorrect password.' });
-            }
-            return done(null, user);
-        });
-    }
-));
-
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-    done(null, obj);
-});
 
 exports.save = function(req, res){
     var name = req.body.name ? req.body.name : null;
@@ -74,7 +50,7 @@ exports.list = function(req, res) {
         .populate('eventComments')
         .exec( function (err, users) {
             if (err) {
-                res.send("[GET - /api/user] Error on MongoDB: unknown", 500);
+                res.send(err, 500);
             } else {
                 res.send(users, 200);
             }
@@ -92,7 +68,7 @@ exports.findByUsername = function (req, res) {
         .populate('eventComments')
         .exec( function (err, user) {
             if (err) {
-                res.send("[GET - /api/user/{username} Error on MongoDB: unknown", 500);
+                res.send(err, 500);
             } else if (user === null){
                 res.send("[]", 200);
             } else {
@@ -102,6 +78,22 @@ exports.findByUsername = function (req, res) {
 };
 
 exports.login = function (req, res) {
-    passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: true })}
+    User.findOne({username: req.body.username})
+    .exec( function (err, user) {
+        if (user.password === req.body.password) {
+            req.user = user.username;
+            // req.session.username = user.username;
+            // req.session.email = user.email;
+            // req.session.id = user._id;
+            res.render('index', {username: user.username});
+        } else {
+            res.render('login', {error: true});
+        }
+    });
+    // console.log(req.body, "prueba");
+    
+}
+
+exports.signup = function (req, res) {
+    res.render('signup', {error: 'false'});
+}

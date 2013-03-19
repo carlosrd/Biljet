@@ -1,6 +1,6 @@
 
 /*
- * GET eventos page.
+ * GET events page.
  */
 
 exports.index = function(req, res){

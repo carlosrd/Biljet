@@ -1,0 +1,16 @@
+extends layout
+
+block contentBlock
+    
+    .container
+
+          a(href='') aaaa
+
+          form(action='/api/user', id="form_signup", method='post')
+            
+            input(type='text', id="username", placeholder='Username')
+            input(type='email', id="email", placeholder='Email')
+            input(type='password', id="password", placeholder='Password')
+            
+            input(type='submit', id="signup_submit",value='Log In')
+
