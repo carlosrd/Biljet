@@ -62,6 +62,18 @@ exports.findByTitle = function (req, res) {
     });
 };
 
+exports.findById = function (req, res) {
+    Event.findOne({_id: req.params.id}, function (err, event) {
+        if (err) {
+            res.send(err, 500);
+        } else if (event === null){
+            res.send("[]", 200);
+        } else {
+            res.send(event, 200);
+        }
+    });
+};
+
 exports.filterByProvince = function (req, res) {
     Event.find({province: req.params.number}, function (err, events) {
         if (err) {
