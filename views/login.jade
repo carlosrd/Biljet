@@ -5,12 +5,37 @@ block contentBlock
     form(action='/login', method='post', id="form_login")
         div
             label Username:
-            input(type='text', name='username').field_username
+            input(type='text', placeholder='username').field_username
         div
             label Password:
-            input(type='password', name='password').field_password
+            input(type='password', placeholder='password').field_password
         div
-            input(type='submit', value='Log In')
+            a(title='Login').btn.btn-large.submit Login
+            //- input(type='submit', value='Log In')
 
-    if (error)
-        h3 Usuario o contraseña incorrectos
+block javascript
+    script(type='text/javascript')
+        $(document).ready(function() {
+            $('.submit').click(function () {
+                var hashPass = CryptoJS.MD5($('#password').val()).toString();
+                $('#password').val(hashPass);
+                
+                console.log(data, "data: ");
+
+                var data = {
+                    username: $("#form_login .field_username").val(),
+                    password: $("#form_login .field_password").val(),
+                }
+
+                console.log(data, "data");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/login",
+                    data: data,
+                    success: function () {
+                        window.location.href = '/';
+                    }
+                });            
+            });
+        });
