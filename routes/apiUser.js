@@ -27,7 +27,6 @@ exports.save = function(req, res){
         twitter: twitter,
         facebook: facebook,
         lastLogin: new Date().getTime()
-
     });
 
     newUser.save (function (err) {
