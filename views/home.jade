@@ -3,7 +3,10 @@ extends layout
 block contentBlock
     
     .container
-        h1 Bienvenido a Biljet
+        if (username)
+            h1 Bienvenido, #{username}
+        else
+            h1 Bienvenido a Biljet
         .row
             p.span3
                 | ¿Necesitas organizar un evento? Con Biljet podrás tener siempre un plan al que recurrir.

@@ -89,8 +89,7 @@ exports.login = function (req, res) {
             res.render('login', {error: true});
         }
     });
-    
-    res.render('login', { error: false });    
+    // res.render('login', { error: false });    
 }
 
 exports.signup = function (req, res) {
