@@ -90,8 +90,8 @@ exports.login = function (req, res) {
             res.render('login', {error: true});
         }
     });
-    // console.log(req.body, "prueba");
     
+    res.render('login', { error: false });    
 }
 
 exports.signup = function (req, res) {

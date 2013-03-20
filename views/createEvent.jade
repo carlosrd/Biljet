@@ -3,24 +3,24 @@ extends layout
 block contentBlock
     .contenido
         h2 #{title}
-            form(method='post')
+            form(method='post', id="form_create_event")
                 p
-                    label(for="name") Nombre:
-                        input(type='text', name='name', value="")
+                    label(for="name") Nombre: 
+                        input(type='text', name='name', value="").field_name
 
                 p
-                    label(for="date") Fecha:
-                        input(type='text', name='date', value="")
+                    label(for="date") Fecha: 
+                        input(type='text', name='date', value="").field_date
                     label(for="time") Hora: 
-                        input(type='text',name='time',size=5,value="")
+                        input(type='text',name='time',size=5,value="").field_time
 
                 p
-                    label(for="price") Precio:
-                        input(type='number', name='price', value="")
+                    label(for="price") Precio: 
+                        input(type='number', name='price', value="").field_price
 
                 p
                     label(for="province") Provincia: 
-                        select (name='province')
+                        select(name='province').field_province
                             option(value='0') - selecciona -
                             option(value='1') A Coruña
                             option(value='2') Álava
@@ -77,13 +77,42 @@ block contentBlock
                             option(value='52') Zaragoza
                 p
                     label(for="category") Tipo de evento: 
-                        select(name='category')
+                        select(name='category').field_category
                             option(value='') - Selecciona -
-                            option(value='movie') Pelicula
-                            option(value='theatre') Obra de teatro
-                            option(value='concert') Concierto
-                            option(value='party') Fiesta
-                            option(value='meeting') Reunión
-                p
-                    input(type='submit', value='Crear evento')
+                            option(value='Cinema') Pelicula
+                            option(value='Theatre') Obra de teatro
+                            option(value='Concert') Concierto
+                            option(value='Party') Fiesta
+                            option(value='Meeting') Reunión
+                            option(value='Other') Otros
 
+                p
+                    a().create_event.btn Crear evento
+
+block javascript
+    script(type='text/javascript')
+        $(document).ready(function() {
+            $('a.create_event').click( function () {
+
+                var data = {
+                    title: $("#form_create_event .field_name").val(),
+                    date: $("#form_create_event .field_date").val(),
+                    time: $("#form_create_event .field_time").val(),
+                    price: $("#form_create_event .field_price").val(),
+                    user: 'raul',
+                    province: $("#form_create_event .field_province").val(),
+                    category: $("#form_create_event .field_category").val(),
+                }
+
+                console.log(data, "data");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/event",
+                    data: data,
+                    success: function () {
+                        window.location.href = '/';
+                    }
+                });
+            });
+        });

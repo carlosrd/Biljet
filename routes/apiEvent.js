@@ -7,11 +7,11 @@ var allSchemas = require('../models/allSchemas');
 
 
 var Event = mongoose.model('Event');
+var User = mongoose.model('User');
 
 exports.save = function (req, res) {
 
-    // User.find({username: req.body.creator}, function (err, creator) {   
-
+    // User.find({username: req.body.creator}, function (err, creator) {
         var latitude = req.body.latitude ? req.body.latitude : null;
         var longitude = req.body.longitude ? req.body.longitude : null;
 
@@ -20,11 +20,12 @@ exports.save = function (req, res) {
             finishAt: req.body.finishAt,
             createdAt: new Date().getTime(),
             price: req.body.price,
-            creator: null,
+            creator: '5147d36e05c41ab31d000001',
             province: req.body.province,
             latitude: latitude,
             longitude: longitude,
-            category: req.body.category
+            category: req.body.category,
+            imageName: req.body.imageName
         });
 
         newEvent.save ( function (err) {
@@ -37,7 +38,7 @@ exports.save = function (req, res) {
     // });
 };
 
-exports.list = function (req, res) {
+exports.list = function (req, res) {    
     Event.find({}, function (err, events) {
         if (err) {
             res.send(err, 500);
@@ -60,3 +61,16 @@ exports.findByTitle = function (req, res) {
         }
     });
 };
+
+exports.filterByProvince = function (req, res) {
+    Event.find({province: req.params.number}, function (err, events) {
+        if (err) {
+            res.send(err, 500);
+        } else if (events === null){
+            res.send("[]", 200);
+        } else {
+            res.send(events, 200);
+        }
+    });
+};
+
