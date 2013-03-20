@@ -30,10 +30,12 @@ block contentBlock
                     | Registrate no te arrepentiras 
                     img(src="images/illustrations/clipboard.png", alt="Registrate")
                     a(href='/signup', title='crea un cuenta nueva').btn.btn-large.btn-block Únete
+                                
         else
             h1 Bienvenido de nuevo, span.username USER
 
             h2 Tus eventos 'biljet' más próximos:
+            a(href='/calendar', title='eventos vista calendario').btn.btn-large.btn-block Ver Calendario
             table(cellpadding='25px', align='center')
                 tr
                     th  
