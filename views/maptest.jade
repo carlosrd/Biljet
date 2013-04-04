@@ -7,16 +7,11 @@ block javascript
       map = new GMaps({
         el: '#map',
         lat: 40.009012,
-        lng: -3.018322,
-        zoomControl : true,
-        zoomControlOpt: {
-          style : 'SMALL',
-          position: 'TOP_LEFT'
-        },
-        panControl : false,
-        streetViewControl : false,
-        mapTypeControl: false,
-        overviewMapControl: false
+        lng: -3.018322
+      });
+      map.addMarker({
+        lat: 40.009571,
+        lng: -3.013884
       });
     });
 
