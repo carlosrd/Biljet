@@ -4,12 +4,11 @@ block contentBlock
     
     .container
         form(action='/api/user', id="form_signup", method='post')
-            
             input(type='text', id="username", placeholder='Username')
             input(type='email', id="email", placeholder='Email')
             input(type='password', id="password", placeholder='Password')
             
-            a(href='', title='Regístrate').btn.btn-large.submit Regístrate
+            a(title='Regístrate').btn.btn-large.submit Regístrate
 
 block javascript
     script(type='text/javascript')
@@ -18,9 +17,23 @@ block javascript
                 var hashPass = CryptoJS.MD5($('#password').val()).toString();
                 $('#password').val(hashPass);
                 
-                //- $.post('/api/user', function(data) {
-                //-     alert(data);
-                //- });
-            });
+                console.log(data, "data: ");
 
+                var data = {
+                    username: $("#username").val(),
+                    email: $("#email").val(),
+                    password: $("#password").val(),
+                }
+
+                console.log(data, "data");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/user",
+                    data: data,
+                    success: function () {
+                        window.location.href = '/';
+                    }   
+                });            
+            });
         });

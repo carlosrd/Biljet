@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var eventSchema = new Schema({
     title: { type: String, unique: true, required: true },
-    finishAt: { type: Number, required: true },
+    finishAt: { type: Number, default: null },
     createdAt: Number,
     price: {type: Number, required: true },
     creator: { 

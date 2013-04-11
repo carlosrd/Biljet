@@ -69,7 +69,9 @@ app.get('/api/user/:username', apiUser.findByUsername);
 
 app.post('/api/event', apiEvent.save);
 app.get('/api/event', apiEvent.list);
-app.get('/api/event/:title', apiEvent.findByTitle);
+app.get('/api/event/province/:number', apiEvent.filterByProvince);
+app.get('/api/event/title/:title', apiEvent.findByTitle);
+app.get('/api/event/id/:id', apiEvent.findById);
 
 app.get('/login', user.login);
 app.post('/login', apiUser.login);
