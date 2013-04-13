@@ -1,21 +1,41 @@
+
 extends layout
 
 block javascript
   script(type='text/javascript')
-    var map;
-    $(document).ready(function() {
+    var map,
+    mlat = -12.043333,
+    mlng = -77.028333;
+    $(document).ready(function(){
       map = new GMaps({
-        el: '#map',
-        lat: 40.009012,
-        lng: -3.018322
+      el: '#map',
+      lat: -12.043333,
+      lng: -77.028333
       });
+      $('#geocoding_form').submit(function(e){
+      e.preventDefault();
+      GMaps.geocode({
+      address: $('#address').val().trim(),
+      callback: function(results, status){
+      if(status=='OK'){
+      var latlng = results[0].geometry.location;
+      map.setCenter(latlng.lat(), latlng.lng());
       map.addMarker({
-        lat: 40.009571,
-        lng: -3.013884
+      lat: latlng.lat(),
+      lng: latlng.lng()
       });
-    });
+      }
+      }
+      });
+      });
+      });
 
 block contentBlock
   h1 Mapa de prueba
-  .row
-    #map
+    .row
+    form#geocoding_form(method='post')
+          label(for='address') Address:
+          .input
+            input#address(type='text', name='address')
+            input.btn(type='submit', value='Search')
+        #map
