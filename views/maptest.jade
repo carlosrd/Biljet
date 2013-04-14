@@ -12,10 +12,8 @@ block javascript
       lat: -12.043333,
       lng: -77.028333
       });
-      $('#geocoding_form').submit(function(e){
-      e.preventDefault();
       GMaps.geocode({
-      address: $('#address').val().trim(),
+      address: "C/Pablo Iglesias, 3 Tarancón" ,
       callback: function(results, status){
       if(status=='OK'){
       var latlng = results[0].geometry.location;
@@ -28,14 +26,8 @@ block javascript
       }
       });
       });
-      });
 
 block contentBlock
   h1 Mapa de prueba
     .row
-    form#geocoding_form(method='post')
-          label(for='address') Address:
-          .input
-            input#address(type='text', name='address')
-            input.btn(type='submit', value='Search')
-        #map
+      #map
