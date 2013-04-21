@@ -7,6 +7,7 @@ var eventSchema = new Schema({
     title: { type: String, unique: true, required: true },
     finishAt: { type: Number, default: null },
     createdAt: Number,
+    duration: { type: Number, default: null },
     price: {type: Number, required: true },
     creator: { 
         type: Schema.Types.ObjectId,
@@ -24,8 +25,10 @@ var eventSchema = new Schema({
         default: null
     }],
     province: { type: String, required: true },
+    postalCode: {type: Number, default: null },
     latitude: { type: Number, default: null },
     longitude: { type: Number, default: null },
+    address: { type: String, default: null },
     category: { type: String, required: true },
     comments: [{
         type: Schema.Types.ObjectId,
