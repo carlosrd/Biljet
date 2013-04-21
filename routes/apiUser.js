@@ -18,11 +18,13 @@ exports.save = function(req, res){
     var twitter = req.body.twitter ? req.body.twitter : null;
     var facebook = req.body.facebook ? req.body.facebook : null;
 
+    var passwordHash = crypto.createHash('md5').update(req.body.password).digest("hex");
+
     var newUser = new User({
         username: req.body.username,
         name: name,
         surname: surname,
-        password: req.body.password,
+        password: passwordHash,
         email: req.body.email,
         twitter: twitter,
         facebook: facebook,
@@ -76,17 +78,28 @@ exports.findByUsername = function (req, res) {
         });
 };
 
+exports.delete = function (req, res) {
+    User.remove({_id: req.params.id}, function (err) {
+        if (err) {
+            res.send(err, 500);
+        } else {
+            res.send("", 200);
+        }
+    });
+}
+
 exports.login = function (req, res) {
     User.findOne({username: req.body.username})
     .exec( function (err, user) {
-        if (user.password === req.body.password) {
-            req.user = user.username;
-            // req.session.username = user.username;
-            // req.session.email = user.email;
-            // req.session.id = user._id;
-            res.render('index', {username: user.username});
+        if (user !== null && user.password === req.body.password) {
+            req.session.username = user.username;
+            req.session._id = user._id;
+            console.log(req.session, "session: ");
+            res.send(user, 200);
+            // res.redirect('back');
         } else {
-            res.render('login', {error: true});
+            res.send("", 401);
+            // res.render('login', {error: true});
         }
     });
     // res.render('login', { error: false });    

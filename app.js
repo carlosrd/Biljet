@@ -42,18 +42,25 @@ app.configure(function(){
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-    app.use(app.router);
     app.use(require('less-middleware')({ src: __dirname + '/public' }));
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.cookieParser('your secret here'));
-    app.use(express.session());
+    app.use(express.session({ secret: "SupersecretpasswordphraseforISproject"}));
+    app.use(app.router);
 });
 
-app.configure('development', function(){
+app.configure('dev', function(){
     app.use(express.errorHandler());
 });
 
-
+function checkAuth(req, res, next) {
+    console.log(req, "req: ");
+    if (! req.session.user_id) {
+        res.send('You are not authorized to view this page');
+    } else {
+        next();
+  }
+}
 
 app.get('/', home.index);
 app.get('/social', social.index);
@@ -64,16 +71,20 @@ app.get('/qrtest', qrtest.index);
 
 app.post('/api/user', apiUser.save);
 app.get('/api/user', apiUser.list);
+app.delete('/api/user/:id', apiUser.delete);
 app.get('/api/user/:username', apiUser.findByUsername);
 
-app.post('/api/event', apiEvent.save);
 app.get('/api/event', apiEvent.list);
+app.get('/api/event/:id', apiEvent.findById);
+app.post('/api/event', apiEvent.save);
+app.delete('/api/event/:id', apiEvent.delete);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
-app.get('/api/event/id/:id', apiEvent.findById);
+
 
 app.get('/login', user.login);
 app.post('/login', apiUser.login);
+
 
 app.get('/signup', apiUser.signup);
 

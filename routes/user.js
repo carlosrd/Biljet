@@ -4,5 +4,5 @@
  */
 
 exports.login  = function(req, res){
-    res.render('login', { error: false });
+    res.render('login', { username: req.session.username, error: false });
 };
