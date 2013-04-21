@@ -92,23 +92,22 @@ exports.login = function (req, res) {
     User.findOne({username: req.body.username})
     .exec( function (err, user) {
         if (user !== null && user.password === req.body.password) {
-            req.session.username = user.username;
-            req.session._id = user._id;
+            req.session.user = {};
+            req.session.user.username = user.username;
+            req.session.user._id = user._id;
             console.log(req.session, "session: ");
             res.send(user, 200);
-            // res.redirect('back');
         } else {
             res.send("", 401);
-            // res.render('login', {error: true});
         }
     });
-    // res.render('login', { error: false });    
 }
 
 exports.logout = function (req, res) {
-    req.session.username = null;
+    req.session.user = null;
+    res.redirect('back');
 }
 
 exports.signup = function (req, res) {
-    res.render('signup', {error: 'false'});
+    res.render('signup', { username: req.session.user.username, error: 'false'});
 }

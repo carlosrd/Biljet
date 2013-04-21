@@ -3,8 +3,8 @@ extends layout
 block contentBlock
     
     .container
-        if (username)
-            h1 Bienvenido, #{username}
+        if (user)
+            h1 Bienvenido, #{user.username}
         else
             h1 Bienvenido a Biljet
             .row

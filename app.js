@@ -55,7 +55,7 @@ app.configure('dev', function(){
 
 function checkAuth(req, res, next) {
     console.log(req, "req: ");
-    if (! req.session.user_id) {
+    if (! req.session.user) {
         res.send('You are not authorized to view this page');
     } else {
         next();
