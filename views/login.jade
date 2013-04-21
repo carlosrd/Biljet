@@ -23,15 +23,21 @@ block javascript
                     password: hashPass,
                 }
 
-                console.log(data, "data");
-
                 $.ajax({
                     type: "POST",
                     url: "/login",
                     data: data,
-                    success: function () {
-                        window.location.href = '/';
+                    statusCode: {
+                        200: function() {
+                            window.location.href= "/";
+                        }
+                    },
+                    error: function() {
+                        alert("BAD Auth");
                     }
+                    //- success: function () {
+                    //-     window.location.href = '/';
+                    //- }
                 });            
             });
         });
