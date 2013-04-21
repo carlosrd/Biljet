@@ -32,7 +32,29 @@ body
         div#nav_bar_right
             .navbar.navbar-inverse
                 .navbar-inner
-                    if (! username)
+                    if (username)
+                        ul.nav
+                            li
+                                a(href='/')
+                                    span.fui-location-24
+                                    |  Home
+                            li
+                                a(href='/social')
+                                    span.fui-man-24
+                                    |  Social
+                            li
+                                a(href='/discover')
+                                    span.fui-heart-24
+                                    |  Descubrir
+                            li
+                                a(href='/create')
+                                    span.fui-plus-24
+                                    |  Crear Evento
+                            li
+                                a(href='/logout')
+                                    span.fui-new-24
+                                    |  Salir
+                    else
                         ul.nav
                             li
                                 a(href='/')
@@ -58,24 +80,6 @@ body
                                 a(href='/signup')
                                     span.fui-new-24
                                     |  Registro
-                    else
-                        ul.nav
-                            li
-                                a(href='/')
-                                    span.fui-location-24
-                                    |  Home
-                            li
-                                a(href='/social')
-                                    span.fui-man-24
-                                    |  Social
-                            li
-                                a(href='/discover')
-                                    span.fui-heart-24
-                                    |  Descubrir
-                            li
-                                a(href='/create')
-                                    span.fui-plus-24
-                                    |  Crear Evento
         div.clear
 
     .content

@@ -105,6 +105,10 @@ exports.login = function (req, res) {
     // res.render('login', { error: false });    
 }
 
+exports.logout = function (req, res) {
+    req.session.username = null;
+}
+
 exports.signup = function (req, res) {
     res.render('signup', {error: 'false'});
 }

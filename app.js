@@ -84,7 +84,7 @@ app.get('/api/event/title/:title', apiEvent.findByTitle);
 
 app.get('/login', user.login);
 app.post('/login', apiUser.login);
-
+app.get('/logout', apiUser.logout);
 
 app.get('/signup', apiUser.signup);
 
