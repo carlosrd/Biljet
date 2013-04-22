@@ -26,8 +26,8 @@ Schema = mongoose.Schema;
 // WARNING!!!
 // This line connect to the remote Mongo Database, use carefully!!
 // For testing purposes, use the localhost DB (the line commented below)
-//mongoose.connect('mongodb://admin:admin@dharma.mongohq.com:10010/Biljet');
- mongoose.connect('localhost', 'biljet');
+mongoose.connect('mongodb://admin:admin@dharma.mongohq.com:10010/Biljet');
+// mongoose.connect('localhost', 'biljet');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
