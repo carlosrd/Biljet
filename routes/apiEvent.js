@@ -11,7 +11,7 @@ var User = mongoose.model('User');
 
 exports.save = function (req, res) {
 
-    User.findOne({username: req.body.creator}, function (err, creator) {
+    User.findOne({_id: req.body.creator}, function (err, creator) {
         var latitude = req.body.latitude ? req.body.latitude : null;
         var longitude = req.body.longitude ? req.body.longitude : null;
 
@@ -20,7 +20,7 @@ exports.save = function (req, res) {
             finishAt: req.body.finishAt,
             createdAt: new Date().getTime(),
             price: req.body.price,
-            creator: '5172c27f5b49890000000002',
+            creator: creator,
             province: req.body.province,
             latitude: latitude,
             longitude: longitude,
@@ -36,7 +36,7 @@ exports.save = function (req, res) {
                 User.update(
                     { _id: creator._id },
                     { $push:
-                        { eventsOrganized: newEvent }
+                        { eventsOrganized: newEvent, eventsToGo: newEvent }
                     }, function (err, data) {
                         if (! err) {
                             console.log("Event added successfully to " + creator.username);
@@ -102,6 +102,34 @@ exports.delete = function (req, res) {
             res.send(err, 500);
         } else {
             res.send("", 200);
+        }
+    });
+}
+
+exports.goToEvent = function (req, res) {
+    Event.findOne({_id: req.params.id}, function (err, eventToGo) {
+        if (err) {
+            res.send(err, 500);
+        } else {
+            User.findOne({_id: req.body.id}, function (err, user) {
+                if (err) {
+                    res.send(err, 500);
+                } else {
+                    User.update(
+                        { _id: user._id, password: req.body.password },
+                        { $push:
+                            { eventsToGo: eventToGo }
+                        }, function (err, data) {
+                            if (err) {
+                                res.send(err, 500);
+                            } else {
+                                console.log("Event added successfully to " + user.username);
+                                res.send(data, 200);
+                            }
+                        }
+                    );
+                }
+            });
         }
     });
 }

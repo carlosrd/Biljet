@@ -68,7 +68,7 @@ app.get('/social', social.index);
 app.get('/discover', discover.index);
 app.get('/create', createEvent.index);
 app.get('/qrtest', qrtest.index);
-app.get('/eventInformation',eventInformation.index);
+app.get('/eventInformation', eventInformation.index);
 
 
 app.post('/api/user', apiUser.save);
@@ -79,6 +79,7 @@ app.get('/api/user/:username', apiUser.findByUsername);
 app.get('/api/event', apiEvent.list);
 app.get('/api/event/:id', apiEvent.findById);
 app.post('/api/event', apiEvent.save);
+app.post('/api/event/go/:id', apiEvent.goToEvent);
 app.delete('/api/event/:id', apiEvent.delete);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
