@@ -8,6 +8,7 @@ var express = require('express'),
     home = require('./routes/home'),
     user = require('./routes/user'),
     social = require('./routes/social'),
+    eventInformation = require('./routes/eventInformation'),
     discover = require('./routes/discover'),
     createEvent = require('./routes/createEvent'),
     qrtest = require('./routes/qrtest'),
@@ -67,6 +68,7 @@ app.get('/social', social.index);
 app.get('/discover', discover.index);
 app.get('/create', createEvent.index);
 app.get('/qrtest', qrtest.index);
+app.get('/eventInformation',eventInformation.index);
 
 
 app.post('/api/user', apiUser.save);
