@@ -18,11 +18,13 @@ exports.save = function(req, res){
     var twitter = req.body.twitter ? req.body.twitter : null;
     var facebook = req.body.facebook ? req.body.facebook : null;
 
+    var passwordHash = crypto.createHash('md5').update(req.body.password).digest("hex");
+
     var newUser = new User({
         username: req.body.username,
         name: name,
         surname: surname,
-        password: req.body.password,
+        password: passwordHash,
         email: req.body.email,
         twitter: twitter,
         facebook: facebook,
@@ -56,6 +58,26 @@ exports.list = function(req, res) {
         });
 };
 
+exports.findById = function (req, res) {
+    User.findOne({_id: req.params.id})
+        .populate('friends')
+        .populate('eventsToGo')
+        .populate('eventsFollowed')
+        .populate('eventsOrganized')
+        .populate('qrs')
+        .populate('userComments')
+        .populate('eventComments')
+        .exec( function (err, user) {
+            if (err) {
+                res.send(err, 500);
+            } else if (user === null){
+                res.send("[]", 200);
+            } else {
+                res.send(user, 200);
+            }
+        });
+}
+
 exports.findByUsername = function (req, res) {
     User.findOne({username: req.params.username})
         .populate('friends')
@@ -76,23 +98,36 @@ exports.findByUsername = function (req, res) {
         });
 };
 
+exports.delete = function (req, res) {
+    User.remove({_id: req.params.id}, function (err) {
+        if (err) {
+            res.send(err, 500);
+        } else {
+            res.send("", 200);
+        }
+    });
+}
+
 exports.login = function (req, res) {
     User.findOne({username: req.body.username})
     .exec( function (err, user) {
-        if (user.password === req.body.password) {
-            req.user = user.username;
-            // req.session.username = user.username;
-            // req.session.email = user.email;
-            // req.session.id = user._id;
-            res.render('index', {username: user.username});
+        if (user !== null && user.password === req.body.password) {
+            req.session.user = {};
+            req.session.user.username = user.username;
+            req.session.user._id = user._id;
+            console.log(req.session, "session: ");
+            res.send(user, 200);
         } else {
-            res.render('login', {error: true});
+            res.send("", 401);
         }
     });
-    
-    res.render('login', { error: false });    
+}
+
+exports.logout = function (req, res) {
+    delete req.session.user;
+    res.redirect('back');
 }
 
 exports.signup = function (req, res) {
-    res.render('signup', {error: 'false'});
+    res.render('signup', { username: req.session.user.username, error: 'false'});
 }

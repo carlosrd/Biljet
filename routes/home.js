@@ -4,5 +4,6 @@
  */
 
 exports.index = function(req, res){
-  res.render('home', {username: null});
+    console.log(req.session, "session: ");
+    res.render('home', {user: req.session.user});
 };

@@ -1,0 +1,26 @@
+extends layout
+
+block contentBlock
+	h1 Nombre del evento
+	//TODO
+	// hay q ordenar esta lsita con css 
+	// la imagen esta a la derecha y la fecha y el boton a la izquierda cerca de la imagen
+	ul
+		li
+			img.fotoRecomendados(src='img/eventDefault.png', alt='nombre del evento')
+		li
+			|Fecha del evento
+		li
+			|Indicar el numero de plazas disponibles(si no lo indicamso elimianr este punto)
+		li.span2
+			a(href='/', title='Unirse a un evento').btn.btn-large.btn-block Comprar
+
+	h2 Descripción
+	p
+		|Descripcion del evento
+
+	h2 Localización
+	p
+		|dirección
+	p
+		|integracion de la libreria de google maps
