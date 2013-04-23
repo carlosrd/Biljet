@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-    res.render('discover', { username: req.session.user, title: 'Biljet :: Descubrir Eventos', subtitle: 'Descubrir Eventos section' });
+    res.render('discover', { user: req.session.user, title: 'Biljet :: Descubrir Eventos', subtitle: 'Descubrir Eventos section' });
 };

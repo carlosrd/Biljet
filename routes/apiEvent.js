@@ -11,7 +11,7 @@ var User = mongoose.model('User');
 
 exports.save = function (req, res) {
 
-    User.findOne({_id: req.body.creator}, function (err, creator) {
+    User.findOne({_id: req.session.user._id}, function (err, creator) {
         var latitude = req.body.latitude ? req.body.latitude : null;
         var longitude = req.body.longitude ? req.body.longitude : null;
 

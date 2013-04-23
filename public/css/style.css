@@ -51,3 +51,11 @@ body {
   width: 57px;
   margin: 10px;
 }
+#calendar {
+  align: center;
+  width: 390px;
+  margin: 200 auto 200 auto;
+}
+#calendar.large {
+  height: 300px;
+}
