@@ -134,3 +134,30 @@ exports.goToEvent = function (req, res) {
     });
 }
 
+exports.dontGoToEvent = function (req, res) {
+    Event.findOne({_id: req.params.id}, function (err, eventToGo) {
+        if (err) {
+            res.send(err, 500);
+        } else {
+            User.findOne({_id: req.body.id}, function (err, user) {
+                if (err) {
+                    res.send(err, 500);
+                } else {
+                    User.update(
+                        { _id: user._id, password: req.body.password },
+                        { $pull:
+                            { eventsToGo: eventToGo }
+                        }, function (err, data) {
+                            if (err) {
+                                res.send(err, 500);
+                            } else {
+                                res.send(data, 200);
+                            }
+                        }
+                    );
+                }
+            });
+        }
+    });
+}
+

@@ -80,6 +80,7 @@ app.get('/api/event', apiEvent.list);
 app.get('/api/event/:id', apiEvent.findById);
 app.post('/api/event', apiEvent.save);
 app.post('/api/event/go/:id', apiEvent.goToEvent);
+app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
 app.delete('/api/event/:id', apiEvent.delete);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
