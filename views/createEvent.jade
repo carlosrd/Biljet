@@ -9,8 +9,21 @@ block contentBlock
                         input(type='text', name='name', value="").field_name
 
                 p
-                    label(for="date") Fecha: 
-                        input(type='text', name='date', value="").field_date
+                    link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css')
+                    script(src='http://code.jquery.com/jquery-1.9.1.js')
+                    script(src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
+                    link(rel='stylesheet', href='/resources/demos/style.css')
+                    script
+                        $(function() {
+                            $( "#datepicker" ).datepicker({
+                            changeMonth: true,
+                            changeYear: true
+                            });
+                        });
+
+                    label(for="date") Fecha:
+                        input#datepicker(type='text', name='date', value="")
+                    
                     label(for="time") Hora: 
                         input(type='text',name='time',size=5,value="").field_time
 
@@ -116,3 +129,4 @@ block javascript
                 });
             });
         });
+

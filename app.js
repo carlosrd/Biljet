@@ -12,6 +12,7 @@ var express = require('express'),
     discover = require('./routes/discover'),
     createEvent = require('./routes/createEvent'),
     qrtest = require('./routes/qrtest'),
+    calendar = require('./routes/calendar'),
     apiUser = require('./routes/apiUser'),
     apiEvent = require('./routes/apiEvent'),
     http = require('http'),
@@ -68,8 +69,8 @@ app.get('/social', social.index);
 app.get('/discover', discover.index);
 app.get('/create', createEvent.index);
 app.get('/qrtest', qrtest.index);
+app.get('/calendar', calendar.index);
 app.get('/eventInformation', eventInformation.index);
-
 
 app.post('/api/user', apiUser.save);
 app.get('/api/user', apiUser.list);
