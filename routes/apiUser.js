@@ -33,7 +33,7 @@ exports.save = function(req, res){
 
     newUser.save (function (err) {
         if (err) {
-            res.send(err, 500);
+            res.send(err, 400);
         } else {
             res.send(newUser, 200);
         }
@@ -51,7 +51,7 @@ exports.list = function(req, res) {
         .populate('eventComments')
         .exec( function (err, users) {
             if (err) {
-                res.send(err, 500);
+                res.send(err, 400);
             } else {
                 res.send(users, 200);
             }
@@ -69,7 +69,7 @@ exports.findById = function (req, res) {
         .populate('eventComments')
         .exec( function (err, user) {
             if (err) {
-                res.send(err, 500);
+                res.send(err, 400);
             } else if (user === null){
                 res.send("[]", 200);
             } else {
@@ -89,7 +89,7 @@ exports.findByUsername = function (req, res) {
         .populate('eventComments')
         .exec( function (err, user) {
             if (err) {
-                res.send(err, 500);
+                res.send(err, 400);
             } else if (user === null){
                 res.send("[]", 200);
             } else {
@@ -101,7 +101,7 @@ exports.findByUsername = function (req, res) {
 exports.delete = function (req, res) {
     User.remove({_id: req.params.id}, function (err) {
         if (err) {
-            res.send(err, 500);
+            res.send(err, 400);
         } else {
             res.send("", 200);
         }
@@ -115,6 +115,7 @@ exports.login = function (req, res) {
             req.session.user = {};
             req.session.user.username = user.username;
             req.session.user._id = user._id;
+            req.session.user.password = user.password;
             console.log(req.session, "session: ");
             res.send(user, 200);
         } else {
