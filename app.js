@@ -74,7 +74,8 @@ app.get('/eventInformation', eventInformation.index);
 app.post('/api/user', apiUser.save);
 app.get('/api/user', apiUser.list);
 app.delete('/api/user/:id', apiUser.delete);
-app.get('/api/user/:username', apiUser.findByUsername);
+app.get('/api/user/:id', apiUser.findById);
+app.get('/api/user/u/:username', apiUser.findByUsername);
 
 app.get('/api/event', apiEvent.list);
 app.get('/api/event/:id', apiEvent.findById);

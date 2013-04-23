@@ -58,6 +58,26 @@ exports.list = function(req, res) {
         });
 };
 
+exports.findById = function (req, res) {
+    User.findOne({_id: req.params.id})
+        .populate('friends')
+        .populate('eventsToGo')
+        .populate('eventsFollowed')
+        .populate('eventsOrganized')
+        .populate('qrs')
+        .populate('userComments')
+        .populate('eventComments')
+        .exec( function (err, user) {
+            if (err) {
+                res.send(err, 500);
+            } else if (user === null){
+                res.send("[]", 200);
+            } else {
+                res.send(user, 200);
+            }
+        });
+}
+
 exports.findByUsername = function (req, res) {
     User.findOne({username: req.params.username})
         .populate('friends')
