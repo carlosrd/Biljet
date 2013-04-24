@@ -2,6 +2,7 @@ extends layout
 
 block contentBlock
 
+
     form(action='/login', method='post', id="form_login")
         div
             input(type='text', placeholder='Usuario').field_username
@@ -9,18 +10,17 @@ block contentBlock
             input(type='password', placeholder='Contraseña').field_password
         div
             a(title='Login').btn.btn-large.submit Login
-            //- input(type='submit', value='Log In')
+
+        .error_message
 
 block javascript
     script(type='text/javascript')
         $(document).ready(function() {
             $('.submit').click(function () {
-                var hashPass = CryptoJS.MD5($('#form_login .field_password').val()).toString();
-                $('#form_login .field_password').val(hashPass);
 
                 var data = {
                     username: $("#form_login .field_username").val(),
-                    password: hashPass,
+                    password: CryptoJS.MD5($('#form_login .field_password').val()).toString(),
                 }
 
                 $.ajax({
@@ -33,7 +33,7 @@ block javascript
                         }
                     },
                     error: function() {
-                        alert("BAD Auth");
+                        $('.error_message').text("Datos incorrectos. Vuelve a intentarlo.");
                     }
                     //- success: function () {
                     //-     window.location.href = '/';

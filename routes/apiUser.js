@@ -1,6 +1,5 @@
 // MongoDB conection
 var mongoose = require('mongoose');
-var crypto = require('crypto');
 var Schema = mongoose.Schema;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
@@ -18,13 +17,11 @@ exports.save = function(req, res){
     var twitter = req.body.twitter ? req.body.twitter : null;
     var facebook = req.body.facebook ? req.body.facebook : null;
 
-    var passwordHash = crypto.createHash('md5').update(req.body.password).digest("hex");
-
     var newUser = new User({
         username: req.body.username,
         name: name,
         surname: surname,
-        password: passwordHash,
+        password: req.body.password,
         email: req.body.email,
         twitter: twitter,
         facebook: facebook,
@@ -130,5 +127,5 @@ exports.logout = function (req, res) {
 }
 
 exports.signup = function (req, res) {
-    res.render('signup', { username: req.session.user.username, error: 'false'});
+    res.render('signup', { user: req.session.user, error: 'false'});
 }
