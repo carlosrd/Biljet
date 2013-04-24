@@ -28,6 +28,11 @@ This project contains BiljetApp web. The following section are almost implemente
 * **Login:** Shows a form to write your username and password of the web.
 * **Register:** Shows a form to write your user data to create a new user of the web.
 
+## API calls
+
+Changes to the database are made through some API calls. 
+You can see the tutorial at the following URL: https://github.com/Biljet/Biljet/wiki
+
 ## Features to be added
 
 * Login access
@@ -35,6 +40,11 @@ This project contains BiljetApp web. The following section are almost implemente
 * Events map view
 * User settings view
 * Register funcionality
+
+## Documentation
+
+All the application documentation is in github wiki.
+Here is the URL for future reference if you need it: https://github.com/Biljet/Biljet/wiki/_pages
 
 ## Disclaimer
 
