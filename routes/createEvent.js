@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('createEvent', {user: req.session.user, title: "Crear form"});
+  res.render('createEvent', {user: req.session.user, title: "Crea un nuevo evento"});
 };

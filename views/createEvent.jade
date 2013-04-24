@@ -12,12 +12,10 @@ block contentBlock
                     link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css')
                     script(src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
                     script(type="text/javascript", src="js/jquery.ui.timepicker.js")
-                    //- link(rel='stylesheet', type="text/css", href='/resources/demos/style.css')
+                    script(type="text/javascript", src="js/jquery.numeric.js")
                     link(rel="stylesheet", type="text/css", href="css/jquery.ui.timepicker.css")
                     script
                         $(function() {
-                            //- $.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );
-                            //- $("#datepicker").datepicker();
                             $("#datepicker").datepicker({
                                 changeMonth: true,
                                 changeYear: true,
@@ -25,6 +23,7 @@ block contentBlock
                                 dateFormat: 'dd/mm/yy'
                             });
                             $('#timepicker').timepicker();
+                            $(".field_price").numeric( { decimal : ",", negative : false });
                         });
 
                     label(for="date") Fecha:
