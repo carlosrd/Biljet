@@ -35,7 +35,8 @@ var eventSchema = new Schema({
         ref: 'EventComment',
         default: null
     }],
-    imageName: { type: String, default: 'eventDefault.png' }
+    imageName: { type: String, default: 'eventDefault.png' },
+    description: { type: String,required: true }
 });
 
 
