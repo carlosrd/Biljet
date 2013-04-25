@@ -32,11 +32,15 @@ exports.save = function (req, res) {
                 latitude: latitude,
                 longitude: longitude,
                 category: req.body.category,
-                imageName: req.body.imageName
+                imageName: req.body.imageName,
+                capacity: req.body.capacity,
+                description: req.body.description
             });
 
             newEvent.save ( function (err) {
                 if (err) {
+                    console.log(err, "err: ");
+                    
                     res.send(err, 400);
                 } else {
                     User.update(
@@ -45,6 +49,8 @@ exports.save = function (req, res) {
                             { eventsOrganized: newEvent, eventsToGo: newEvent }
                         }, function (err, data) {
                             if (err) {
+                                console.log(err, "err: ");
+                                
                                 res.send(err, 400);
                             } else {
                                 res.send(newEvent, 200);

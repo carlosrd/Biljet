@@ -57,7 +57,7 @@ app.configure('dev', function(){
 
 function checkAuth(req, res, next) {
     if (! req.session.user) {
-        res.send('You are not authorized to view this page');
+        res.redirect('back');
     } else {
         next();
   }
@@ -66,7 +66,7 @@ function checkAuth(req, res, next) {
 app.get('/', home.index);
 app.get('/social', social.index);
 app.get('/discover', checkAuth, discover.index);
-app.get('/create', createEvent.index);
+app.get('/create', checkAuth, createEvent.index);
 app.get('/qrtest', qrtest.index);
 app.get('/calendar', calendar.index);
 app.get('/event/:id', eventDetails.index);
