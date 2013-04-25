@@ -18,6 +18,8 @@ block contentBlock
                     a(title='Apúntate').btn.btn-large.btn-block.joinEvent Apúntate
                 else
                     a(href="/signup", title='Regístrate').btn.btn-large.btn-block.signup Regístrate para apuntarte
+            li.qr
+                img.qrImg
 
 block javascript
     script(type='text/javascript')
@@ -45,6 +47,8 @@ block javascript
                 success: function (response) {
                     if (response === "true") {
                         $('a.joinEvent').text("Desapúntame");
+                        $('img.qrImg').attr('src','/img/QRGenerate/'+"#{id}"+"#{user._id}");
+                          
                     }
                 }
             });
@@ -63,9 +67,14 @@ block javascript
             if ($('a.joinEvent').text() === "Apúntate") {
                 url = "/api/event/go/" + "#{id}";
                 $('.joinEvent').text("Desapúntame");
+                //TODO problema de sincronismo no esta la imagen creada cuando ejecuta esto
+                $('img.qrImg').attr('src','/img/QRGenerate/prueba.gif');
+
+
             } else {
                 url = "/api/event/dont-go/" + "#{id}";
                 $('a.joinEvent').text("Apúntate");
+                $('img.qrImg');
             }
 
             $.ajax({
