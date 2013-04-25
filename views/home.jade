@@ -3,21 +3,28 @@ extends layout
 block contentBlock
     
     .container
-        h1 Bienvenido a Biljet
-        .row
-            p.span3
-                | ¿Necesitas organizar un evento? Con Biljet podrás tener siempre un plan al que recurrir.
-                | ¡Conciertos, fiestas, actuaciones tan cerca de ti como entrar en nuestra web!
-            p.span3
-                | Biljet te permite prescindir de una entrada de papel ¡saca partido a tu smartphone!
-                | Descárgate nuestra 
-                a(href="https://dl.dropbox.com/u/16354811/Android/Biljet.apk", target="_blank") aplicación Android
-            p.span3
-                | Y si nos quieres ayudar, nos sería muy útil que rellenases esta 
-                a(href="http://www.e-encuesta.com/answer.do?testId=NRVoBd8Gato=&chk=1", target="_blank") encuesta.
-            p.span2.offset1
-                img(src="images/illustrations/clipboard.png", alt="Registrate")
-                a(href='/signup', title='crea un cuenta nueva').btn.btn-large.btn-block Únete
+        if (user)
+            h1 Bienvenido, #{user.username}
+        else
+            h1 Bienvenido a Biljet
+            .row
+                p.span3
+                    | ¿Necesitas organizar un evento? Con Biljet podrás tener siempre un plan al que recurrir.
+                    | ¡Conciertos, fiestas, actuaciones tan cerca de ti como entrar en nuestra web!
+                p.span3
+                    | Biljet te permite prescindir de una entrada de papel ¡saca partido a tu smartphone!
+                    | Descárgate nuestra 
+                    a(href="https://dl.dropbox.com/u/16354811/Android/BiljetApp.apk", target="_blank") aplicación Android. 
+                    | Este es el 
+                    a(href="https://docs.google.com/document/d/1KD9JHae4pCk8_5aaSC275iKWxxVDiXgzBLPrrVeFF6A", target="_blank") manual de Android, 
+                    | y 
+                    a(href="https://docs.google.com/document/d/1q1cC1xpOdYpBbdppGrCRM8vGoPBPyLCfmkdQFR9LPJ4", target="_blank") este el de la web.
+                p.span3
+                    | Y si nos quieres ayudar, nos sería muy útil que rellenases esta 
+                    a(href="http://www.e-encuesta.com/answer.do?testId=NRVoBd8Gato=&chk=1", target="_blank") encuesta.
+                p.span2.offset1
+                    img(src="images/illustrations/clipboard.png", alt="Registrate")
+                    a(href='/signup', title='crea un cuenta nueva').btn.btn-large.btn-block Únete
 
         .row
             h4 Estos son algunos de los eventos que puedes encontrar en Biljet en:
@@ -109,26 +116,26 @@ block javascript
         });
 
         function drawEvents (data) {
-            console.log(data, "data: ");
             var eventTemplate = '' +
                 '<div class="event tile">' +
                     '<img src="#" />' +
-                    '<h4 class="title"></h4>' +
+                    '<h4 class="title"><a.link></a></h4>' +
                     '<p class="price"></p>' +
                 '</div>';
 
             var $container = $('.events');
             for (i in data) {
-                console.log(data, "data: ");
-
                 var event = data[i];
-                var $el = $(eventTemplate)
+                var $el = $(eventTemplate);
 
                 $el.find('img')
                     .attr('src', 'img/' + event.imageName);
 
                 $el.find('.title')
-                    .text(event.title);
+                    .html('<a href="/event/' + event._id + '">' + event.title + '</a>');
+
+                $el.find('a.link')
+                    .attr('href', '/event/' + event._id);
 
                 $el.find('.price')
                     .text("Precio: " + event.price + "€.");

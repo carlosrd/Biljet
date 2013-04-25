@@ -1,13 +1,13 @@
 
 /*
- * GET social page.
+ * GET calendar.
  */
 
 exports.index = function(req, res){
-    res.render('social', {
+    res.render('calendar', {
         logged: req.session.logged,
         user: req.session.user,
-        title: 'Biljet :: Social',
-        subtitle: 'Social section'
+        title: 'Biljet :: calendario',
+        subtitle: 'calendario'
     });
 };

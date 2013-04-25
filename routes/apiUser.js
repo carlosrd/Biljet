@@ -1,6 +1,5 @@
 // MongoDB conection
 var mongoose = require('mongoose');
-var crypto = require('crypto');
 var Schema = mongoose.Schema;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
@@ -31,7 +30,7 @@ exports.save = function(req, res){
 
     newUser.save (function (err) {
         if (err) {
-            res.send(err, 500);
+            res.send(err, 400);
         } else {
             res.send(newUser, 200);
         }
@@ -49,12 +48,32 @@ exports.list = function(req, res) {
         .populate('eventComments')
         .exec( function (err, users) {
             if (err) {
-                res.send(err, 500);
+                res.send(err, 400);
             } else {
                 res.send(users, 200);
             }
         });
 };
+
+exports.findById = function (req, res) {
+    User.findOne({_id: req.params.id})
+        .populate('friends')
+        .populate('eventsToGo')
+        .populate('eventsFollowed')
+        .populate('eventsOrganized')
+        .populate('qrs')
+        .populate('userComments')
+        .populate('eventComments')
+        .exec( function (err, user) {
+            if (err) {
+                res.send(err, 400);
+            } else if (user === null){
+                res.send("[]", 200);
+            } else {
+                res.send(user, 200);
+            }
+        });
+}
 
 exports.findByUsername = function (req, res) {
     User.findOne({username: req.params.username})
@@ -67,7 +86,7 @@ exports.findByUsername = function (req, res) {
         .populate('eventComments')
         .exec( function (err, user) {
             if (err) {
-                res.send(err, 500);
+                res.send(err, 400);
             } else if (user === null){
                 res.send("[]", 200);
             } else {
@@ -76,23 +95,40 @@ exports.findByUsername = function (req, res) {
         });
 };
 
+exports.delete = function (req, res) {
+    User.remove({_id: req.params.id}, function (err) {
+        if (err) {
+            res.send(err, 400);
+        } else {
+            res.send("", 200);
+        }
+    });
+}
+
 exports.login = function (req, res) {
     User.findOne({username: req.body.username})
     .exec( function (err, user) {
-        if (user.password === req.body.password) {
-            req.user = user.username;
-            // req.session.username = user.username;
-            // req.session.email = user.email;
-            // req.session.id = user._id;
-            res.render('index', {username: user.username});
+        if (user !== null && user.password === req.body.password) {
+            req.session.user = {};
+            req.session.user.username = user.username;
+            req.session.user._id = user._id;
+            req.session.user.password = user.password;
+            req.session.logged = true;
+            res.send(user, 200);
         } else {
-            res.render('login', {error: true});
+            res.send("", 401);
         }
     });
-    
-    res.render('login', { error: false });    
+}
+
+exports.logout = function (req, res) {
+    req.session.user.username = null;
+    req.session.user._id = null;
+    req.session.user.password = null;
+    req.session.logged = false;
+    res.redirect('back');
 }
 
 exports.signup = function (req, res) {
-    res.render('signup', {error: 'false'});
+    res.render('signup', { logged: req.session.logged, user: req.session.user, error: 'false'});
 }

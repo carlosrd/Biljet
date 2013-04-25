@@ -9,10 +9,38 @@ block contentBlock
                         input(type='text', name='name', value="").field_name
 
                 p
-                    label(for="date") Fecha: 
-                        input(type='text', name='date', value="").field_date
+                    label(for="description") Descripción: 
+                        input(type='text', name='description', value="").field_description
+
+                p
+                    link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css')
+                    script(src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
+                    script(type="text/javascript", src="js/jquery.ui.timepicker.js")
+                    script(type="text/javascript", src="js/jquery.numeric.js")
+                    link(rel="stylesheet", type="text/css", href="css/jquery.ui.timepicker.css")
+                    script
+                        $(function() {
+                            $("#datepicker").datepicker({
+                                changeMonth: true,
+                                changeYear: true,
+                                minDate: 1,
+                                dateFormat: 'dd/mm/yy'
+                            });
+                            $('#timepicker').timepicker();
+                            $(".field_price").numeric( { decimal : ",", negative : false });
+                            $(".field_capacity").numeric( { decimal : ",", negative : false });
+                        });
+
+                    label(for="date") Fecha:
+                        input#datepicker(type='text', name='date', value="").field_date
+                    
                     label(for="time") Hora: 
-                        input(type='text',name='time',size=5,value="").field_time
+                        input#timepicker(type='text', name='time', value="").field_time
+
+                p
+                    label(for="capacity") Capacidad:
+                        input(type='number', name='capacity', value="").field_capacity
+
 
                 p
                     label(for="price") Precio: 
@@ -94,17 +122,19 @@ block javascript
         $(document).ready(function() {
             $('a.create_event').click( function () {
 
+                var arrayDate = $("#form_create_event .field_date").val().split("/");
+                var arrayTime = $("#form_create_event .field_time").val().split(":");
+                var date = new Date(arrayDate[2], arrayDate[1], arrayDate[0], arrayTime[0], arrayTime[1]);
                 var data = {
                     title: $("#form_create_event .field_name").val(),
-                    date: $("#form_create_event .field_date").val(),
+                    finishAt: date.getTime(),
                     time: $("#form_create_event .field_time").val(),
                     price: $("#form_create_event .field_price").val(),
-                    user: 'raul',
                     province: $("#form_create_event .field_province").val(),
                     category: $("#form_create_event .field_category").val(),
+                    capacity: $("#form_create_event .field_capacity").val(),
+                    description: $("#form_create_event .field_description").val()
                 }
-
-                console.log(data, "data");
 
                 $.ajax({
                     type: "POST",
@@ -116,3 +146,4 @@ block javascript
                 });
             });
         });
+

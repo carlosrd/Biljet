@@ -1,48 +1,61 @@
 @import "flat-ui.css";
+body {
+  margin: 0px;
+  padding: 0px;
+}
+.clear {
+  clear: both;
+}
 .topbar {
   display: block;
-  background-color: #F0F;
+  background-color: #ecf0f1;
+  color: #bdc1c5;
+  border-bottom: 4px solid #bdc3c7;
+  height: 130px;
+  overflow: hidden;
 }
 .topbar #nav_bar_left {
   float: left;
-}
-.topbar #nav_bar_left img {
-  height: 20px;
+  width: 320px;
+  padding: 10px;
 }
 .topbar #nav_bar_right {
   float: right;
+  margin: 40px;
 }
-.topbar {
+.topbar #nav_bar_right .navbar li a span {
+  margin-right: 3px;
+}
+.container {
+  padding: 20px;
+  padding-bottom: 100px;
+}
+.bottombar {
+  border-top: 2px solid #bdc3c7;
+  background-color: #ecf0f1;
+  color: #16a085;
   position: fixed;
-  top: 0;
-  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 20px;
+  text-align: center;
 }
-.topbar #nav_bar {
-  width: 100%;
+.events .event {
+  width: 20%;
+  height: 200px;
   float: left;
-  margin: 0 0 3em 0;
-  padding: 0;
-  list-style: none;
-  background-color: #16a085;
-  border-bottom: 1px solid #ccc;
-  border-top: 1px solid #ccc;
+  margin: 8px;
 }
-.topbar #nav_bar li {
-  float: left;
+.create_qr {
+  width: 57px;
+  margin: 10px;
 }
-.topbar #nav_bar li .logo {
-  width: 200px;
+#calendar {
+  align: center;
+  width: 390px;
+  margin: 200 auto 200 auto;
 }
-.topbar #nav_bar li a {
-  display: block;
-  padding: 20px 40px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 20px;
-  color: #bdc3c7;
-  border-right: 1px solid #ccc;
-}
-.topbar #nav_bar li a:hover {
-  color: #ecf0f1;
-  background-color: #1abc9c;
+#calendar.large {
+  height: 300px;
 }

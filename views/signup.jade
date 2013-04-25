@@ -10,22 +10,18 @@ block contentBlock
             
             a(title='Regístrate').btn.btn-large.submit Regístrate
 
+    .error_message
+
 block javascript
     script(type='text/javascript')
         $(document).ready(function() {
             $('.submit').click(function () {
-                var hashPass = CryptoJS.MD5($('#password').val()).toString();
-                $('#password').val(hashPass);
                 
-                console.log(data, "data: ");
-
                 var data = {
                     username: $("#username").val(),
                     email: $("#email").val(),
-                    password: $("#password").val(),
+                    password: CryptoJS.MD5($('#password').val()).toString()
                 }
-
-                console.log(data, "data");
 
                 $.ajax({
                     type: "POST",
@@ -33,7 +29,10 @@ block javascript
                     data: data,
                     success: function () {
                         window.location.href = '/';
-                    }   
-                });            
+                    },
+                    error: function() {
+                        $('.error_message').text("El usuario o el email ya existen. Vuelve a intentarlo.");
+                    }
+                });
             });
         });

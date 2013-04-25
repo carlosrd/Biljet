@@ -1,0 +1,57 @@
+extends layout
+block contentBlock
+
+    .content
+        h1 Tus eventos más cercanos:
+
+        head
+            meta(charset='utf-8')
+            title jQuery UI Dialog - Modal form
+            script(src='http://code.jquery.com/jquery-1.9.1.js')
+            script(src='http://code.jquery.com/ui/1.10.2/jquery-ui.js')
+
+            //Include calendar View
+            script(src='js/jquery.eventCalendar.min.js', type='text/javascript')
+
+            // Core CSS File. The CSS code needed to make eventCalendar works
+            link(rel='stylesheet', href='css/eventCalendar.css')
+
+            // Theme CSS file: it makes eventCalendar nicer
+            link(rel='stylesheet', href='css/eventCalendar_theme_responsive.css')
+
+            //script (src='js/jquery-1.9.1.min.js', type='text/javascript')
+            //script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js', type='text/javascript')
+
+            body
+            .container
+            .row
+                .g4
+                    h2.h4 Calendario
+                    #eventCalendarLocale
+                        script
+                            $(document).ready(function() {
+                                $("#eventCalendarLocale").eventCalendar({
+                                    eventsjson: 'eventsBiljet.json',
+                                    monthNames: [
+                                        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                                    ],
+                                    dayNames: [
+                                        'Domingo','Lunes','Martes','Miércoles',
+                                        'Jueves','Viernes','Sabado'
+                                    ],
+                                    dayNamesShort: [
+                                        'Dom','Lun','Mar','Mie', 'Jue','Vie','Sab'
+                                    ],
+                                    txt_noEvents: "No hay eventos para este periodo",
+                                    txt_SpecificEvents_prev: "",
+                                    txt_SpecificEvents_after: "eventos:",
+                                    txt_next: "siguiente",
+                                    txt_prev: "anterior",
+                                    txt_NextEvents: "Próximos eventos:",
+                                    txt_GoToEventUrl: "Ir al evento"
+                                });
+                            });
+                    pre.
+
+            #calendar

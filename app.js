@@ -4,14 +4,15 @@
  */
 
 var express = require('express'),
-    // index = require('./routes'),
     home = require('./routes/home'),
     user = require('./routes/user'),
     social = require('./routes/social'),
+    eventDetails = require('./routes/eventDetails'),
     discover = require('./routes/discover'),
     createEvent = require('./routes/createEvent'),
     qrtest = require('./routes/qrtest'),
     maptest = require('./routes/maptest'),
+    calendar = require('./routes/calendar'),
     apiUser = require('./routes/apiUser'),
     apiEvent = require('./routes/apiEvent'),
     http = require('http'),
@@ -26,7 +27,7 @@ Schema = mongoose.Schema;
 // WARNING!!!
 // This line connect to the remote Mongo Database, use carefully!!
 // For testing purposes, use the localhost DB (the line commented below)
-mongoose.connect('mongodb://admin:admin@dharma.mongohq.com:10010/Biljet');
+mongoose.connect('mongodb://admin:admin@dharma.mongohq.com:10086/Biljet2');
 // mongoose.connect('localhost', 'biljet');
 
 var db = mongoose.connection;
@@ -43,39 +44,54 @@ app.configure(function(){
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-    app.use(app.router);
     app.use(require('less-middleware')({ src: __dirname + '/public' }));
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.cookieParser('your secret here'));
-    app.use(express.session());
+    app.use(express.session({ secret: "SupersecretpasswordphraseforISproject"}));
+    app.use(app.router);
 });
 
-app.configure('development', function(){
+app.configure('dev', function(){
     app.use(express.errorHandler());
 });
 
-
+function checkAuth(req, res, next) {
+    if (! req.session.user) {
+        res.redirect('back');
+    } else {
+        next();
+  }
+}
 
 app.get('/', home.index);
 app.get('/social', social.index);
-app.get('/discover', discover.index);
-app.get('/create', createEvent.index);
+app.get('/discover', checkAuth, discover.index);
+app.get('/create', checkAuth, createEvent.index);
 app.get('/qrtest', qrtest.index);
 app.get('/maptest', maptest.index);
-
+app.get('/calendar', calendar.index);
+app.get('/event/:id', eventDetails.index);
 
 app.post('/api/user', apiUser.save);
 app.get('/api/user', apiUser.list);
-app.get('/api/user/:username', apiUser.findByUsername);
+app.delete('/api/user/:id', apiUser.delete);
+app.get('/api/user/:id', apiUser.findById);
+app.get('/api/user/u/:username', apiUser.findByUsername);
 
-app.post('/api/event', apiEvent.save);
 app.get('/api/event', apiEvent.list);
+app.get('/api/event/:id', apiEvent.findById);
+app.post('/api/event', apiEvent.save);
+app.post('/api/event/is-going/:id', apiEvent.isGoing);
+app.post('/api/event/go/:id', apiEvent.goToEvent);
+app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
+app.delete('/api/event/:id', apiEvent.delete);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
-app.get('/api/event/id/:id', apiEvent.findById);
+
 
 app.get('/login', user.login);
 app.post('/login', apiUser.login);
+app.get('/logout', apiUser.logout);
 
 app.get('/signup', apiUser.signup);
 

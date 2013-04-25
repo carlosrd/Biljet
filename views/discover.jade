@@ -15,8 +15,20 @@ block contentBlock
 					input(type='text', name='buscarPrecio', value='Introduce un rango de precios', size='30%')
 				|Menos de 30, entre 10 y 20...
 				span
-					input(type='text', name='buscarFecha', value='Introduce una fecha', size='30%')
-				|Esta semana, el proximo mes,
+					link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css')
+					script(src='http://code.jquery.com/jquery-1.9.1.js')
+					script(src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
+					link(rel='stylesheet', href='/resources/demos/style.css')
+					script
+							$(function() {
+								$( "#datepicker" ).datepicker({
+								changeMonth: true,
+								changeYear: true
+								});
+							});
+					form.descubrirFecha
+					input#datepicker(type='text', name='buscarFecha', value='Introduce una fecha', size='30%')
+				|Esta semana, el próximo mes,
 				|una fecha en concreto...
 				span
 					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')
@@ -30,6 +42,6 @@ block contentBlock
 		div.tablonEventosEncontrados
 			.linea
 			.pEvento
-				|Resultados de la busqueda:
+				|Resultados de la búsqueda:
 			
 			
