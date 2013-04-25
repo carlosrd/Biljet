@@ -113,7 +113,6 @@ exports.login = function (req, res) {
             req.session.user.username = user.username;
             req.session.user._id = user._id;
             req.session.user.password = user.password;
-            console.log(req.session, "session: ");
             res.send(user, 200);
         } else {
             res.send("", 401);

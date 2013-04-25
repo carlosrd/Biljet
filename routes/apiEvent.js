@@ -117,7 +117,7 @@ exports.delete = function (req, res) {
 }
 
 exports.isGoing = function (req, res) {
-    User.findOne({_id: req.body._id, password: req.body.password}, function (err, user) {
+    User.findOne({_id: req.body.id, password: req.body.password}, function (err, user) {
         if (err) {
             res.send(err, 400);
         } else {
@@ -126,7 +126,7 @@ exports.isGoing = function (req, res) {
                 if (user.eventsToGo.indexOf(req.params.id) > -1) {
                     res.send("true", 200);
                 } else {
-                    res.send("false", 400);
+                    res.send("false", 200);
                 }
             } else {
                 res.send("false", 400);

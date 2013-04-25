@@ -1,0 +1,75 @@
+extends layout
+
+block contentBlock
+    .details
+        ul
+            li
+                h1.title
+            li
+                img.eventImg
+            li
+                h2.description
+            li.date
+
+            li.price
+
+            li.span2
+                if (user)
+                    a(title='Apúntate').btn.btn-large.btn-block.joinEvent Apúntate
+                else
+                    a(href="/signup", title='Regístrate').btn.btn-large.btn-block Regístrate para apuntarte
+
+block javascript
+    script(type='text/javascript')
+        var path = "/api/event/" + "#{id}";
+        $.getJSON(path, function (event) {
+            $('h1.title').text(event.title);
+            $('h2.title').text(event.description);
+            $('li.date').text(new Date(event.createdAt));
+            $('img.eventImg').attr('src', '/img/' + event.imageName);
+            $('li.price').text(event.price + ' €');
+        });
+
+
+        if ($('a.joinEvent')) {
+            var data = {
+                id: "#{user._id}",
+                password: "#{user.password}"
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/api/event/is-going/" + "#{id}",
+                data: data,
+                success: function (response) {
+                    if (response === "true") {
+                        $('a.joinEvent').text("Desapúntame");
+                    }
+                }
+            });
+        }
+
+
+        $('.joinEvent').click( function () {
+
+            var data, url;
+
+            data = {
+                id: "#{user._id}",
+                password: "#{user.password}"
+            };
+
+            if ($('a.joinEvent').text() === "Apúntate") {
+                url = "/api/event/go/" + "#{id}";
+                $('.joinEvent').text("Desapúntame");
+            } else {
+                url = "/api/event/dont-go/" + "#{id}";
+                $('a.joinEvent').text("Apúntate");
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data
+            });
+        });
