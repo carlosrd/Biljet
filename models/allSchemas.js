@@ -36,7 +36,8 @@ var eventSchema = new Schema({
         default: null
     }],
     imageName: { type: String, default: 'eventDefault.png' },
-    description: { type: String,required: true }
+    description: { type: String,required: true },
+    capacity: { type: String, required: true }
 });
 
 

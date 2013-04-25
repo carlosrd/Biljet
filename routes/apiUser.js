@@ -113,6 +113,7 @@ exports.login = function (req, res) {
             req.session.user.username = user.username;
             req.session.user._id = user._id;
             req.session.user.password = user.password;
+            req.session.logged = true;
             res.send(user, 200);
         } else {
             res.send("", 401);
@@ -121,10 +122,13 @@ exports.login = function (req, res) {
 }
 
 exports.logout = function (req, res) {
-    delete req.session.user;
+    req.session.user.username = null;
+    req.session.user._id = null;
+    req.session.user.password = null;
+    req.session.logged = false;
     res.redirect('back');
 }
 
 exports.signup = function (req, res) {
-    res.render('signup', { user: req.session.user, error: 'false'});
+    res.render('signup', { logged: req.session.logged, user: req.session.user, error: 'false'});
 }

@@ -14,10 +14,10 @@ block contentBlock
             li.price
 
             li.span2
-                if (user)
+                if (logged)
                     a(title='Apúntate').btn.btn-large.btn-block.joinEvent Apúntate
                 else
-                    a(href="/signup", title='Regístrate').btn.btn-large.btn-block Regístrate para apuntarte
+                    a(href="/signup", title='Regístrate').btn.btn-large.btn-block.signup Regístrate para apuntarte
 
 block javascript
     script(type='text/javascript')
@@ -31,7 +31,7 @@ block javascript
         });
 
 
-        if ($('a.joinEvent')) {
+        if ($('a.joinEvent').text()) {
             var data = {
                 id: "#{user._id}",
                 password: "#{user.password}"
