@@ -119,21 +119,23 @@ block javascript
             var eventTemplate = '' +
                 '<div class="event tile">' +
                     '<img src="#" />' +
-                    '<h4 class="title"></h4>' +
+                    '<h4 class="title"><a.link></a></h4>' +
                     '<p class="price"></p>' +
                 '</div>';
 
             var $container = $('.events');
             for (i in data) {
-
                 var event = data[i];
-                var $el = $(eventTemplate)
+                var $el = $(eventTemplate);
 
                 $el.find('img')
                     .attr('src', 'img/' + event.imageName);
 
                 $el.find('.title')
-                    .text(event.title);
+                    .html('<a href="/event/' + event._id + '">' + event.title + '</a>');
+
+                $el.find('a.link')
+                    .attr('href', '/event/' + event._id);
 
                 $el.find('.price')
                     .text("Precio: " + event.price + "€.");
