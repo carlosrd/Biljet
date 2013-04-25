@@ -26,83 +26,83 @@ block contentBlock
                     img(src="images/illustrations/clipboard.png", alt="Registrate")
                     a(href='/signup', title='crea un cuenta nueva').btn.btn-large.btn-block Únete
 
-            .row
-                h4 Estos son algunos de los eventos que puedes encontrar en Biljet en:
-            
-            .row
-                p.span3.offset1
-                    label(for="province") Provincia: 
-                        select (name='province')
-                            option(value='0') - selecciona -
-                            option(value='1') A Coruña
-                            option(value='2') Álava
-                            option(value='3') Albacete
-                            option(value='4') Alicante
-                            option(value='5') Almería
-                            option(value='6') Asturias
-                            option(value='7') Ávila
-                            option(value='8') Badajoz
-                            option(value='9') Baleares
-                            option(value='10') Barcelona
-                            option(value='11') Burgos
-                            option(value='12') Cáceres
-                            option(value='13') Cádiz
-                            option(value='14') Cantabria
-                            option(value='15') Castellón
-                            option(value='16') Ceuta
-                            option(value='17') Ciudad Real
-                            option(value='18') Córdoba
-                            option(value='19') Cuenca
-                            option(value='99') Extranjero
-                            option(value='20') Girona
-                            option(value='21') Granada
-                            option(value='22') Guadalajara
-                            option(value='23') Guipúzcoa
-                            option(value='24') Huelva
-                            option(value='25') Huesca
-                            option(value='26') Jaén
-                            option(value='27') La rioja
-                            option(value='28') Las palmas
-                            option(value='29') León
-                            option(value='30') Lleida
-                            option(value='31') Lugo
-                            option(value='32') Madrid
-                            option(value='33') Málaga
-                            option(value='34') Melilla
-                            option(value='35') Murcia
-                            option(value='36') Navarra
-                            option(value='37') Ourense
-                            option(value='38') Palencia
-                            option(value='39') Pontevedra
-                            option(value='40') Salamanca
-                            option(value='41') Santa cruz de tenerife
-                            option(value='42') Segovia
-                            option(value='43') Sevilla
-                            option(value='44') Soria
-                            option(value='45') Tarragona
-                            option(value='46') Teruel
-                            option(value='47') Toledo
-                            option(value='48') Valencia
-                            option(value='49') Valladolid
-                            option(value='50') Vizcaya
-                            option(value='51') Zamora
-                            option(value='52') Zaragoza
+        .row
+            h4 Estos son algunos de los eventos que puedes encontrar en Biljet en:
+        
+        .row
+            p.span3.offset1
+                label(for="province") Provincia: 
+                    select (name='province')
+                        option(value='0') - selecciona -
+                        option(value='1') A Coruña
+                        option(value='2') Álava
+                        option(value='3') Albacete
+                        option(value='4') Alicante
+                        option(value='5') Almería
+                        option(value='6') Asturias
+                        option(value='7') Ávila
+                        option(value='8') Badajoz
+                        option(value='9') Baleares
+                        option(value='10') Barcelona
+                        option(value='11') Burgos
+                        option(value='12') Cáceres
+                        option(value='13') Cádiz
+                        option(value='14') Cantabria
+                        option(value='15') Castellón
+                        option(value='16') Ceuta
+                        option(value='17') Ciudad Real
+                        option(value='18') Córdoba
+                        option(value='19') Cuenca
+                        option(value='99') Extranjero
+                        option(value='20') Girona
+                        option(value='21') Granada
+                        option(value='22') Guadalajara
+                        option(value='23') Guipúzcoa
+                        option(value='24') Huelva
+                        option(value='25') Huesca
+                        option(value='26') Jaén
+                        option(value='27') La rioja
+                        option(value='28') Las palmas
+                        option(value='29') León
+                        option(value='30') Lleida
+                        option(value='31') Lugo
+                        option(value='32') Madrid
+                        option(value='33') Málaga
+                        option(value='34') Melilla
+                        option(value='35') Murcia
+                        option(value='36') Navarra
+                        option(value='37') Ourense
+                        option(value='38') Palencia
+                        option(value='39') Pontevedra
+                        option(value='40') Salamanca
+                        option(value='41') Santa cruz de tenerife
+                        option(value='42') Segovia
+                        option(value='43') Sevilla
+                        option(value='44') Soria
+                        option(value='45') Tarragona
+                        option(value='46') Teruel
+                        option(value='47') Toledo
+                        option(value='48') Valencia
+                        option(value='49') Valladolid
+                        option(value='50') Vizcaya
+                        option(value='51') Zamora
+                        option(value='52') Zaragoza
 
-                p.span3.offset1
-                    label(for="category") Categoría:
-                        select(name='category')
-                                option(value='') - Selecciona -
-                                option(value='Cinema') Película
-                                option(value='Theatre') Obra de teatro
-                                option(value='Concert') Concierto
-                                option(value='Party') Fiesta
-                                option(value='Meeting') Reunión
-                                option(value='Other') Otros
+            p.span3.offset1
+                label(for="category") Categoría:
+                    select(name='category')
+                            option(value='') - Selecciona -
+                            option(value='Cinema') Película
+                            option(value='Theatre') Obra de teatro
+                            option(value='Concert') Concierto
+                            option(value='Party') Fiesta
+                            option(value='Meeting') Reunión
+                            option(value='Other') Otros
 
-                a(title='Buscar').btn.btn-large.submit.span1.search Buscar
+            a(title='Buscar').btn.btn-large.submit.span1.search Buscar
 
-            .row
-                .events
+        .row
+            .events
 block javascript
     script(type='text/javascript')
         $.getJSON('/api/event', function (data) {
