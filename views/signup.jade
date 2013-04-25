@@ -3,12 +3,13 @@ extends layout
 block contentBlock
     
     .container
+    div.formsignup
         form(action='/api/user', id="form_signup", method='post')
             input(type='text', id="username", placeholder='Username')
             input(type='email', id="email", placeholder='Email')
             input(type='password', id="password", placeholder='Password')
             
-            a(title='Regístrate').btn.btn-large.submit Regístrate
+            div.buttonsignup.a(title='Regístrate').btn.btn-large.submit Regístrate
 
     .error_message
 
