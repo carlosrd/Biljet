@@ -3,5 +3,10 @@
  */
 
 exports.index = function(req, res){
-	res.render('maptest', { title: 'Biljet :: mapaPrueba', subtitle: 'mapa prueba' });
+	res.render('maptest', { 
+        logged: req.session.logged,
+        user: req.session.user,
+        title: 'Biljet :: mapaPrueba',
+        subtitle: 'mapa prueba'
+    });
 };
