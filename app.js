@@ -8,7 +8,7 @@ var express = require('express'),
     home = require('./routes/home'),
     user = require('./routes/user'),
     social = require('./routes/social'),
-    eventInformation = require('./routes/eventInformation'),
+    eventDetails = require('./routes/eventDetails'),
     discover = require('./routes/discover'),
     createEvent = require('./routes/createEvent'),
     qrtest = require('./routes/qrtest'),
@@ -56,7 +56,6 @@ app.configure('dev', function(){
 });
 
 function checkAuth(req, res, next) {
-    console.log(req, "req: ");
     if (! req.session.user) {
         res.send('You are not authorized to view this page');
     } else {
@@ -66,11 +65,11 @@ function checkAuth(req, res, next) {
 
 app.get('/', home.index);
 app.get('/social', social.index);
-app.get('/discover', discover.index);
+app.get('/discover', checkAuth, discover.index);
 app.get('/create', createEvent.index);
 app.get('/qrtest', qrtest.index);
 app.get('/calendar', calendar.index);
-app.get('/event/:id', eventInformation.index);
+app.get('/event/:id', eventDetails.index);
 
 app.post('/api/user', apiUser.save);
 app.get('/api/user', apiUser.list);
@@ -81,6 +80,7 @@ app.get('/api/user/u/:username', apiUser.findByUsername);
 app.get('/api/event', apiEvent.list);
 app.get('/api/event/:id', apiEvent.findById);
 app.post('/api/event', apiEvent.save);
+app.post('/api/event/is-going/:id', apiEvent.isGoing);
 app.post('/api/event/go/:id', apiEvent.goToEvent);
 app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
 app.delete('/api/event/:id', apiEvent.delete);

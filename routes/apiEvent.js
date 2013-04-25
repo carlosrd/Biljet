@@ -116,6 +116,25 @@ exports.delete = function (req, res) {
     });
 }
 
+exports.isGoing = function (req, res) {
+    User.findOne({_id: req.body._id, password: req.body.password}, function (err, user) {
+        if (err) {
+            res.send(err, 400);
+        } else {
+            console.log(user, "user: ");
+            if (user != null) {
+                if (user.eventsToGo.indexOf(req.params.id) > -1) {
+                    res.send("true", 200);
+                } else {
+                    res.send("false", 400);
+                }
+            } else {
+                res.send("false", 400);
+            }
+        }
+    });
+}
+
 exports.goToEvent = function (req, res) {
     Event.findOne({_id: req.params.id}, function (err, eventToGo) {
         if (err) {
