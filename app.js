@@ -11,6 +11,7 @@ var express = require('express'),
     discover = require('./routes/discover'),
     createEvent = require('./routes/createEvent'),
     qrtest = require('./routes/qrtest'),
+    maptest = require('./routes/maptest'),
     calendar = require('./routes/calendar'),
     apiUser = require('./routes/apiUser'),
     apiEvent = require('./routes/apiEvent'),
@@ -67,6 +68,7 @@ app.get('/social', social.index);
 app.get('/discover', checkAuth, discover.index);
 app.get('/create', checkAuth, createEvent.index);
 app.get('/qrtest', qrtest.index);
+app.get('/maptest', maptest.index);
 app.get('/calendar', calendar.index);
 app.get('/event/:id', eventDetails.index);
 

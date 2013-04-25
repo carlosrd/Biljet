@@ -25,7 +25,6 @@ block javascript
     script(type='text/javascript')
         var path = "/api/event/" + "#{id}";
         $.getJSON(path, function (event) {
-            console.log(event, "event: ");
             $('h1.title').text(event.title);
             $('h2.title').text(event.description);
             $('li.date').text(new Date(event.createdAt));
