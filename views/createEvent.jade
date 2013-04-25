@@ -3,7 +3,7 @@ extends layout
 block contentBlock
     .contenido
         h2 #{title}
-            form(method='post', id="form_create_event")
+            div.formcreate.form(method='post', id="form_create_event")
                 p
                     label(for="name") Nombre: 
                         input(type='text', name='name', value="").field_name
@@ -115,7 +115,7 @@ block contentBlock
                             option(value='Other') Otros
 
                 p
-                    a().create_event.btn Crear evento
+                    div.buttoncreate.a().create_event.btn Crear evento
 
 block javascript
     script(type='text/javascript')
