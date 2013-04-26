@@ -46,7 +46,7 @@ block javascript
                 success: function (response) {
                     if (response === "true") {
                         $('a.joinEvent').text("Desapúntame");
-                        $('img.qrImg').attr('src','/img/QRGenerate/'+"#{id}"+"#{user._id}");
+                        $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");
                           
                     }
                 }

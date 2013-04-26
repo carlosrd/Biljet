@@ -171,7 +171,7 @@ exports.goToEvent = function (req, res) {
                                 //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
                                 var n=imgTag.indexOf("\u0020width="); 
                                 var cosa2=imgTag.slice(32,n-1);
-                                fs.writeFile("./public/img/QRGenerate/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
+                                fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
                                     if(err){
                                         console.log(err);
                                     }else{
@@ -209,7 +209,7 @@ exports.dontGoToEvent = function (req, res) {
                             } else {
                                 res.send(data, 200);
 
-                                fs.unlink("./public/img/QRGenerate/"+req.params.id+req.body.id, function (err) {
+                                fs.unlink("./public/img/"+req.params.id+req.body.id, function (err) {
                                     if (err){
                                         console(err);
                                     } 
