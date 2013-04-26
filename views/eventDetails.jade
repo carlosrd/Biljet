@@ -46,7 +46,7 @@ block javascript
                 success: function (response) {
                     if (response === "true") {
                         $('a.joinEvent').text("Desapúntame");
-                        $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");
+                        $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");   
                           
                     }
                 }
@@ -66,14 +66,15 @@ block javascript
             if ($('a.joinEvent').text() === "Apúntate") {
                 url = "/api/event/go/" + "#{id}";
                 $('.joinEvent').text("Desapúntame");
-                //TODO problema de sincronismo no esta la imagen creada cuando ejecuta esto
-                $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");
-
+                var millisecondsToWait = 1000;
+                setTimeout(function() {
+                    $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");
+                }, millisecondsToWait);
+                        
 
             } else {
                 url = "/api/event/dont-go/" + "#{id}";
                 $('a.joinEvent').text("Apúntate");
-                $('img.qrImg');
             }
 
             $.ajax({
