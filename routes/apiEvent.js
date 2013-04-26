@@ -143,7 +143,7 @@ exports.isGoing = function (req, res) {
 }
 
 exports.goToEvent = function (req, res) {
-    Event.findOne({_id: req.params.id}, function (err, eventToGo) {
+    var c = Event.findOne({_id: req.params.id}, function (err, eventToGo) {
         if (err) {
             res.send(err, 400);
         } else {
@@ -161,8 +161,8 @@ exports.goToEvent = function (req, res) {
                             } else {
                                 console.log("Event added successfully to " + user.username);
                                 res.send(data, 200);
-
-                                var text = 'www.biljetappweadadasda.com';
+                              
+                                var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
 
                                 var qr = qrCode.qrcode(4, 'M');
                                 qr.addData(text);
@@ -175,7 +175,7 @@ exports.goToEvent = function (req, res) {
                                     if(err){
                                         console.log(err);
                                     }else{
-                                         console.log("Create qr");
+                                         console.log(eventToGo.title);
                                     }
                                 });
                                
