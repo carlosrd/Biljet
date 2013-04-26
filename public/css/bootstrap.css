@@ -591,7 +591,8 @@ a.text-success:hover {
   color: #356635;
 }
 h2 {
-  margin-left: 560px;
+  margin-left: 440px;
+  margin-top: -5px;
   font-family: inherit;
   font-weight: bold;
   line-height: 20px;
@@ -599,15 +600,13 @@ h2 {
   text-rendering: optimizelegibility;
 }
 .formcreate {
-  margin-left: -40px;
-  font-family: inherit;
-  font-weight: bold;
-  line-height: 20px;
-  color: inherit;
-  text-rendering: optimizelegibility;
+  margin-left: 80px;
+  margin-top: 10px;
 }
 .buttoncreate {
-  margin-left: 60px;
+  zoom: 120%;
+  margin-left: 170px;
+  margin-top: -850px;
 }
 div.buttonlogin {
   margin-left: 60px;
@@ -637,6 +636,12 @@ h6 {
 .calenstyle {
   margin: 20px 30px;
   margin-top: -130px;
+}
+.formdiscover {
+  margin-left: 240px;
+}
+.titlediscover {
+  margin-left: 500px;
 }
 h1 small,
 h2 small,
