@@ -67,7 +67,7 @@ block javascript
                 url = "/api/event/go/" + "#{id}";
                 $('.joinEvent').text("Desapúntame");
                 //TODO problema de sincronismo no esta la imagen creada cuando ejecuta esto
-                $('img.qrImg').attr('src','/img/QRGenerate/prueba.gif');
+                $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");
 
 
             } else {

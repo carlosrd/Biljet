@@ -175,7 +175,7 @@ exports.goToEvent = function (req, res) {
                                     if(err){
                                         console.log(err);
                                     }else{
-                                         console.log(eventToGo.title);
+                                         console.log('qr create');
                                     }
                                 });
                                
