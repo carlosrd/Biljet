@@ -14,7 +14,7 @@ exports.save = function (req, res) {
 
     var userId = req.body.id ? req.body.id : req.session.user._id;
     var userPassword = req.body.password ? req.body.password : req.session.user.password;
-    User.findOne({_id: req.session.user._id}, function (err, creator) {
+    User.findOne({_id: userId}, function (err, creator) {
         if (err) {
             res.send(err, 400);
         } else if (creator.password !== userPassword) {
