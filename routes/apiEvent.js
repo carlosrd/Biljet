@@ -4,7 +4,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
 var allSchemas = require('../models/allSchemas'),
-    qrCode = require('qrcode-npm/qrcode'),
+    // qrCode = require('qrcode-npm/qrcode'),
     fs = require('fs');
 
 var Event = mongoose.model('Event');
@@ -162,25 +162,22 @@ exports.goToEvent = function (req, res) {
                                 console.log("Event added successfully to " + user.username);
                                 res.send(data, 200);
                               
-                                var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
+                                // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
 
-                                var qr = qrCode.qrcode(4, 'M');
-                                qr.addData(text);
-                                qr.make();
-                                var imgTag = qr.createImgTag(4);
-                                //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
-                                var n=imgTag.indexOf("\u0020width="); 
-                                var cosa2=imgTag.slice(32,n-1);
-                                fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
-                                    if(err){
-                                        console.log(err);
-                                    }else{
-                                         console.log('qr create');
-                                    }
-                                });
-                               
-
-
+                                // var qr = qrCode.qrcode(4, 'M');
+                                // qr.addData(text);
+                                // qr.make();
+                                // var imgTag = qr.createImgTag(4);
+                                // //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
+                                // var n=imgTag.indexOf("\u0020width=");
+                                // var cosa2=imgTag.slice(32,n-1);
+                                // fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
+                                //     if(err){
+                                //         console.log(err);
+                                //     }else{
+                                //          console.log('qr create');
+                                //     }
+                                // });
                             }
                         }
                     );
@@ -209,15 +206,15 @@ exports.dontGoToEvent = function (req, res) {
                             } else {
                                 res.send(data, 200);
 
-                                fs.unlink("./public/img/"+req.params.id+req.body.id, function (err) {
-                                    if (err){
-                                        console(err);
-                                    } 
-                                    else{
-                                       console.log('Remove qr'); 
-                                    }
+                                // fs.unlink("./public/img/"+req.params.id+req.body.id, function (err) {
+                                //     if (err){
+                                //         console(err);
+                                //     }
+                                //     else{
+                                //        console.log('Remove qr');
+                                //     }
                                     
-                                });
+                                // });
                             }
                         }
                     );
