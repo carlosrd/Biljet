@@ -18,8 +18,8 @@ block contentBlock
                     a(title='Apúntate').btn.btn-large.btn-block.joinEvent Apúntate
                 else
                     a(href="/signup", title='Regístrate').btn.btn-large.btn-block.signup Regístrate para apuntarte
-            li.qr
-                img.qrImg
+            //- li.qr
+            //-     img.qrImg
 
 block javascript
     script(type='text/javascript')
@@ -66,10 +66,10 @@ block javascript
             if ($('a.joinEvent').text() === "Apúntate") {
                 url = "/api/event/go/" + "#{id}";
                 $('.joinEvent').text("Desapúntame");
-                var millisecondsToWait = 1000;
-                setTimeout(function() {
-                    $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");
-                }, millisecondsToWait);
+                //- var millisecondsToWait = 1000;
+                //- setTimeout(function() {
+                //-     $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");
+                //- }, millisecondsToWait);
                         
 
             } else {
