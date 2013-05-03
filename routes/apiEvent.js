@@ -1,3 +1,8 @@
+
+/*jslint node: true */
+
+"use strict";
+
 var mongoose = require('mongoose');
 // var Schema = mongoose.Schema;
 var db = mongoose.connection;
@@ -11,19 +16,23 @@ var Event = mongoose.model('Event');
 var User = mongoose.model('User');
 
 exports.save = function (req, res) {
+    var userId, userPassword;
 
-    var userId = req.body.id ? req.body.id : req.session.user._id;
-    var userPassword = req.body.password ? req.body.password : req.session.user.password;
+    userId = req.body.id ? req.body.id : req.session.user._id;
+    userPassword = req.body.password ? req.body.password : req.session.user.password;
+
     User.findOne({_id: userId}, function (err, creator) {
         if (err) {
             res.send(err, 400);
         } else if (creator.password !== userPassword) {
             res.send("Bad password", 401);
         } else {
-            var latitude = req.body.latitude ? req.body.latitude : null;
-            var longitude = req.body.longitude ? req.body.longitude : null;
+            var latitude, longitude, newEvent;
 
-            var newEvent = new Event({
+            latitude = req.body.latitude ? req.body.latitude : null;
+            longitude = req.body.longitude ? req.body.longitude : null;
+
+            newEvent = new Event({
                 title: req.body.title,
                 finishAt: req.body.finishAt,
                 createdAt: new Date().getTime(),
@@ -38,20 +47,26 @@ exports.save = function (req, res) {
                 description: req.body.description
             });
 
-            newEvent.save ( function (err) {
+            newEvent.save(function (err) {
                 if (err) {
                     console.log(err, "err: ");
-                    
+
                     res.send(err, 400);
                 } else {
                     User.update(
-                        { _id: creator._id },
-                        { $push:
-                            { eventsOrganized: newEvent, eventsToGo: newEvent }
-                        }, function (err, data) {
+                        {
+                            _id: creator._id
+                        },
+                        {
+                            $push:
+                                {
+                                    eventsOrganized: newEvent,
+                                    eventsToGo: newEvent
+                                }
+                        },
+                        function (err, data) {
                             if (err) {
                                 console.log(err, "err: ");
-                                
                                 res.send(err, 400);
                             } else {
                                 res.send(newEvent, 200);
@@ -65,11 +80,11 @@ exports.save = function (req, res) {
     });
 };
 
-exports.list = function (req, res) {    
+exports.list = function (req, res) {
     Event.find({}, function (err, events) {
         if (err) {
             res.send(err, 400);
-        } else if (events === null){
+        } else if (events === null) {
             res.send("[]", 200);
         } else {
             res.send(events, 200);
@@ -81,7 +96,7 @@ exports.findByTitle = function (req, res) {
     Event.findOne({title: req.params.title}, function (err, event) {
         if (err) {
             res.send(err, 400);
-        } else if (event === null){
+        } else if (event === null) {
             res.send("[]", 200);
         } else {
             res.send(event, 200);
@@ -93,7 +108,7 @@ exports.findById = function (req, res) {
     Event.findOne({_id: req.params.id}, function (err, event) {
         if (err) {
             res.send(err, 400);
-        } else if (event === null){
+        } else if (event === null) {
             res.send("[]", 200);
         } else {
             res.send(event, 200);
@@ -105,7 +120,7 @@ exports.filterByProvince = function (req, res) {
     Event.find({province: req.params.number}, function (err, events) {
         if (err) {
             res.send(err, 400);
-        } else if (events === null){
+        } else if (events === null) {
             res.send("[]", 200);
         } else {
             res.send(events, 200);
@@ -121,7 +136,7 @@ exports.delete = function (req, res) {
             res.send("", 200);
         }
     });
-}
+};
 
 exports.isGoing = function (req, res) {
     User.findOne({_id: req.body.id, password: req.body.password}, function (err, user) {
@@ -129,7 +144,7 @@ exports.isGoing = function (req, res) {
             res.send(err, 400);
         } else {
             console.log(user, "user: ");
-            if (user != null) {
+            if (user !== null) {
                 if (user.eventsToGo.indexOf(req.params.id) > -1) {
                     res.send("true", 200);
                 } else {
@@ -140,7 +155,7 @@ exports.isGoing = function (req, res) {
             }
         }
     });
-}
+};
 
 exports.goToEvent = function (req, res) {
     var c = Event.findOne({_id: req.params.id}, function (err, eventToGo) {
@@ -152,16 +167,23 @@ exports.goToEvent = function (req, res) {
                     res.send(err, 400);
                 } else {
                     User.update(
-                        { _id: user._id, password: req.body.password },
-                        { $push:
-                            { eventsToGo: eventToGo }
-                        }, function (err, data) {
+                        {
+                            _id: user._id,
+                            password: req.body.password
+                        },
+                        {
+                            $push:
+                                {
+                                    eventsToGo: eventToGo
+                                }
+                        },
+                        function (err, data) {
                             if (err) {
                                 res.send(err, 400);
                             } else {
                                 console.log("Event added successfully to " + user.username);
                                 res.send(data, 200);
-                              
+
                                 // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
 
                                 // var qr = qrCode.qrcode(4, 'M');
@@ -185,7 +207,7 @@ exports.goToEvent = function (req, res) {
             });
         }
     });
-}
+};
 
 exports.dontGoToEvent = function (req, res) {
     Event.findOne({_id: req.params.id}, function (err, eventToGo) {
@@ -197,10 +219,17 @@ exports.dontGoToEvent = function (req, res) {
                     res.send(err, 400);
                 } else {
                     User.update(
-                        { _id: user._id, password: req.body.password },
-                        { $pull:
-                            { eventsToGo: eventToGo }
-                        }, function (err, data) {
+                        {
+                            _id: user._id,
+                            password: req.body.password
+                        },
+                        {
+                            $pull:
+                                {
+                                    eventsToGo: eventToGo
+                                }
+                        },
+                        function (err, data) {
                             if (err) {
                                 res.send(err, 400);
                             } else {
@@ -213,7 +242,6 @@ exports.dontGoToEvent = function (req, res) {
                                 //     else{
                                 //        console.log('Remove qr');
                                 //     }
-                                    
                                 // });
                             }
                         }
@@ -222,5 +250,5 @@ exports.dontGoToEvent = function (req, res) {
             });
         }
     });
-}
+};
 

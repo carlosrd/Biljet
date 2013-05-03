@@ -1,8 +1,13 @@
+
+/*jslint node: true */
+
+"use strict";
+
 /*
  * GET events page.
  */
 
-exports.index = function(req, res){
+exports.index = function (req, res) {
     res.render('qrtest', {
         username: req.session.user,
         title: 'Biljet :: Prueba qr',

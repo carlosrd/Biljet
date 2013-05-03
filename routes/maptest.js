@@ -1,9 +1,14 @@
+
+/*jslint node: true */
+
+"use strict";
+
 /*
  * GET events page.
  */
 
-exports.index = function(req, res){
-	res.render('maptest', { 
+exports.index = function (req, res) {
+    res.render('maptest', {
         logged: req.session.logged,
         user: req.session.user,
         title: 'Biljet :: mapaPrueba',

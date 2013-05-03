@@ -1,7 +1,11 @@
 
+/*jslint node: true */
+
 /**
  * Module dependencies.
  */
+
+"use strict";
 
 var express = require('express'),
     home = require('./routes/home'),
@@ -21,7 +25,7 @@ var express = require('express'),
 
 // MongoDB conection
 var mongoose = require('mongoose'),
-Schema = mongoose.Schema;
+    Schema = mongoose.Schema;
 
 
 // WARNING!!!
@@ -35,7 +39,7 @@ db.on('error', console.error.bind(console, "Connection error: "));
 
 var app = express();
 
-app.configure(function(){
+app.configure(function () {
     app.set('port', process.env.PORT || 3000);
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
@@ -51,16 +55,16 @@ app.configure(function(){
     app.use(app.router);
 });
 
-app.configure('dev', function(){
+app.configure('dev', function () {
     app.use(express.errorHandler());
 });
 
 function checkAuth(req, res, next) {
-    if (! req.session.user) {
+    if (!req.session.user) {
         res.redirect('back');
     } else {
         next();
-  }
+    }
 }
 
 app.get('/', home.index);
@@ -74,7 +78,7 @@ app.get('/event/:id', eventDetails.index);
 
 app.post('/api/user', apiUser.save);
 app.get('/api/user', apiUser.list);
-app.delete('/api/user/:id', apiUser.delete);
+app.del('/api/user/:id', apiUser.delete);
 app.get('/api/user/:id', apiUser.findById);
 app.get('/api/user/u/:username', apiUser.findByUsername);
 
@@ -84,7 +88,7 @@ app.post('/api/event', apiEvent.save);
 app.post('/api/event/is-going/:id', apiEvent.isGoing);
 app.post('/api/event/go/:id', apiEvent.goToEvent);
 app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
-app.delete('/api/event/:id', apiEvent.delete);
+app.del('/api/event/:id', apiEvent.delete);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
 
@@ -95,6 +99,6 @@ app.get('/logout', apiUser.logout);
 
 app.get('/signup', apiUser.signup);
 
-http.createServer(app).listen(app.get('port'), function(){
+http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
 });
