@@ -143,6 +143,16 @@ exports.delete = function (req, res) {
     });
 };
 
+exports.search = function (req, res) {
+    Event.find({title: { $regex: req.params.title, $options: 'i'}}, function (err, events) {
+        if (err) {
+            res.send(err, 400);
+        } else {
+            res.send(events, 200);
+        }
+    });
+};
+
 exports.isGoing = function (req, res) {
     User.findOne({_id: req.body.id, password: req.body.password}, function (err, user) {
         if (err) {
