@@ -27,8 +27,9 @@ exports.save = function (req, res) {
         } else if (creator.password !== userPassword) {
             res.send("Bad password", 401);
         } else {
-            var latitude, longitude, newEvent;
+            var place, latitude, longitude, newEvent;
 
+            place = req.body.place ? req.body.place : null;
             latitude = req.body.latitude ? req.body.latitude : null;
             longitude = req.body.longitude ? req.body.longitude : null;
 
@@ -39,6 +40,10 @@ exports.save = function (req, res) {
                 price: req.body.price,
                 creator: creator,
                 province: req.body.province,
+                city: req.body.city,
+                place: place,
+                postalCode: req.body.postalCode,
+                address: req.body.address,
                 latitude: latitude,
                 longitude: longitude,
                 category: req.body.category,

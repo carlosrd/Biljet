@@ -24,11 +24,13 @@ var eventSchema = new Schema({
         ref: 'User',
         default: null
     }],
+    city: { type: String, required: true },
+    place: { type: String, default: null },
     province: { type: String, required: true },
-    postalCode: {type: Number, default: null },
+    postalCode: {type: Number, required: true },
+    address: { type: String, required: true },
     latitude: { type: Number, default: null },
     longitude: { type: Number, default: null },
-    address: { type: String, default: null },
     category: { type: String, required: true },
     comments: [{
         type: Schema.Types.ObjectId,
@@ -36,8 +38,8 @@ var eventSchema = new Schema({
         default: null
     }],
     imageName: { type: String, default: 'eventDefault.png' },
-    description: { type: String,required: true },
-    capacity: { type: String, required: true }
+    description: { type: String, required: true },
+    capacity: { type: Number, required: true }
 });
 
 
