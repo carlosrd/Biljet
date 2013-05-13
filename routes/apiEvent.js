@@ -18,8 +18,13 @@ var User = mongoose.model('User');
 exports.save = function (req, res) {
     var userId, userPassword;
 
-    userId = req.body.id ? req.body.id : req.session.user._id;
-    userPassword = req.body.password ? req.body.password : req.session.user.password;
+    if (req.session.user) {
+        userId = req.session.user._id;
+        userPassword = req.session.user.password;
+    } else {
+        userId = req.body.id;
+        userPassword = req.body.password;
+    }
 
     User.findOne({_id: userId}, function (err, creator) {
         if (err) {
@@ -89,8 +94,6 @@ exports.list = function (req, res) {
     Event.find({}, function (err, events) {
         if (err) {
             res.send(err, 400);
-        } else if (events === null) {
-            res.send("[]", 200);
         } else {
             res.send(events, 200);
         }
@@ -117,6 +120,67 @@ exports.findById = function (req, res) {
             res.send("[]", 200);
         } else {
             res.send(event, 200);
+        }
+    });
+};
+
+exports.createdById = function (req, res) {
+    User.findOne({_id: req.params.id}, function (err, user) {
+        if (err) {
+            res.send(err, 200);
+        } else if (user === '[]') {
+            res.send('The user doesn\'t exist', 400);
+        } else {
+
+            var before, after;
+
+            before = req.query.before ? req.query.before : 1999999999; // a very long timestamp
+            after = req.query.after ? req.query.after : 0;
+
+            Event.find({creator: user})
+                .where('finishAt').lte(before).gte(after)
+                .limit(50)
+                .sort('finishAt')
+                .exec(function (err, events) {
+                    if (err) {
+                        res.send(err, 400);
+                    } else if (events === null) {
+                        res.send("[]", 200);
+                    } else {
+                        res.send(events, 200);
+                    }
+                });
+        }
+    });
+};
+
+exports.goingById = function (req, res) {
+    User.findOne({_id: req.params.id}, function (err, user) {
+        if (err) {
+            res.send(err, 200);
+        } else if (user === '[]') {
+            res.send('The user doesn\'t exist', 400);
+        } else {
+
+            var before, after;
+
+            before = req.query.before ? req.query.before : 1999999999; // a very long timestamp
+            after = req.query.after ? req.query.after : 0;
+            console.log(user, "user");
+            
+            Event.find({attendee: user})
+                .where('finishAt').lte(before).gte(after)
+                .limit(50)
+                .sort('finishAt')
+                .exec(function (err, events) {
+                    if (err) {
+                        res.send(err, 400);
+                    } else if (events === null) {
+                        res.send("[]", 200);
+                    } else {
+                        res.send(events, 200);
+                    }
+                });
         }
     });
 };

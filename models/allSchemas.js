@@ -26,7 +26,7 @@ var eventSchema = new Schema({
     }],
     city: { type: String, required: true },
     place: { type: String, default: null },
-    province: { type: String, required: true },
+    province: { type: Number, required: true },
     postalCode: {type: Number, required: true },
     address: { type: String, required: true },
     latitude: { type: Number, default: null },

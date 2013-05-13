@@ -86,6 +86,8 @@ app.get('/api/event', apiEvent.list);
 app.get('/api/event/:id', apiEvent.findById);
 app.post('/api/event', apiEvent.save);
 app.del('/api/event/:id', apiEvent.delete);
+app.get('/api/event/created/:id', apiEvent.createdById);
+app.get('/api/event/going/:id', apiEvent.goingById);
 app.get('/api/event/search/:title', apiEvent.search);
 app.post('/api/event/is-going/:id', apiEvent.isGoing);
 app.post('/api/event/go/:id', apiEvent.goToEvent);
