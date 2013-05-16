@@ -176,10 +176,10 @@ exports.eventsGoing = function (req, res) {
             } else {
                 var eventsGoing = {}, before, after, i, j, len;
 
-                before = req.query.before ? req.query.before : 0;
-                after = req.query.after ? req.query.after : 99999999999;
+                before = req.query.before ? req.query.before : 99999999999;
+                after = req.query.after ? req.query.after : 0;
                 for (i = 0, len = user.eventsToGo.length, j = 0; i < len; i += 1) {
-                    if (user.eventsToGo[i].finishAt > before && user.eventsToGo[i].finishAt < after) {
+                    if (user.eventsToGo[i].finishAt < before && user.eventsToGo[i].finishAt > after) {
                         eventsGoing[j] = user.eventsToGo[i];
                         j += 1;
                     }
