@@ -81,6 +81,8 @@ app.get('/api/user', apiUser.list);
 app.del('/api/user/:id', apiUser.delete);
 app.get('/api/user/:id', apiUser.findById);
 app.get('/api/user/u/:username', apiUser.findByUsername);
+app.get('/api/user/:id/e/going', apiUser.eventsGoing);
+app.get('/api/user/:id/e/created', apiUser.eventsCreated);
 
 app.get('/api/event', apiEvent.list);
 app.get('/api/event/:id', apiEvent.findById);

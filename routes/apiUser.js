@@ -13,8 +13,6 @@ db.on('error', console.error.bind(console, "Connection error: "));
 
 
 allSchemas = require('../models/allSchemas');
-
-
 User = mongoose.model('User');
 
 
@@ -144,4 +142,50 @@ exports.signup = function (req, res) {
         user: req.session.user,
         error: 'false'
     });
+};
+
+exports.eventsCreated = function (req, res) {
+    User.findOne({_id: req.params.id})
+        .populate('eventsOrganized')
+        .exec(function (err, user) {
+            if (err) {
+                res.send(err, 400);
+            } else {
+                var eventsCreated = {}, before, after, i, j, len;
+
+                before = req.query.before ? req.query.before : 0;
+                after = req.query.after ? req.query.after : 99999999999;
+                for (i = 0, len = user.eventsOrganized.length, j = 0; i < len; i += 1) {
+                    if (user.eventsOrganized[i].finishAt > before && user.eventsOrganized[i].finishAt < after) {
+                        eventsCreated[j] = user.eventsOrganized[i];
+                        j += 1;
+                    }
+                }
+
+                res.send(eventsCreated, 200);
+            }
+        });
+};
+
+exports.eventsGoing = function (req, res) {
+    User.findOne({_id: req.params.id})
+        .populate('eventsToGo')
+        .exec(function (err, user) {
+            if (err) {
+                res.send(err, 400);
+            } else {
+                var eventsGoing = {}, before, after, i, j, len;
+
+                before = req.query.before ? req.query.before : 0;
+                after = req.query.after ? req.query.after : 99999999999;
+                for (i = 0, len = user.eventsToGo.length, j = 0; i < len; i += 1) {
+                    if (user.eventsToGo[i].finishAt > before && user.eventsToGo[i].finishAt < after) {
+                        eventsGoing[j] = user.eventsToGo[i];
+                        j += 1;
+                    }
+                }
+
+                res.send(eventsGoing, 200);
+            }
+        });
 };
