@@ -4,6 +4,8 @@
 "use strict";
 
 var mongoose = require('mongoose');
+var fs = require('fs');
+var jQuery = require('jquery');
 // var Schema = mongoose.Schema;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
@@ -329,5 +331,24 @@ exports.dontGoToEvent = function (req, res) {
             });
         }
     });
+};
+
+exports.uploadImage = function (req, res) {
+    // TODO: move and rename the file using req.files.path & .name)
+    if (jQuery.isEmptyObject(req.files)) {
+        res.send('Por favor, selecciona una imagen.', 400);
+    } else {
+        if (req.files.eventImage.size > 204800) {
+            res.send('La imagen no puede superar los 200kb.', 400);
+        } else {
+            fs.rename(req.files.eventImage.path, './public/img/' + req.files.eventImage.name, function (err) {
+                if (err) {
+                    res.send('Ha habido un error', 400);
+                } else {
+                    res.send(req.files.eventImage.name, 200);
+                }
+            });
+        }
+    }
 };
 
