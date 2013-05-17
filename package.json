@@ -17,6 +17,7 @@
     "mongoose-models": "*",
     "crypto": "*",
     "request": "*",
-    "qrcode-npm":"*"
+    "qrcode-npm":"*",
+    "jquery": "*"
   }
 }
