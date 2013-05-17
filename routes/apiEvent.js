@@ -341,9 +341,9 @@ exports.uploadImage = function (req, res) {
         if (req.files.eventImage.size > 204800) {
             res.send('La imagen no puede superar los 200kb.', 400);
         } else {
-            fs.rename(req.files.eventImage.path, './public/img/' + req.files.eventImage.name, function (err) {
+            fs.rename(req.files.eventImage.path, 'public/img/' + req.files.eventImage.name, function (err) {
                 if (err) {
-                    res.send('Ha habido un error', 400);
+                    res.send('Ha habido un error al subir la imagen.', 400);
                 } else {
                     res.send(req.files.eventImage.name, 200);
                 }
