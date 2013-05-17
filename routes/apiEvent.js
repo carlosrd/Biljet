@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose');
 var fs = require('fs');
+var util = require('util');
 var jQuery = require('jquery');
 // var Schema = mongoose.Schema;
 var db = mongoose.connection;
@@ -338,20 +339,14 @@ exports.uploadImage = function (req, res) {
     if (jQuery.isEmptyObject(req.files)) {
         res.send('Por favor, selecciona una imagen.', 400);
     } else {
-        console.log(req.files, "************ files: ");
         if (req.files.eventImage.size > 204800) {
             res.send('La imagen no puede superar los 200kb.', 400);
         } else {
-            fs.rename(req.files.eventImage.path, 'public/img/' + req.files.eventImage.name, function (err) {
-                if (err) {
-                    console.log(__dirname, "*****dirname");
-                    console.log(err, "*******err:");
-                    res.send('Ha habido un error al subir la imagen.', 400);
-                } else {
-                    console.log(__dirname, "err");
-
-                    res.send(req.files.eventImage.name, 200);
-                }
+            var is = fs.createReadStream(req.files.eventImage.path);
+            var os = fs.createWriteStream('public/img/' + req.files.eventImage.name);
+            is.pipe(os); 
+            is.on('end', function() {
+                res.send(req.files.eventImage.name, 200);
             });
         }
     }
