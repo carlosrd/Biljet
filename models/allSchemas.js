@@ -1,6 +1,11 @@
+
+/*jslint node: true */
+
+"use strict";
+
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
 
 
 var eventSchema = new Schema({
@@ -9,7 +14,7 @@ var eventSchema = new Schema({
     createdAt: Number,
     duration: { type: Number, default: null },
     price: {type: Number, required: true },
-    creator: { 
+    creator: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -41,7 +46,6 @@ var eventSchema = new Schema({
     description: { type: String, required: true },
     capacity: { type: Number, required: true }
 });
-
 
 
 var userSchema = new Schema({
@@ -99,18 +103,18 @@ var userSchema = new Schema({
 
 
 userSchema.methods.validPassword = function (pass) {
-  return this.password === pass;
-}
+    return this.password === pass;
+};
 
 
 var qrSchema = new Schema({
-    username: { 
+    username: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
     name: String,
     path: String,
-    event: { 
+    event: {
         type: Schema.Types.ObjectId,
         ref: 'Event'
     }
@@ -119,7 +123,7 @@ var qrSchema = new Schema({
 
 
 var eventCommentSchema = new Schema({
-    username: { 
+    username: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
@@ -130,7 +134,7 @@ var eventCommentSchema = new Schema({
 
 
 var userCommentSchema = new Schema({
-    username: { 
+    username: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
