@@ -17,6 +17,7 @@ var express = require('express'),
     qrtest = require('./routes/qrtest'),
     maptest = require('./routes/maptest'),
     calendar = require('./routes/calendar'),
+    example = require('./routes/example'),
     apiUser = require('./routes/apiUser'),
     apiEvent = require('./routes/apiEvent'),
     http = require('http'),
@@ -31,7 +32,7 @@ var mongoose = require('mongoose'),
 // WARNING!!!
 // This line connect to the remote Mongo Database, use carefully!!
 // For testing purposes, use the localhost DB (the line commented below)
-mongoose.connect('mongodb://admin:admin@dharma.mongohq.com:10086/Biljet2');
+mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
 //mongoose.connect('localhost', 'biljet');
 
 var db = mongoose.connection;
@@ -81,17 +82,25 @@ app.get('/api/user', apiUser.list);
 app.del('/api/user/:id', apiUser.delete);
 app.get('/api/user/:id', apiUser.findById);
 app.get('/api/user/u/:username', apiUser.findByUsername);
+app.get('/api/user/:id/e/going', apiUser.eventsGoing);
+app.get('/api/user/:id/e/created', apiUser.eventsCreated);
 
 app.get('/api/event', apiEvent.list);
 app.get('/api/event/:id', apiEvent.findById);
 app.post('/api/event', apiEvent.save);
+app.del('/api/event/:id', apiEvent.delete);
+app.get('/api/event/created/:id', apiEvent.createdById);
+app.get('/api/event/going/:id', apiEvent.goingById);
+app.get('/api/event/search/:title', apiEvent.search);
 app.post('/api/event/is-going/:id', apiEvent.isGoing);
 app.post('/api/event/go/:id', apiEvent.goToEvent);
 app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
-app.del('/api/event/:id', apiEvent.delete);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
 
+// DEBUG
+app.get('/example', example.index);
+app.post('/upload', apiEvent.uploadImage);
 
 app.get('/login', user.login);
 app.post('/login', apiUser.login);

@@ -4,6 +4,9 @@
 "use strict";
 
 var mongoose = require('mongoose');
+var fs = require('fs');
+var util = require('util');
+var jQuery = require('jquery');
 // var Schema = mongoose.Schema;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
@@ -22,8 +25,13 @@ var superKey = 'super_key';
 exports.save = function (req, res) {
     var userId, userPassword;
 
-    userId = req.body.id ? req.body.id : req.session.user._id;
-    userPassword = req.body.password ? req.body.password : req.session.user.password;
+    if (req.session.user) {
+        userId = req.session.user._id;
+        userPassword = req.session.user.password;
+    } else {
+        userId = req.body.id;
+        userPassword = req.body.password;
+    }
 
     User.findOne({_id: userId}, function (err, creator) {
         if (err) {
@@ -31,8 +39,9 @@ exports.save = function (req, res) {
         } else if (creator.password !== userPassword) {
             res.send("Bad password", 401);
         } else {
-            var latitude, longitude, newEvent;
+            var place, latitude, longitude, newEvent;
 
+            place = req.body.place ? req.body.place : null;
             latitude = req.body.latitude ? req.body.latitude : null;
             longitude = req.body.longitude ? req.body.longitude : null;
 
@@ -43,6 +52,10 @@ exports.save = function (req, res) {
                 price: req.body.price,
                 creator: creator,
                 province: req.body.province,
+                city: req.body.city,
+                place: place,
+                postalCode: req.body.postalCode,
+                address: req.body.address,
                 latitude: latitude,
                 longitude: longitude,
                 category: req.body.category,
@@ -88,8 +101,6 @@ exports.list = function (req, res) {
     Event.find({}, function (err, events) {
         if (err) {
             res.send(err, 400);
-        } else if (events === null) {
-            res.send("[]", 200);
         } else {
             res.send(events, 200);
         }
@@ -120,6 +131,67 @@ exports.findById = function (req, res) {
     });
 };
 
+exports.createdById = function (req, res) {
+    User.findOne({_id: req.params.id}, function (err, user) {
+        if (err) {
+            res.send(err, 200);
+        } else if (user === '[]') {
+            res.send('The user doesn\'t exist', 400);
+        } else {
+
+            var before, after;
+
+            before = req.query.before ? req.query.before : 1999999999; // a very long timestamp
+            after = req.query.after ? req.query.after : 0;
+
+            Event.find({creator: user})
+                .where('finishAt').lte(before).gte(after)
+                .limit(50)
+                .sort('finishAt')
+                .exec(function (err, events) {
+                    if (err) {
+                        res.send(err, 400);
+                    } else if (events === null) {
+                        res.send("[]", 200);
+                    } else {
+                        res.send(events, 200);
+                    }
+                });
+        }
+    });
+};
+
+exports.goingById = function (req, res) {
+    User.findOne({_id: req.params.id}, function (err, user) {
+        if (err) {
+            res.send(err, 200);
+        } else if (user === '[]') {
+            res.send('The user doesn\'t exist', 400);
+        } else {
+
+            var before, after;
+
+            before = req.query.before ? req.query.before : 1999999999; // a very long timestamp
+            after = req.query.after ? req.query.after : 0;
+            console.log(user, "user");
+            
+            Event.find({attendee: user})
+                .where('finishAt').lte(before).gte(after)
+                .limit(50)
+                .sort('finishAt')
+                .exec(function (err, events) {
+                    if (err) {
+                        res.send(err, 400);
+                    } else if (events === null) {
+                        res.send("[]", 200);
+                    } else {
+                        res.send(events, 200);
+                    }
+                });
+        }
+    });
+};
+
 exports.filterByProvince = function (req, res) {
     Event.find({province: req.params.number}, function (err, events) {
         if (err) {
@@ -138,6 +210,16 @@ exports.delete = function (req, res) {
             res.send(err, 400);
         } else {
             res.send("", 200);
+        }
+    });
+};
+
+exports.search = function (req, res) {
+    Event.find({title: { $regex: req.params.title, $options: 'i'}}, function (err, events) {
+        if (err) {
+            res.send(err, 400);
+        } else {
+            res.send(events, 200);
         }
     });
 };
@@ -278,3 +360,22 @@ function decrypt (key,encryptedPassword){
 
     return decryptedPassword;
 };
+
+exports.uploadImage = function (req, res) {
+    // TODO: move and rename the file using req.files.path & .name)
+    if (jQuery.isEmptyObject(req.files)) {
+        res.send('Por favor, selecciona una imagen.', 400);
+    } else {
+        if (req.files.eventImage.size > 204800) {
+            res.send('La imagen no puede superar los 200kb.', 400);
+        } else {
+            var is = fs.createReadStream(req.files.eventImage.path);
+            var os = fs.createWriteStream('public/img/' + req.files.eventImage.name);
+            is.pipe(os); 
+            is.on('end', function() {
+                res.send(req.files.eventImage.name, 200);
+            });
+        }
+    }
+};
+
