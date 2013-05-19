@@ -47,8 +47,9 @@ exports.save = function (req, res) {
                 createdAt: new Date().getTime(),
                 price: req.body.price,
                 creator: creator,
-                province: req.body.province,
+                attendee: creator,
                 city: req.body.city,
+                province: req.body.province,
                 place: place,
                 postalCode: req.body.postalCode,
                 address: req.body.address,
@@ -62,8 +63,8 @@ exports.save = function (req, res) {
 
             newEvent.save(function (err) {
                 if (err) {
+                    // DEBUG
                     console.log(err, "err: ");
-
                     res.send(err, 400);
                 } else {
                     User.update(
@@ -79,10 +80,12 @@ exports.save = function (req, res) {
                         },
                         function (err, data) {
                             if (err) {
+                                // DEBUG
                                 console.log(err, "err: ");
                                 res.send(err, 400);
                             } else {
                                 res.send(newEvent, 200);
+                                // DEBUG
                                 console.log("Event added successfully to " + creator.username);
                             }
                         }
@@ -94,37 +97,46 @@ exports.save = function (req, res) {
 };
 
 exports.list = function (req, res) {
-    Event.find({}, function (err, events) {
-        if (err) {
-            res.send(err, 400);
-        } else {
-            res.send(events, 200);
-        }
-    });
+    Event.find({})
+        .populate('attendee')
+        .populate('creator')
+        .exec(function (err, events) {
+            if (err) {
+                res.send(err, 400);
+            } else {
+                res.send(events, 200);
+            }
+        });
 };
 
 exports.findByTitle = function (req, res) {
-    Event.findOne({title: req.params.title}, function (err, event) {
-        if (err) {
-            res.send(err, 400);
-        } else if (event === null) {
-            res.send("[]", 200);
-        } else {
-            res.send(event, 200);
-        }
-    });
+    Event.findOne({title: req.params.title})
+        .populate('attendee')
+        .populate('creator')
+        .exec(function (err, event) {
+            if (err) {
+                res.send(err, 400);
+            } else if (event === null) {
+                res.send("[]", 200);
+            } else {
+                res.send(event, 200);
+            }
+        });
 };
 
 exports.findById = function (req, res) {
-    Event.findOne({_id: req.params.id}, function (err, event) {
-        if (err) {
-            res.send(err, 400);
-        } else if (event === null) {
-            res.send("[]", 200);
-        } else {
-            res.send(event, 200);
-        }
-    });
+    Event.findOne({_id: req.params.id})
+        .populate('attendee')
+        .populate('creator')
+        .exec(function (err, event) {
+            if (err) {
+                res.send(err, 400);
+            } else if (event === null) {
+                res.send("[]", 200);
+            } else {
+                res.send(event, 200);
+            }
+        });
 };
 
 exports.createdById = function (req, res) {
@@ -169,7 +181,6 @@ exports.goingById = function (req, res) {
 
             before = req.query.before ? req.query.before : 1999999999; // a very long timestamp
             after = req.query.after ? req.query.after : 0;
-            console.log(user, "user");
             
             Event.find({attendee: user})
                 .where('finishAt').lte(before).gte(after)
@@ -189,15 +200,18 @@ exports.goingById = function (req, res) {
 };
 
 exports.filterByProvince = function (req, res) {
-    Event.find({province: req.params.number}, function (err, events) {
-        if (err) {
-            res.send(err, 400);
-        } else if (events === null) {
-            res.send("[]", 200);
-        } else {
-            res.send(events, 200);
-        }
-    });
+    Event.find({province: req.params.number})
+        .populate('attendee')
+        .populate('creator')
+        .exec(function (err, events) {
+            if (err) {
+                res.send(err, 400);
+            } else if (events === null) {
+                res.send("[]", 200);
+            } else {
+                res.send(events, 200);
+            }
+        });
 };
 
 exports.delete = function (req, res) {
@@ -211,13 +225,16 @@ exports.delete = function (req, res) {
 };
 
 exports.search = function (req, res) {
-    Event.find({title: { $regex: req.params.title, $options: 'i'}}, function (err, events) {
-        if (err) {
-            res.send(err, 400);
-        } else {
-            res.send(events, 200);
-        }
-    });
+    Event.find({title: { $regex: req.params.title, $options: 'i'}})
+        .populate('attendee')
+        .populate('creator')
+        .exec(function (err, events) {
+            if (err) {
+                res.send(err, 400);
+            } else {
+                res.send(events, 200);
+            }
+        });
 };
 
 exports.isGoing = function (req, res) {
@@ -263,6 +280,7 @@ exports.goToEvent = function (req, res) {
                             if (err) {
                                 res.send(err, 400);
                             } else {
+                                // DEBUG
                                 console.log("Event added successfully to " + user.username);
                                 res.send(data, 200);
 
