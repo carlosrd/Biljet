@@ -185,7 +185,7 @@ exports.goingById = function (req, res) {
 
             before = req.query.before ? req.query.before : 1999999999; // a very long timestamp
             after = req.query.after ? req.query.after : 0;
-            
+
             Event.find({attendee: user})
                 .where('finishAt').lte(before).gte(after)
                 .limit(50)
@@ -261,7 +261,7 @@ exports.isGoing = function (req, res) {
 };
 
 exports.goToEvent = function (req, res) {
-    var c = Event.findOne({_id: req.params.id}, function (err, eventToGo) {
+    Event.findOne({_id: req.params.id}, function (err, eventToGo) {
         if (err) {
             res.send(err, 400);
         } else {
@@ -269,44 +269,60 @@ exports.goToEvent = function (req, res) {
                 if (err) {
                     res.send(err, 400);
                 } else {
-                    User.update(
+                    Event.update(
                         {
-                            _id: user._id,
-                            password: req.body.password
+                            _id: req.params.id
                         },
                         {
                             $push:
-                                {
-                                    eventsToGo: eventToGo
-                                }
+                            {
+                                attendee: user
+                            }
                         },
                         function (err, data) {
                             if (err) {
                                 res.send(err, 400);
                             } else {
-                                // DEBUG
-                                console.log("Event added successfully to " + user.username);
-                                res.send(data, 200);
+                                User.update(
+                                    {
+                                        _id: user._id,
+                                        password: req.body.password
+                                    },
+                                    {
+                                        $push:
+                                            {
+                                                eventsToGo: eventToGo
+                                            }
+                                    },
+                                    function (err, data) {
+                                        if (err) {
+                                            res.send(err, 400);
+                                        } else {
+                                            // DEBUG
+                                            console.log("Event added successfully to " + user.username);
+                                            res.send(data, 200);
 
-                                // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
+                                            // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
 
-                                // var qr = qrCode.qrcode(4, 'M');
-                                // qr.addData(text);
-                                // qr.make();
-                                // var imgTag = qr.createImgTag(4);
-                                // //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
-                                // var n=imgTag.indexOf("\u0020width=");
-                                // var cosa2=imgTag.slice(32,n-1);
-                                // fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
-                                //     if(err){
-                                //         console.log(err);
-                                //     }else{
-                                //          console.log('qr create');
-                                //     }
-                                // });
+                                            // var qr = qrCode.qrcode(4, 'M');
+                                            // qr.addData(text);
+                                            // qr.make();
+                                            // var imgTag = qr.createImgTag(4);
+                                            // //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
+                                            // var n=imgTag.indexOf("\u0020width=");
+                                            // var cosa2=imgTag.slice(32,n-1);
+                                            // fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
+                                            //     if(err){
+                                            //         console.log(err);
+                                            //     }else{
+                                            //          console.log('qr create');
+                                            //     }
+                                            // });
+                                        }
+                                    }
+                                );
                             }
-                        }
-                    );
+                        });
                 }
             });
         }
@@ -322,34 +338,50 @@ exports.dontGoToEvent = function (req, res) {
                 if (err) {
                     res.send(err, 400);
                 } else {
-                    User.update(
+                    Event.update(
                         {
-                            _id: user._id,
-                            password: req.body.password
+                            _id: req.params.id
                         },
                         {
                             $pull:
-                                {
-                                    eventsToGo: eventToGo
-                                }
+                            {
+                                attendee: user
+                            }
                         },
                         function (err, data) {
                             if (err) {
                                 res.send(err, 400);
                             } else {
-                                res.send(data, 200);
+                                User.update(
+                                    {
+                                        _id: user._id,
+                                        password: req.body.password
+                                    },
+                                    {
+                                        $pull:
+                                            {
+                                                eventsToGo: eventToGo
+                                            }
+                                    },
+                                    function (err, data) {
+                                        if (err) {
+                                            res.send(err, 400);
+                                        } else {
+                                            res.send(data, 200);
 
-                                // fs.unlink("./public/img/"+req.params.id+req.body.id, function (err) {
-                                //     if (err){
-                                //         console(err);
-                                //     }
-                                //     else{
-                                //        console.log('Remove qr');
-                                //     }
-                                // });
+                                            // fs.unlink("./public/img/"+req.params.id+req.body.id, function (err) {
+                                            //     if (err){
+                                            //         console(err);
+                                            //     }
+                                            //     else{
+                                            //        console.log('Remove qr');
+                                            //     }
+                                            // });
+                                        }
+                                    }
+                                );
                             }
-                        }
-                    );
+                        });
                 }
             });
         }
@@ -387,10 +419,11 @@ exports.uploadImage = function (req, res) {
         if (req.files.eventImage.size > 204800) {
             res.send('La imagen no puede superar los 200kb.', 400);
         } else {
-            var is = fs.createReadStream(req.files.eventImage.path);
-            var os = fs.createWriteStream('public/img/' + req.files.eventImage.name);
-            is.pipe(os); 
-            is.on('end', function() {
+            var readStream, writeStream;
+            readStream = fs.createReadStream(req.files.eventImage.path);
+            writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
+            readStream.pipe(writeStream); 
+            readStream.on('end', function() {
                 res.send(req.files.eventImage.name, 200);
             });
         }
