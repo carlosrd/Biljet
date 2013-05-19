@@ -151,12 +151,12 @@ exports.eventsCreated = function (req, res) {
             if (err) {
                 res.send(err, 400);
             } else {
-                var eventsCreated = {}, before, after, i, j, len;
+                var eventsCreated = [], before, after, i, j, len;
 
-                before = req.query.before ? req.query.before : 0;
-                after = req.query.after ? req.query.after : 99999999999;
+                before = req.query.before ? req.query.before : 99999999999;
+                after = req.query.after ? req.query.after : 0;
                 for (i = 0, len = user.eventsOrganized.length, j = 0; i < len; i += 1) {
-                    if (user.eventsOrganized[i].finishAt > before && user.eventsOrganized[i].finishAt < after) {
+                    if (user.eventsOrganized[i].finishAt < before && user.eventsOrganized[i].finishAt > after) {
                         eventsCreated[j] = user.eventsOrganized[i];
                         j += 1;
                     }
@@ -174,7 +174,7 @@ exports.eventsGoing = function (req, res) {
             if (err) {
                 res.send(err, 400);
             } else {
-                var eventsGoing = {}, before, after, i, j, len;
+                var eventsGoing = [], before, after, i, j, len;
 
                 before = req.query.before ? req.query.before : 99999999999;
                 after = req.query.after ? req.query.after : 0;
