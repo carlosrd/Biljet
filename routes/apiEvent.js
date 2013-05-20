@@ -12,15 +12,11 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
 var allSchemas = require('../models/allSchemas'),
-    // qrCode = require('qrcode-npm/qrcode'),
     crypto = require('crypto'),
     fs = require('fs');
 
 var Event = mongoose.model('Event');
 var User = mongoose.model('User');
-
-//clave para los qr
-var superKey = 'super_key';
 
 exports.save = function (req, res) {
     var userId, userPassword;
@@ -268,24 +264,7 @@ exports.goToEvent = function (req, res) {
                                 res.send(err, 400);
                             } else {
                                 console.log("Event added successfully to " + user.username);
-                                res.send(data, 200);
-
-                                // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
-
-                                // var qr = qrCode.qrcode(4, 'M');
-                                // qr.addData(text);
-                                // qr.make();
-                                // var imgTag = qr.createImgTag(4);
-                                // //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
-                                // var n=imgTag.indexOf("\u0020width=");
-                                // var cosa2=imgTag.slice(32,n-1);
-                                // fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
-                                //     if(err){
-                                //         console.log(err);
-                                //     }else{
-                                //          console.log('qr create');
-                                //     }
-                                // });
+                                res.send(data, 200)
                             }
                         }
                     );
@@ -336,29 +315,6 @@ exports.dontGoToEvent = function (req, res) {
             });
         }
     });
-};
-
-function encrypt (key,plaintext){
-
-    var cipher = crypto.createCipher('aes-256-cbc', key),encryptedPassword;
-
-    cipher.update(plaintext, 'utf8', 'base64');
-    encryptedPassword = cipher.final('base64');
-    console.log('encrypted :', encryptedPassword);
-
-    return encryptedPassword;
-
-};
-
-function decrypt (key,encryptedPassword){
-
-    var decipher = crypto.createDecipher('aes-256-cbc', key),decryptedPassword;
-
-    decipher.update(encryptedPassword, 'base64', 'utf8'); 
-    decryptedPassword = decipher.final('utf8');
-    console.log('decrypted :', decryptedPassword);
-
-    return decryptedPassword;
 };
 
 exports.uploadImage = function (req, res) {
