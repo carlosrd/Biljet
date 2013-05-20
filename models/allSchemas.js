@@ -113,6 +113,10 @@ var qrSchema = new Schema({
         ref: 'User'
     },
     name: String,
+    //numero de entradas a comprar
+    numberTickets: Number,
+    //Saber si el qr ya fue usado
+    isUse: Boolean,
     path: String,
     event: {
         type: Schema.Types.ObjectId,

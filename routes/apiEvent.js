@@ -12,15 +12,11 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
 var allSchemas = require('../models/allSchemas'),
-    // qrCode = require('qrcode-npm/qrcode'),
     crypto = require('crypto'),
     fs = require('fs');
 
 var Event = mongoose.model('Event');
 var User = mongoose.model('User');
-
-//clave para los qr
-var superKey = 'super_key';
 
 exports.save = function (req, res) {
     var userId, userPassword;
@@ -386,29 +382,6 @@ exports.dontGoToEvent = function (req, res) {
             });
         }
     });
-};
-
-function encrypt (key,plaintext){
-
-    var cipher = crypto.createCipher('aes-256-cbc', key),encryptedPassword;
-
-    cipher.update(plaintext, 'utf8', 'base64');
-    encryptedPassword = cipher.final('base64');
-    console.log('encrypted :', encryptedPassword);
-
-    return encryptedPassword;
-
-};
-
-function decrypt (key,encryptedPassword){
-
-    var decipher = crypto.createDecipher('aes-256-cbc', key),decryptedPassword;
-
-    decipher.update(encryptedPassword, 'base64', 'utf8'); 
-    decryptedPassword = decipher.final('utf8');
-    console.log('decrypted :', decryptedPassword);
-
-    return decryptedPassword;
 };
 
 exports.uploadImage = function (req, res) {
