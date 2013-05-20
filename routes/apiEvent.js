@@ -387,7 +387,7 @@ exports.uploadImage = function (req, res) {
     if (jQuery.isEmptyObject(req.files)) {
         res.send('Por favor, selecciona una imagen.', 400);
     } else {
-        if (req.files.eventImage.size > 204800) {
+        if (req.files.eventImage.size > 307200) {
             res.send('La imagen no puede superar los 200kb.', 400);
         } else {
             var readStream, writeStream;
