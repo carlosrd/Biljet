@@ -127,7 +127,7 @@ block contentBlock
 
 block javascript
     script(type="text/javascript", src="js/jquery.form.js")
-    script(src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
+    script(type="text/javascript", src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
     script(type="text/javascript", src="js/jquery.ui.timepicker.js")
     script(type="text/javascript", src="js/jquery.numeric.js")
     script(type='text/javascript')
@@ -151,14 +151,14 @@ block javascript
                     description: $("#form_create_event .field_description").val()
                 }
 
-                //- $.ajax({
-                //-     type: "POST",
-                //-     url: "/api/event",
-                //-     data: data,
-                //-     success: function () {
-                //-         window.location.href = '/';
-                //-     }
-                //- });
+                $.ajax({
+                    type: "POST",
+                    url: "/api/event",
+                    data: data,
+                    success: function () {
+                        window.location.href = '/';
+                    }
+                });
             });
 
             // bind 'myForm' and provide a simple callback function
