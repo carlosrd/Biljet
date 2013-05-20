@@ -12,7 +12,6 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
 var allSchemas = require('../models/allSchemas'),
-    crypto = require('crypto'),
     fs = require('fs');
 
 var Event = mongoose.model('Event');
@@ -385,7 +384,6 @@ exports.dontGoToEvent = function (req, res) {
 };
 
 exports.uploadImage = function (req, res) {
-    // TODO: move and rename the file using req.files.path & .name)
     if (jQuery.isEmptyObject(req.files)) {
         res.send('Por favor, selecciona una imagen.', 400);
     } else {

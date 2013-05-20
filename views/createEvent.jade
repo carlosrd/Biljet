@@ -1,23 +1,38 @@
 extends layout
 
 block contentBlock
-    .contenido
-        h2 #{title}
-            form(method='post', id="form_create_event")
+
+        form(method='post', id="form_create_event")
+            .about.span3
                 p
+                    h2 Sobre el evento
                     label(for="name") Nombre: 
                         input(type='text', name='name', value="").field_name
-
-                p
                     label(for="description") Descripción: 
                         input(type='text', name='description', value="").field_description
-
+                    label(for="category") Tipo de evento: 
+                        select(name='category').field_category
+                            option(value='leisure') Ocio
+                            option(value='comedy') Comedia/Monólogos
+                            option(value='cinema') Cine
+                            option(value='concert') Concierto
+                            option(value='conference') Conferencia
+                            option(value='cultural') Cultural
+                            option(value='competition') Concurso
+                            option(value='sport') Deportivo
+                            option(value='trip') Excursión
+                            option(value='exhibition') Exposición
+                            option(value='party') Fiesta
+                            option(value='musical') Musical
+                            option(value='meeting') Reunión
+                            option(value='theatre') Teatro
+                    label(for="capacity") Capacidad:
+                        input(type='number', name='capacity', value="").field_capacity
+                    label(for="price") Precio: 
+                        input(type='number', name='price', value="").field_price
+            .when.span3
                 p
-                    link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css')
-                    script(src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
-                    script(type="text/javascript", src="js/jquery.ui.timepicker.js")
-                    script(type="text/javascript", src="js/jquery.numeric.js")
-                    link(rel="stylesheet", type="text/css", href="css/jquery.ui.timepicker.css")
+                    h2 Cuándo
                     script
                         $(function() {
                             $("#datepicker").datepicker({
@@ -30,26 +45,17 @@ block contentBlock
                             $(".field_price").numeric( { decimal : ",", negative : false });
                             $(".field_capacity").numeric( { decimal : ",", negative : false });
                         });
-
                     label(for="date") Fecha:
                         input#datepicker(type='text', name='date', value="").field_date
-                    
                     label(for="time") Hora: 
                         input#timepicker(type='text', name='time', value="").field_time
-
+            .where.span3
                 p
-                    label(for="capacity") Capacidad:
-                        input(type='number', name='capacity', value="").field_capacity
-
-
-                p
-                    label(for="price") Precio: 
-                        input(type='number', name='price', value="").field_price
-
-                p
+                    h2 Dónde
+                    label(for='city') Localidad:
+                        input(type='text', name='city', value='').field_city
                     label(for="province") Provincia: 
                         select(name='province').field_province
-                            option(value='0') - selecciona -
                             option(value='1') A Coruña
                             option(value='2') Álava
                             option(value='3') Albacete
@@ -103,21 +109,27 @@ block contentBlock
                             option(value='50') Vizcaya
                             option(value='51') Zamora
                             option(value='52') Zaragoza
-                p
-                    label(for="category") Tipo de evento: 
-                        select(name='category').field_category
-                            option(value='') - Selecciona -
-                            option(value='Cinema') Pelicula
-                            option(value='Theatre') Obra de teatro
-                            option(value='Concert') Concierto
-                            option(value='Party') Fiesta
-                            option(value='Meeting') Reunión
-                            option(value='Other') Otros
-
+                    label(for='postalCode') Código postal:
+                        input(type='number', name='postalCode', value='').field_postalCode
+                    label(for='address') Dirección:
+                        input(type='text', name='address', value='').field_address
                 p
                     a().create_event.btn Crear evento
 
+        form(action="/upload", id="upload", method="POST", enctype="multipart/form-data")
+            .upload.span3
+                input(type='file', name='eventImage').file_chooser
+                input(type='submit', value='Subir imagen')
+
+                .container
+                    img(src="img/eventDefault.png", alt="").image
+                    p.text Imagen por defecto
+
 block javascript
+    script(type="text/javascript", src="js/jquery.form.js")
+    script(src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
+    script(type="text/javascript", src="js/jquery.ui.timepicker.js")
+    script(type="text/javascript", src="js/jquery.numeric.js")
     script(type='text/javascript')
         $(document).ready(function() {
             $('a.create_event').click( function () {
@@ -128,22 +140,41 @@ block javascript
                 var data = {
                     title: $("#form_create_event .field_name").val(),
                     finishAt: date.getTime(),
-                    time: $("#form_create_event .field_time").val(),
                     price: $("#form_create_event .field_price").val(),
+                    city: $("#form_create_event .field_city").val(),
                     province: $("#form_create_event .field_province").val(),
+                    postalCode: $("#form_create_event .field_postalCode").val(),
+                    address: $("#form_create_event .field_address").val(),
                     category: $("#form_create_event .field_category").val(),
+                    imageName: $("#upload .file_chooser").val().split(/(\\|\/)/g).pop(),
                     capacity: $("#form_create_event .field_capacity").val(),
                     description: $("#form_create_event .field_description").val()
                 }
 
-                $.ajax({
-                    type: "POST",
-                    url: "/api/event",
-                    data: data,
-                    success: function () {
-                        window.location.href = '/';
-                    }
-                });
+                //- $.ajax({
+                //-     type: "POST",
+                //-     url: "/api/event",
+                //-     data: data,
+                //-     success: function () {
+                //-         window.location.href = '/';
+                //-     }
+                //- });
             });
+
+            // bind 'myForm' and provide a simple callback function
+            var options = {
+                success: function(name) {
+                    $('img.image').attr('src', 'img/' + name);
+                    $('p.text').text('Imagen subida con éxito');
+                },
+                error: function(text) {
+                    if (text.responseText) {
+                        $('p.text').text(text.responseText);
+                    } else {
+                        $('p.text').text('Ha habido un error. Vuelve a intentarlo.');
+                    }
+                }
+            };
+            $('#upload').ajaxForm(options);
         });
 

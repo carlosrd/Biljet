@@ -17,7 +17,6 @@ var express = require('express'),
     qrtest = require('./routes/qrtest'),
     maptest = require('./routes/maptest'),
     calendar = require('./routes/calendar'),
-    example = require('./routes/example'),
     apiUser = require('./routes/apiUser'),
     apiEvent = require('./routes/apiEvent'),
     http = require('http'),
@@ -98,8 +97,6 @@ app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
 
-// DEBUG
-app.get('/example', example.index);
 app.post('/upload', apiEvent.uploadImage);
 
 app.get('/login', user.login);
