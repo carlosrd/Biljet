@@ -3,7 +3,7 @@
 "use strict";
 
 var mongoose, Schema, db, allSchemas, QR;
-
+var superKey = "super key";
 // MongoDB conection
 mongoose = require('mongoose');
 Schema = mongoose.Schema;
@@ -24,10 +24,10 @@ var User = mongoose.model('User');
 function createQR(idQR,userId,eventId,numberTickets){
 
 	var text = idQR + " " + userId + " " + eventId + " " + numberTickets;
-
+	var textEncrypted = encrypt(superKey,text);
 	var qr = qrCode.qrcode(4, 'M');
 
-	qr.addData(text);
+	qr.addData(textEncrypted);
 	qr.make();
 	var imgTag = qr.createImgTag(4);
 	var n = imgTag.indexOf("\u0020width=");
