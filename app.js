@@ -97,6 +97,8 @@ app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
 
+app.get('/api/qr', apiEvent.create);
+
 app.post('/upload', apiEvent.uploadImage);
 
 app.get('/login', user.login);
