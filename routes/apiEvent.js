@@ -418,7 +418,8 @@ exports.uploadImage = function (req, res) {
             readStream = fs.createReadStream(req.files.eventImage.path);
             writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
             readStream.pipe(writeStream);
-            readStream.on('end', function() {
+            readStream.on('end', function(data) {
+                console.log(data, "data end event: ");
                 console.log(req.files.eventImage.name, "*** end callback, name: ");
                 res.send(req.files.eventImage.name, 200);
             });
@@ -462,7 +463,7 @@ function createQR(idQR, userId, eventId, numberTickets) {
     //     res.send(imgFinal, 200);
     // });
 
-    fs.writeFile('./public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
+    fs.writeFile('/public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
         if (err) {
             console.log(err);
         } else {
