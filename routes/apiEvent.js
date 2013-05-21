@@ -68,8 +68,6 @@ exports.save = function (req, res) {
 
             newEvent.save(function (err) {
                 if (err) {
-                    // DEBUG
-                    console.log(err, "err: ");
                     res.send(err, 400);
                 } else {
                     User.update(
@@ -85,8 +83,6 @@ exports.save = function (req, res) {
                         },
                         function (err, data) {
                             if (err) {
-                                // DEBUG
-                                console.log(err, "err: ");
                                 res.send(err, 400);
                             } else {
                                 res.send(newEvent, 200);
@@ -415,7 +411,8 @@ exports.uploadImage = function (req, res) {
 };
 
 exports.create = function (req, res) {
-    createQR(11, 22, 33, 44);  
+    // createQR(11, 22, 33, 44);
+    validateQR('rzl7HwrhvIMe7sZUu+k/oA==');
 };
 
 function createQR(idQR, userId, eventId, numberTickets) {
@@ -441,6 +438,34 @@ function createQR(idQR, userId, eventId, numberTickets) {
     });
 }
 
+function validateQR(stringQR) {
+
+    var decryptString, elementsQR, idQR, userId, eventId, numberTickets;
+
+    decryptString = decrypt(superKey, stringQR);
+    elementsQR = decryptString.split(" ");
+    idQR = elementsQR[0];
+    userId = elementsQR[1];
+    eventId = elementsQR[2];
+    numberTickets = elementsQR[3];
+    
+    //buscamos el qr en la base de datos
+    QR.findOne({_id: idQR}, function (err, QRToCompare) {
+        if (err) {
+            return false;
+        } else if (QRToCompare === null) {
+            return false;
+        } else {
+            if (QRToCompare._id !== userId || QRToCompare.event._id !== eventId ||
+                    QRToCompare.numberTickets !== numberTickets || QRToCompare.isUsed) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    );
+}
+
 function encrypt (key, plaintext) {
 
     var cipher = crypto.createCipher('aes-256-cbc', key),encryptedPassword;
@@ -462,45 +487,4 @@ function decrypt(key, encryptedPassword) {
 
     return decryptedPassword;
 }
-
-function validateQR(stringQR) {
-
-    var elementsQR = stringQR.split(" ");
-    //buscamos el qr en la base de datos
-    QR.findOne({_id: elementsQR[0]}, function (err,QRToCompare) {
-        if (err) {
-                return -1;
-            } else if (QRToCompare === null) {
-                return -1;
-            } else {
-                //saber si es ese usuario esta dentro del qr
-                if (QRToCompare.username !== elementsQR[1]) {
-                    return -1;
-                }
-                else{
-                    //saber si es ese evento del qr
-                    if (QRToCompare.event !== elementsQR[2]){
-                        return -1;
-                    }
-                    else{
-                            //si coinciden el numero de entradas
-                        if (QRToCompare.numberTickets !== elementsQR[3]){
-                            return-1;
-                        }
-                        else{
-                            //si no ha sido usado
-                            if (QRToCompare.isUse){
-                                return -1;
-                            }
-                            else {
-                                return 0;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    );
-}
-
 
