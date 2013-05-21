@@ -410,6 +410,7 @@ exports.uploadImage = function (req, res) {
     if (jQuery.isEmptyObject(req.files)) {
         res.send('Por favor, selecciona una imagen.', 400);
     } else {
+        console.log(req.files, '**** req files: ****');
         if (req.files.eventImage.size > 307200) {
             res.send('La imagen no puede superar los 200kb.', 400);
         } else {
@@ -418,6 +419,7 @@ exports.uploadImage = function (req, res) {
             writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
             readStream.pipe(writeStream);
             readStream.on('end', function() {
+                console.log(req.files.eventImage.name, "*** end callback, name: ");
                 res.send(req.files.eventImage.name, 200);
             });
         }
@@ -435,7 +437,7 @@ exports.create = function (req, res) {
 
 function createQR(idQR, userId, eventId, numberTickets) {
 
-    var text, textEncrypted, qr, imgTag, n, imgFinal;
+    var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
 
     text = idQR + " " + userId + " " + eventId + " " + numberTickets;
     textEncrypted = encrypt(superKey, text);
@@ -446,6 +448,19 @@ function createQR(idQR, userId, eventId, numberTickets) {
     imgTag = qr.createImgTag(4);
     n = imgTag.indexOf('\u0020width=');
     imgFinal = imgTag.slice(32, n - 1);
+
+    fs.stat(imgFinal, function (err, stats) {
+        console.log(stats, "stats");
+        console.log(imgFinal, "imgFinal: ");
+    });
+
+    // readStream = fs.createReadStream(imgFinal);
+    // writeStream = fs.createWriteStream('public/qr/' + idQR + '.png');
+    // readStream.pipe(writeStream);
+    // readStream.on('end', function(err) {
+    //     console.log(err, "err: ");
+    //     res.send(imgFinal, 200);
+    // });
 
     fs.writeFile('public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
         if (err) {
