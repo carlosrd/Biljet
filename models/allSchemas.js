@@ -108,7 +108,7 @@ userSchema.methods.validPassword = function (pass) {
 
 
 var qrSchema = new Schema({
-    username: {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
