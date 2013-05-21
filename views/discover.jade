@@ -3,6 +3,7 @@ extends layout
 block contentBlock
 
 	.container
+		div.discovertittle
 		h1 Quieres descubrir eventos nuevos?
 		div.row.span5
 			div.formdiscover.span3
@@ -35,7 +36,7 @@ block contentBlock
 				span
 					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')
 				
-			.botonBuscar
+				div.botonBuscar
 				input.btn(type='button', value='Buscar coincidencias')
 			
 		div.tablonEventosEncontrados

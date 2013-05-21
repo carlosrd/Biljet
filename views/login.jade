@@ -2,16 +2,18 @@ extends layout
 
 block contentBlock
 
+     
+        div.formlogin.form(action='/login', method='post', id="form_login")
+            div.logintittle
+                h1 LOGIN
+            div
+                input(type='text', placeholder='Usuario').field_username
+            div
+                input(type='password', placeholder='Contraseña').field_password
+            div.buttonlogin
+                a(title='Login').btn.btn-large.submit Login
 
-    div.formlogin.form(action='/login', method='post', id="form_login")
-        div
-            input(type='text', placeholder='Usuario').field_username
-        div
-            input(type='password', placeholder='Contraseña').field_password
-        div.buttonlogin
-            a(title='Login').btn.btn-large.submit Login
-
-        .error_message
+            .error_message
 
 block javascript
     script(type='text/javascript')

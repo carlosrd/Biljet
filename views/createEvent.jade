@@ -118,11 +118,14 @@ block contentBlock
 
         form(action="/upload", id="upload", method="POST", enctype="multipart/form-data")
             .upload.span3
-                input(type='file', name='eventImage').file_chooser
-                input.btn(type='submit', value='Subir imagen')
                 div.photocreateevent
-                img(src="img/eventDefault.png", alt="").image
-                p.text Imagen por defecto
+                    img(src="img/eventDefault.png", alt="").image
+                    p.text Imagen por defecto
+                div.filechooser
+                    input(type='file', name='eventImage').file_chooser
+                div.buttonuploadimage
+                    input.btn(type='submit', value='Subir imagen')
+              
 
 block javascript
     script(type="text/javascript", src="js/jquery.form.js")
