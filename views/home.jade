@@ -130,6 +130,7 @@ block javascript
 
                 $el.find('img')
                     .attr('src', 'img/' + event.imageName);
+                    console.log($el.find('img').attr('src'));
 
                 $el.find('.title')
                     .html('<a href="/event/' + event._id + '">' + event.title + '</a>');

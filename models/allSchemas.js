@@ -37,11 +37,6 @@ var eventSchema = new Schema({
     latitude: { type: Number, default: null },
     longitude: { type: Number, default: null },
     category: { type: String, required: true },
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'EventComment',
-        default: null
-    }],
     imageName: { type: String, default: 'eventDefault.png' },
     description: { type: String, required: true },
     capacity: { type: Number, required: true }
@@ -88,16 +83,6 @@ var userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'QR',
         default: null
-    }],
-    userComments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'UserComment',
-        default: null
-    }],
-    eventComments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'EventComment',
-        default: null
     }]
 });
 
@@ -108,42 +93,22 @@ userSchema.methods.validPassword = function (pass) {
 
 
 var qrSchema = new Schema({
-    username: {
+    user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
-    name: String,
+    name: { type: String, required: true },
     //numero de entradas a comprar
-    numberTickets: Number,
+    numberTickets: { type: Number, required: true },
     //Saber si el qr ya fue usado
-    isUse: Boolean,
-    path: String,
+    isUsed: { type: Boolean, default: false },
+    path: { type: String, required: true },
     event: {
         type: Schema.Types.ObjectId,
-        ref: 'Event'
+        ref: 'Event',
+        required: true
     }
-});
-
-
-
-var eventCommentSchema = new Schema({
-    username: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    createdAt: Number,
-    text: String
-});
-
-
-
-var userCommentSchema = new Schema({
-    username: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    createdAt: Number,
-    text: String
 });
 
 
@@ -151,5 +116,3 @@ var userCommentSchema = new Schema({
 mongoose.model('User', userSchema);
 mongoose.model('Event', eventSchema);
 mongoose.model('QR', qrSchema);
-mongoose.model('EventComment', eventCommentSchema);
-mongoose.model('UserComment', userCommentSchema);

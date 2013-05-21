@@ -114,7 +114,7 @@ block contentBlock
                     label(for='address') Dirección:
                         input(type='text', name='address', value='').field_address
                 p
-                    div.buttoncreate.a().create_event.btn Crear evento
+                    a().create_event.btn.buttoncreate Crear evento
 
         form(action="/upload", id="upload", method="POST", enctype="multipart/form-data")
             .upload.span3
@@ -139,6 +139,10 @@ block javascript
                 var arrayDate = $("#form_create_event .field_date").val().split("/");
                 var arrayTime = $("#form_create_event .field_time").val().split(":");
                 var date = new Date(arrayDate[2], arrayDate[1], arrayDate[0], arrayTime[0], arrayTime[1]);
+                var imageName = $("#upload .file_chooser").val().split(/(\\|\/)/g).pop();
+                if (imageName === "") {
+                    imageName = 'eventDefault.png';
+                }
                 var data = {
                     title: $("#form_create_event .field_name").val(),
                     finishAt: date.getTime(),
@@ -148,7 +152,7 @@ block javascript
                     postalCode: $("#form_create_event .field_postalCode").val(),
                     address: $("#form_create_event .field_address").val(),
                     category: $("#form_create_event .field_category").val(),
-                    imageName: $("#upload .file_chooser").val().split(/(\\|\/)/g).pop(),
+                    imageName: imageName,
                     capacity: $("#form_create_event .field_capacity").val(),
                     description: $("#form_create_event .field_description").val()
                 }
