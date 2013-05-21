@@ -463,7 +463,7 @@ function validateQR(stringQR) {
                 return true;
             }
         }
-    );
+    });
 }
 
 function encrypt (key, plaintext) {
