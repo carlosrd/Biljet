@@ -70,27 +70,41 @@ exports.save = function (req, res) {
                 if (err) {
                     res.send(err, 400);
                 } else {
-                    User.update(
-                        {
-                            _id: creator._id
-                        },
-                        {
-                            $push:
+                    var newQr = new QR({
+                        user: creator,
+                        name: newEvent._id,
+                        numberTickets: 1,
+                        isUsed: false,
+                        path: newEvent._id + '.png',
+                        event: newEvent
+                    });
+                    newQr.save(function (err) {
+                        if (err) {
+                            res.send(err, 400);
+                        } else {
+                            createQR(newQr._id, creator._id, newEvent._id, 1);
+                            User.update(
                                 {
-                                    eventsOrganized: newEvent,
-                                    eventsToGo: newEvent
+                                    _id: creator._id
+                                },
+                                {
+                                    $push:
+                                        {
+                                            eventsOrganized: newEvent,
+                                            eventsToGo: newEvent,
+                                            qrs: newQr
+                                        }
+                                },
+                                function (err, data) {
+                                    if (err) {
+                                        res.send(err, 400);
+                                    } else {
+                                        res.send(newEvent, 200);
+                                    }
                                 }
-                        },
-                        function (err, data) {
-                            if (err) {
-                                res.send(err, 400);
-                            } else {
-                                res.send(newEvent, 200);
-                                // DEBUG
-                                console.log("Event added successfully to " + creator.username);
-                            }
+                            );
                         }
-                    );
+                    });
                 }
             });
         }
@@ -412,7 +426,11 @@ exports.uploadImage = function (req, res) {
 
 exports.create = function (req, res) {
     // createQR(11, 22, 33, 44);
-    validateQR('rzl7HwrhvIMe7sZUu+k/oA==');
+    if (validQR('rzl7HwrhvIMe7sZUu+k/oA==')) {
+        res.send('', 200);
+    } else {
+        res.send('Invalid QR', 400);
+    }
 };
 
 function createQR(idQR, userId, eventId, numberTickets) {
@@ -438,7 +456,7 @@ function createQR(idQR, userId, eventId, numberTickets) {
     });
 }
 
-function validateQR(stringQR) {
+function validQR(stringQR) {
 
     var decryptString, elementsQR, idQR, userId, eventId, numberTickets;
 
@@ -448,8 +466,7 @@ function validateQR(stringQR) {
     userId = elementsQR[1];
     eventId = elementsQR[2];
     numberTickets = elementsQR[3];
-    
-    //buscamos el qr en la base de datos
+
     QR.findOne({_id: idQR}, function (err, QRToCompare) {
         if (err) {
             return false;
