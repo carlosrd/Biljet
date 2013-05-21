@@ -96,24 +96,32 @@ input[type="submit"] {
   cursor: pointer;
   -webkit-appearance: button;
 }
+.logintittle {
+  margin-left: 50px;
+}
 .formlogin {
-  margin: 100px 530px;
+  margin: 100px 540px;
 }
 .buttonlogin {
   margin-left: 65px;
+}
+.signuptittle {
+  margin-left: 220px;
 }
 .formsignup {
   margin-left: 340px;
 }
 .buttonsignup {
-  margin: 200px -370px;
+  margin-left: 250px;
+}
+.discovertittle {
+  margin: -28px;
 }
 .formdiscover {
-  margin: 0px;
+  margin: -10px;
 }
 .botonBuscar {
-  margin: 30px 17px;
-  zoom: 130%;
+  margin: zoom: 110%;
 }
 .formcreate {
   margin: 0px 20px;
@@ -129,14 +137,31 @@ input[type="submit"] {
   margin: 40px;
 }
 .upload {
-  margin: -210px 0px;
+  margin: -235px 0px;
+}
+.filechooser {
+  margin: -20px 0px;
+}
+.bottonuploadimage {
+  margin: 0px 30px;
 }
 .photocreateevent {
-  margin: 5px;
+  margin: 30px 50px;
+  zoom: 80%;
 }
 .buttoncreate {
   zoom: 180%;
-  margin: 6px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+.buttonuploadimage {
+  margin: 28px 0px 0px 50px;
+}
+.details {
+  margin: 40px 100px 100px 50px;
+}
+.precio {
+  margin: 0px 0px 0px 35px;
+  zoom: 200%;
 }
 label,
 select,
