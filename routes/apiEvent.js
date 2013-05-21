@@ -462,7 +462,7 @@ function createQR(idQR, userId, eventId, numberTickets) {
     //     res.send(imgFinal, 200);
     // });
 
-    fs.writeFile('public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
+    fs.writeFile('./public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
         if (err) {
             console.log(err);
         } else {
