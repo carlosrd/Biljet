@@ -37,11 +37,6 @@ var eventSchema = new Schema({
     latitude: { type: Number, default: null },
     longitude: { type: Number, default: null },
     category: { type: String, required: true },
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'EventComment',
-        default: null
-    }],
     imageName: { type: String, default: 'eventDefault.png' },
     description: { type: String, required: true },
     capacity: { type: Number, required: true }
@@ -87,16 +82,6 @@ var userSchema = new Schema({
     qrs: [{
         type: Schema.Types.ObjectId,
         ref: 'QR',
-        default: null
-    }],
-    userComments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'UserComment',
-        default: null
-    }],
-    eventComments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'EventComment',
         default: null
     }]
 });
