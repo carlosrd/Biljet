@@ -7,15 +7,21 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 var util = require('util');
 var jQuery = require('jquery');
+var crypto = require('crypto');
 // var Schema = mongoose.Schema;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
 
 var allSchemas = require('../models/allSchemas'),
-    fs = require('fs');
+    fs = require('fs'),
+    qrCode = require('qrcode-npm/qrcode');
 
 var Event = mongoose.model('Event');
 var User = mongoose.model('User');
+var QR = mongoose.model('QR');
+
+var superKey = "super key";
+
 
 exports.save = function (req, res) {
     var userId, userPassword;
@@ -96,7 +102,12 @@ exports.save = function (req, res) {
 };
 
 exports.list = function (req, res) {
+
+    var limit;
+
+    limit = req.query.limit ? req.query.limit : 100;
     Event.find({})
+        .limit(limit)
         .populate('attendee')
         .populate('creator')
         .exec(function (err, events) {
@@ -270,9 +281,9 @@ exports.goToEvent = function (req, res) {
                         },
                         {
                             $push:
-                            {
-                                attendee: user
-                            }
+                                {
+                                    attendee: user
+                                }
                         },
                         function (err, data) {
                             if (err) {
@@ -317,7 +328,8 @@ exports.goToEvent = function (req, res) {
                                     }
                                 );
                             }
-                        });
+                        }
+                    );
                 }
             });
         }
@@ -339,9 +351,9 @@ exports.dontGoToEvent = function (req, res) {
                         },
                         {
                             $pull:
-                            {
-                                attendee: user
-                            }
+                                {
+                                    attendee: user
+                                }
                         },
                         function (err, data) {
                             if (err) {
@@ -376,7 +388,8 @@ exports.dontGoToEvent = function (req, res) {
                                     }
                                 );
                             }
-                        });
+                        }
+                    );
                 }
             });
         }
@@ -393,11 +406,101 @@ exports.uploadImage = function (req, res) {
             var readStream, writeStream;
             readStream = fs.createReadStream(req.files.eventImage.path);
             writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
-            readStream.pipe(writeStream); 
+            readStream.pipe(writeStream);
             readStream.on('end', function() {
                 res.send(req.files.eventImage.name, 200);
             });
         }
     }
 };
+
+exports.create = function (req, res) {
+    createQR(11, 22, 33, 44);  
+};
+
+function createQR(idQR, userId, eventId, numberTickets) {
+
+    var text, textEncrypted, qr, imgTag, n, imgFinal;
+
+    text = idQR + " " + userId + " " + eventId + " " + numberTickets;
+    textEncrypted = encrypt(superKey, text);
+    qr = qrCode.qrcode(4, 'M');
+
+    qr.addData(textEncrypted);
+    qr.make();
+    imgTag = qr.createImgTag(4);
+    n = imgTag.indexOf('\u0020width=');
+    imgFinal = imgTag.slice(32, n - 1);
+
+    fs.writeFile('public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('qr create');
+        }
+    });
+}
+
+function encrypt (key, plaintext) {
+
+    var cipher = crypto.createCipher('aes-256-cbc', key),encryptedPassword;
+
+    cipher.update(plaintext, 'utf8', 'base64');
+    encryptedPassword = cipher.final('base64');
+    console.log('encrypted :', encryptedPassword);
+
+    return encryptedPassword;
+}
+
+function decrypt(key, encryptedPassword) {
+
+    var decipher = crypto.createDecipher('aes-256-cbc', key), decryptedPassword;
+
+    decipher.update(encryptedPassword, 'base64', 'utf8'); 
+    decryptedPassword = decipher.final('utf8');
+    console.log('decrypted :', decryptedPassword);
+
+    return decryptedPassword;
+}
+
+function validateQR(stringQR) {
+
+    var elementsQR = stringQR.split(" ");
+    //buscamos el qr en la base de datos
+    QR.findOne({_id: elementsQR[0]}, function (err,QRToCompare) {
+        if (err) {
+                return -1;
+            } else if (QRToCompare === null) {
+                return -1;
+            } else {
+                //saber si es ese usuario esta dentro del qr
+                if (QRToCompare.username !== elementsQR[1]) {
+                    return -1;
+                }
+                else{
+                    //saber si es ese evento del qr
+                    if (QRToCompare.event !== elementsQR[2]){
+                        return -1;
+                    }
+                    else{
+                            //si coinciden el numero de entradas
+                        if (QRToCompare.numberTickets !== elementsQR[3]){
+                            return-1;
+                        }
+                        else{
+                            //si no ha sido usado
+                            if (QRToCompare.isUse){
+                                return -1;
+                            }
+                            else {
+                                return 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    );
+}
+
 

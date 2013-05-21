@@ -116,7 +116,7 @@ var qrSchema = new Schema({
     //numero de entradas a comprar
     numberTickets: Number,
     //Saber si el qr ya fue usado
-    isUse: Boolean,
+    isUsed: Boolean,
     path: String,
     event: {
         type: Schema.Types.ObjectId,
