@@ -2,8 +2,8 @@ extends layout
 
 block contentBlock
 
-        form(method='post', id="form_create_event")
-            .about.span3
+        div.formcreate.form(method='post', id="form_create_event")
+            div.about.span3
                 p
                     h2 Sobre el evento
                     label(for="name") Nombre: 
@@ -49,7 +49,7 @@ block contentBlock
                         input#datepicker(type='text', name='date', value="").field_date
                     label(for="time") Hora: 
                         input#timepicker(type='text', name='time', value="").field_time
-            .where.span3
+            where.span3
                 p
                     h2 Dónde
                     label(for='city') Localidad:
@@ -114,16 +114,15 @@ block contentBlock
                     label(for='address') Dirección:
                         input(type='text', name='address', value='').field_address
                 p
-                    a().create_event.btn Crear evento
+                    div.buttoncreate.a().create_event.btn Crear evento
 
         form(action="/upload", id="upload", method="POST", enctype="multipart/form-data")
             .upload.span3
                 input(type='file', name='eventImage').file_chooser
-                input(type='submit', value='Subir imagen')
-
-                .container
-                    img(src="img/eventDefault.png", alt="").image
-                    p.text Imagen por defecto
+                input.btn(type='submit', value='Subir imagen')
+                div.photocreateevent
+                img(src="img/eventDefault.png", alt="").image
+                p.text Imagen por defecto
 
 block javascript
     script(type="text/javascript", src="js/jquery.form.js")

@@ -4,9 +4,8 @@ block contentBlock
 
 	.container
 		h1 Quieres descubrir eventos nuevos?
-		
-		div.row
-			div.span5
+		div.row.span5
+			div.formdiscover.span3
 				| Busca nuevos eventos por :
 				span
 					input(type='text', name='buscarLugar', value='Introduce un lugar', size='30%')
@@ -37,7 +36,7 @@ block contentBlock
 					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')
 				
 			.botonBuscar
-				input(type='button', value='Buscar coincidencias')
+				input.btn(type='button', value='Buscar coincidencias')
 			
 		div.tablonEventosEncontrados
 			.linea

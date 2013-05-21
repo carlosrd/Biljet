@@ -3,12 +3,12 @@ extends layout
 block contentBlock
 
 
-    form(action='/login', method='post', id="form_login")
+    div.formlogin.form(action='/login', method='post', id="form_login")
         div
             input(type='text', placeholder='Usuario').field_username
         div
             input(type='password', placeholder='Contraseña').field_password
-        div
+        div.buttonlogin
             a(title='Login').btn.btn-large.submit Login
 
         .error_message
