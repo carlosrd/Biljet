@@ -121,6 +121,7 @@ exports.list = function (req, res) {
         .limit(limit)
         .populate('attendee')
         .populate('creator')
+        .sort('finishAt')
         .exec(function (err, events) {
             if (err) {
                 res.send(err, 400);
@@ -300,44 +301,60 @@ exports.goToEvent = function (req, res) {
                             if (err) {
                                 res.send(err, 400);
                             } else {
-                                User.update(
-                                    {
-                                        _id: user._id,
-                                        password: req.body.password
-                                    },
-                                    {
-                                        $push:
+                                var newQr = new QR({
+                                    user: user,
+                                    name: eventToGo._id,
+                                    numberTickets: 1,
+                                    isUsed: false,
+                                    path: eventToGo._id + '.png',
+                                    event: eventToGo
+                                });
+                                newQr.save(function (err) {
+                                    if (err) {
+                                        res.send(err, 400);
+                                    } else {
+                                        createQR(newQr._id, user._id, eventToGo._id, 1);
+                                        User.update(
                                             {
-                                                eventsToGo: eventToGo
+                                                _id: user._id,
+                                                password: req.body.password
+                                            },
+                                            {
+                                                $push:
+                                                    {
+                                                        qrs: newQr,
+                                                        eventsToGo: eventToGo
+                                                    }
+                                            },
+                                            function (err, data) {
+                                                if (err) {
+                                                    res.send(err, 400);
+                                                } else {
+                                                    // DEBUG
+                                                    console.log("Event added successfully to " + user.username);
+                                                    res.send(data, 200);
+
+                                                    // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
+
+                                                    // var qr = qrCode.qrcode(4, 'M');
+                                                    // qr.addData(text);
+                                                    // qr.make();
+                                                    // var imgTag = qr.createImgTag(4);
+                                                    // //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
+                                                    // var n=imgTag.indexOf("\u0020width=");
+                                                    // var cosa2=imgTag.slice(32,n-1);
+                                                    // fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
+                                                    //     if(err){
+                                                    //         console.log(err);
+                                                    //     }else{
+                                                    //          console.log('qr create');
+                                                    //     }
+                                                    // });
+                                                }
                                             }
-                                    },
-                                    function (err, data) {
-                                        if (err) {
-                                            res.send(err, 400);
-                                        } else {
-                                            // DEBUG
-                                            console.log("Event added successfully to " + user.username);
-                                            res.send(data, 200);
-
-                                            // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
-
-                                            // var qr = qrCode.qrcode(4, 'M');
-                                            // qr.addData(text);
-                                            // qr.make();
-                                            // var imgTag = qr.createImgTag(4);
-                                            // //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
-                                            // var n=imgTag.indexOf("\u0020width=");
-                                            // var cosa2=imgTag.slice(32,n-1);
-                                            // fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
-                                            //     if(err){
-                                            //         console.log(err);
-                                            //     }else{
-                                            //          console.log('qr create');
-                                            //     }
-                                            // });
-                                        }
+                                        );
                                     }
-                                );
+                                });
                             }
                         }
                     );
