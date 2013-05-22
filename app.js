@@ -30,8 +30,8 @@ var mongoose = require('mongoose'),
 // WARNING!!!
 // This line connect to the remote Mongo Database, use carefully!!
 // For testing purposes, use the localhost DB (the line commented below)
-//mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
-  mongoose.connect('localhost', 'biljet');
+mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
+  // mongoose.connect('localhost', 'biljet');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connection error: "));
