@@ -1,17 +1,22 @@
 extends layout
 
 block contentBlock
-    .details
+    .details.span2
+
+        script(type='text/javascript')
+            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
         ul
             li
                 h1.title
             li
                 img.eventImg
             li
-                h2.description
+                h3.category
+            li
+                h4.price
+            li
+                h4.description
             li.date
-
-            li.div.precio.price
 
             li.span2
                 if (logged)
@@ -20,17 +25,80 @@ block contentBlock
                     a(href="/signup", title='Regístrate').btn.btn-large.btn-block.signup Regístrate para apuntarte
             //- li.qr
             //-     img.qrImg
+    .share.span1
+        a.twitter-share-button(href='https://twitter.com/share', data-text='Me gusta este evento en http://www.biljetapp.com', data-lang='es', data-hashtags='BiljetApp') Twittear
+
+    .map
+        #map
+
+    <!-- AddThis Button BEGIN -->
+    .addthis_toolbox.addthis_default_style
+        a.addthis_button_facebook_like(fb:like:layout='button_count')
+        a.addthis_button_tweet
+        a.addthis_button_pinterest_pinit
+        a.addthis_counter.addthis_pill_style
+    <!-- AddThis Button END -->
 
 block javascript
+
+    script(type='text/javascript')
+        var addthis_config = {"data_track_addressbar":true};
+    script(type='text/javascript', src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-519cfeb63c42575f")
+    script(type='text/javascript', src='http://maps.google.com/maps/api/js?sensor=false')
+    script(type='text/javascript', src='/js/gmaps.js')
+
     script(type='text/javascript')
         var path = "/api/event/" + "#{id}";
         $.getJSON(path, function (event) {
+            // DEBUG
+            console.log(event, "event: ");
             $('h1.title').text(event.title);
-            $('h2.title').text(event.description);
-            $('li.date').text(new Date(event.createdAt));
+            var category;
+            if (event.category === 'leisure') category = 'Ocio';
+            if (event.category === 'comedy') category = 'Comedia';
+            if (event.category === 'cinema') category = 'Cine';
+            if (event.category === 'concert') category = 'Concierto';
+            if (event.category === 'conference') category = 'Conferencia';
+            if (event.category === 'cultural') category = 'Cultural';
+            if (event.category === 'competition') category = 'Concurso';
+            if (event.category === 'sport') category = 'Deportivo';
+            if (event.category === 'trip') category = 'Excursión';
+            if (event.category === 'exhibition') category = 'Exposición';
+            if (event.category === 'party') category = 'Fiesta';
+            if (event.category === 'musical') category = 'Musical';
+            if (event.category === 'meeting') category = 'Reunión';
+            if (event.category === 'theatre') category = 'Teatro';
+            $('h3.category').text('Categoría: ' + category);
+            $('h4.description').text(event.description);
+            $('li.date').text('Cuándo: ' + new Date(event.createdAt));
             $('img.eventImg').attr('src', '/img/' + event.imageName);
-            $('li.price').text(event.price + ' €');
+            $('h4.price').text('Precio: ' + event.price + ' €');
+
+            var map, address, self = this;
+
+            address = event.address + ', ' + event.postalCode + ', ' + event.city;
+            $(document).ready(function(){
+                map = new GMaps({
+                    el: '#map',
+                    lat: -12.043333,
+                    lng: -77.028333
+                });
+                GMaps.geocode({
+                    address: address,
+                    callback: function(results, status) {
+                        if(status === 'OK'){
+                            var latlng = results[0].geometry.location;
+                            map.setCenter(latlng.lat(), latlng.lng());
+                            map.addMarker({
+                                lat: latlng.lat(),
+                                lng: latlng.lng()
+                            });
+                        }
+                    }
+                });
+            });
         });
+
 
 
         if ($('a.joinEvent').text()) {
