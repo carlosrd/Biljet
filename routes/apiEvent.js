@@ -20,7 +20,7 @@ var Event = mongoose.model('Event');
 var User = mongoose.model('User');
 var QR = mongoose.model('QR');
 
-var superKey = "*****Incredible | secure _ phrase & in $ order / to ? protect ·  our * QRs****";
+var superKey = "****Incredible|_secure_phrase&in$order/to?_protect·our*QRs***";
 
 
 exports.save = function (req, res) {
@@ -264,7 +264,6 @@ exports.isGoing = function (req, res) {
         if (err) {
             res.send(err, 400);
         } else {
-            console.log(user, "user: ");
             if (user !== null) {
                 if (user.eventsToGo.indexOf(req.params.id) > -1) {
                     res.send("true", 200);
@@ -330,8 +329,6 @@ exports.goToEvent = function (req, res) {
                                                 if (err) {
                                                     res.send(err, 400);
                                                 } else {
-                                                    // DEBUG
-                                                    console.log("Event added successfully to " + user.username);
                                                     res.send(data, 200);
 
                                                     // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
@@ -520,11 +517,12 @@ function validQR(stringQR) {
 
 function encrypt (key, plaintext) {
 
-    var cipher, encryptedPassword;
+    var cipher, firstPart, seconPart, encryptedPassword;
     cipher = crypto.createCipher('aes-256-cbc', key);
 
-    cipher.update(plaintext, 'utf8', 'base64');
-    encryptedPassword = cipher.final('base64');
+    firstPart = cipher.update(plaintext, 'utf8', 'base64');
+    seconPart = encryptedPassword = cipher.final('base64');
+    encryptedPassword = firstPart + seconPart;
     console.log('encrypted :', encryptedPassword);
 
     return encryptedPassword;
@@ -532,12 +530,13 @@ function encrypt (key, plaintext) {
 
 function decrypt(key, encryptedPassword) {
 
-    var decipher, decryptedPassword;
+    var decipher,firstPart,seconPart, decryptedPassword;
     decipher = crypto.createDecipher('aes-256-cbc', key);
     // decipher.setAutoPadding(true);
 
-    decipher.update(encryptedPassword, 'base64', 'utf8'); 
-    decryptedPassword = decipher.final('utf8');
+    firstPart = decipher.update(encryptedPassword, 'base64', 'utf8'); 
+    seconPart = decryptedPassword = decipher.final('utf8');
+    decryptedPassword = firstPart + seconPart;
     console.log('decrypted :', decryptedPassword);
 
     return decryptedPassword;
