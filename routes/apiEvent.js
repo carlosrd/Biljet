@@ -517,11 +517,12 @@ function validQR(stringQR) {
 
 function encrypt (key, plaintext) {
 
-    var cipher, encryptedPassword;
+    var cipher, firstPart, seconPart, encryptedPassword;
     cipher = crypto.createCipher('aes-256-cbc', key);
 
-    cipher.update(plaintext, 'utf8', 'base64');
-    encryptedPassword = cipher.final('base64');
+    firstPart = cipher.update(plaintext, 'utf8', 'base64');
+    seconPart = encryptedPassword = cipher.final('base64');
+    encryptedPassword = firstPart + seconPart;
     console.log('encrypted :', encryptedPassword);
 
     return encryptedPassword;
@@ -529,12 +530,13 @@ function encrypt (key, plaintext) {
 
 function decrypt(key, encryptedPassword) {
 
-    var decipher, decryptedPassword;
+    var decipher,firstPart,seconPart, decryptedPassword;
     decipher = crypto.createDecipher('aes-256-cbc', key);
     // decipher.setAutoPadding(true);
 
-    decipher.update(encryptedPassword, 'base64', 'utf8'); 
-    decryptedPassword = decipher.final('utf8');
+    firstPart = decipher.update(encryptedPassword, 'base64', 'utf8'); 
+    seconPart = decryptedPassword = decipher.final('utf8');
+    decryptedPassword = firstPart + seconPart;
     console.log('decrypted :', decryptedPassword);
 
     return decryptedPassword;
