@@ -485,35 +485,17 @@ function createQR (qrId, userId, eventId, numberTickets) {
     });
 }
 
-    // DEBUG
-
-    // readStream = fs.createReadStream(imgFinal);
-    // writeStream = fs.createWriteStream('public/qr/' + idQR + '.png');
-    // readStream.pipe(writeStream);
-    // readStream.on('error', function (err) {
-    //     console.log(err);
-    //     return err;
-    // });
-    // readStream.on('end', function () {
-    //     console.log(imgFinal);
-    //     return imgFinal;
-    // });
-
-    // fs.writeFile('/public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         console.log('qr create');
-    //     }
-    // });
-// }
 
 function validQR(stringQR) {
 
     var decryptString, elementsQR, idQR, userId, eventId, numberTickets;
 
+    // DEBUG
+    console.log(superKey, "superKey: ");
+    console.log(stringQR, "stringQR: ");
     decryptString = decrypt(superKey, stringQR);
     elementsQR = decryptString.split(" ");
+    // DEBUG
     console.log(elementsQR, "elementsQR: ");
     idQR = elementsQR[0];
     userId = elementsQR[1];
@@ -538,7 +520,8 @@ function validQR(stringQR) {
 
 function encrypt (key, plaintext) {
 
-    var cipher = crypto.createCipher('aes-256-cbc', key), encryptedPassword;
+    var cipher, encryptedPassword;
+    cipher = crypto.createCipher('aes-256-cbc', key);
 
     cipher.update(plaintext, 'utf8', 'base64');
     encryptedPassword = cipher.final('base64');
@@ -549,7 +532,9 @@ function encrypt (key, plaintext) {
 
 function decrypt(key, encryptedPassword) {
 
-    var decipher = crypto.createDecipher('aes-256-cbc', key), decryptedPassword;
+    var decipher, decryptedPassword;
+    decipher = crypto.createDecipher('aes-256-cbc', key);
+    // decipher.setAutoPadding(true);
 
     decipher.update(encryptedPassword, 'base64', 'utf8'); 
     decryptedPassword = decipher.final('utf8');
