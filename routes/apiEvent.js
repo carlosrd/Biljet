@@ -440,10 +440,10 @@ exports.create = function (req, res) {
     }
 };
 
-function createQR (idQR, userId, eventId, numberTickets) {
+function createQR (qrId, userId, eventId, numberTickets) {
     var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
 
-    text = newQr._id + " " + creator._id + " " + newEvent._id + " " + 1;
+    text = qrId + " " + userId + " " + eventId + " " + 1;
     textEncrypted = encrypt(superKey, text);
     qr = qrCode.qrcode(4, 'M');
 
@@ -455,7 +455,7 @@ function createQR (idQR, userId, eventId, numberTickets) {
 
     var buff = new Buffer(imgFinal, 'base64');
 
-    var path = 'public/img/qr_' + newQr._id + '.png';
+    var path = 'public/img/qr_' + qrId + '.png';
     var stream = fs.createWriteStream(path);
     console.log(path, 'route to QR: ');
     stream.write(buff);
