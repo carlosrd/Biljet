@@ -124,7 +124,12 @@ block javascript
                 '</div>';
 
             var $container = $('.events');
-            for (i in data) {
+            var i, len;
+            len = data.length;
+            if (len > 10) {
+                len = 10;
+            }
+            for (i = 0; i < len; i++) {
                 var event = data[i];
                 var $el = $(eventTemplate);
 
