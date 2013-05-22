@@ -419,7 +419,6 @@ exports.uploadImage = function (req, res) {
             writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
             readStream.pipe(writeStream);
             readStream.on('end', function(data) {
-                console.log(data, "data end event: ");
                 console.log(req.files.eventImage.name, "*** end callback, name: ");
                 res.send(req.files.eventImage.name, 200);
             });
@@ -450,26 +449,34 @@ function createQR(idQR, userId, eventId, numberTickets) {
     n = imgTag.indexOf('\u0020width=');
     imgFinal = imgTag.slice(32, n - 1);
 
-    fs.stat(imgFinal, function (err, stats) {
-        console.log(stats, "stats");
-        console.log(imgFinal, "imgFinal: ");
+    var buff = new Buffer(imgFinal, 'base64');
+
+    var stream = fs.createWriteStream('public/qr/' + idQR + '.png');
+    stream.write(buff);
+    stream.on("end", function() {
+        console.log('FINSIH!!');
+        stream.end();
     });
 
     // readStream = fs.createReadStream(imgFinal);
     // writeStream = fs.createWriteStream('public/qr/' + idQR + '.png');
     // readStream.pipe(writeStream);
-    // readStream.on('end', function(err) {
-    //     console.log(err, "err: ");
-    //     res.send(imgFinal, 200);
+    // readStream.on('error', function (err) {
+    //     console.log(err);
+    //     return err;
+    // });
+    // readStream.on('end', function () {
+    //     console.log(imgFinal);
+    //     return imgFinal;
     // });
 
-    fs.writeFile('/public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('qr create');
-        }
-    });
+    // fs.writeFile('/public/qr/' + idQR + '.png', imgFinal, 'base64', function (err) {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         console.log('qr create');
+    //     }
+    // });
 }
 
 function validQR(stringQR) {
