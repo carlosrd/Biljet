@@ -20,7 +20,7 @@ var Event = mongoose.model('Event');
 var User = mongoose.model('User');
 var QR = mongoose.model('QR');
 
-var superKey = "*****Incredible | secure _ phrase & in $ order / to ? protect ·  our * QRs****";
+var superKey = "****Incredible|_secure_phrase&in$order/to?_protect·our*QRs***";
 
 
 exports.save = function (req, res) {
@@ -264,7 +264,6 @@ exports.isGoing = function (req, res) {
         if (err) {
             res.send(err, 400);
         } else {
-            console.log(user, "user: ");
             if (user !== null) {
                 if (user.eventsToGo.indexOf(req.params.id) > -1) {
                     res.send("true", 200);
@@ -330,8 +329,6 @@ exports.goToEvent = function (req, res) {
                                                 if (err) {
                                                     res.send(err, 400);
                                                 } else {
-                                                    // DEBUG
-                                                    console.log("Event added successfully to " + user.username);
                                                     res.send(data, 200);
 
                                                     // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
