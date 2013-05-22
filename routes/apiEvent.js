@@ -96,7 +96,7 @@ exports.save = function (req, res) {
 
                             var buff = new Buffer(imgFinal, 'base64');
 
-                            var stream = fs.createWriteStream('public/qr/' + idQR + '.png');
+                            var stream = fs.createWriteStream('public/qr/' + newQr._id + '.png');
                             stream.write(buff);
                             stream.on('error', function (err) {
                                 console.log(err); 
