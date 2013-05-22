@@ -440,7 +440,7 @@ exports.create = function (req, res) {
     }
 };
 
-exports.createQR = function (idQR, userId, eventId, numberTickets) {
+function createQR (idQR, userId, eventId, numberTickets) {
     var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
 
     text = newQr._id + " " + creator._id + " " + newEvent._id + " " + 1;
