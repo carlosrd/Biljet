@@ -82,7 +82,30 @@ exports.save = function (req, res) {
                         if (err) {
                             res.send(err, 400);
                         } else {
-                            createQR(newQr._id, creator._id, newEvent._id, 1);
+                            var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
+
+                            text = newQr._id + " " + creator._id + " " + newEvent._id + " " + 1;
+                            textEncrypted = encrypt(superKey, text);
+                            qr = qrCode.qrcode(4, 'M');
+
+                            qr.addData(textEncrypted);
+                            qr.make();
+                            imgTag = qr.createImgTag(4);
+                            n = imgTag.indexOf('\u0020width=');
+                            imgFinal = imgTag.slice(32, n - 1);
+
+                            var buff = new Buffer(imgFinal, 'base64');
+
+                            var stream = fs.createWriteStream('public/qr/' + idQR + '.png');
+                            stream.write(buff);
+                            stream.on('error', function (err) {
+                                console.log(err); 
+                            });
+                            stream.on("end", function() {
+                                console.log('FINSIH!!');
+                                stream.end();
+                            });
+
                             User.update(
                                 {
                                     _id: creator._id
@@ -418,6 +441,10 @@ exports.uploadImage = function (req, res) {
             readStream = fs.createReadStream(req.files.eventImage.path);
             writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
             readStream.pipe(writeStream);
+            readStream.on('error', function (err) {
+                console.log(err);
+                res.send(err, 400);
+            });
             readStream.on('end', function(data) {
                 console.log(req.files.eventImage.name, "*** end callback, name: ");
                 res.send(req.files.eventImage.name, 200);
@@ -435,28 +462,31 @@ exports.create = function (req, res) {
     }
 };
 
-function createQR(idQR, userId, eventId, numberTickets) {
+// exports.createQR = function (idQR, userId, eventId, numberTickets) {
 
-    var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
+//     var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
 
-    text = idQR + " " + userId + " " + eventId + " " + numberTickets;
-    textEncrypted = encrypt(superKey, text);
-    qr = qrCode.qrcode(4, 'M');
+//     text = idQR + " " + userId + " " + eventId + " " + numberTickets;
+//     textEncrypted = encrypt(superKey, text);
+//     qr = qrCode.qrcode(4, 'M');
 
-    qr.addData(textEncrypted);
-    qr.make();
-    imgTag = qr.createImgTag(4);
-    n = imgTag.indexOf('\u0020width=');
-    imgFinal = imgTag.slice(32, n - 1);
+//     qr.addData(textEncrypted);
+//     qr.make();
+//     imgTag = qr.createImgTag(4);
+//     n = imgTag.indexOf('\u0020width=');
+//     imgFinal = imgTag.slice(32, n - 1);
 
-    var buff = new Buffer(imgFinal, 'base64');
+//     var buff = new Buffer(imgFinal, 'base64');
 
-    var stream = fs.createWriteStream('public/qr/' + idQR + '.png');
-    stream.write(buff);
-    stream.on("end", function() {
-        console.log('FINSIH!!');
-        stream.end();
-    });
+//     var stream = fs.createWriteStream('public/qr/' + idQR + '.png');
+//     stream.write(buff);
+//     stream.on('error', function (err) {
+//         console.log(err); 
+//     });
+//     stream.on("end", function() {
+//         console.log('FINSIH!!');
+//         stream.end();
+//     });
 
     // readStream = fs.createReadStream(imgFinal);
     // writeStream = fs.createWriteStream('public/qr/' + idQR + '.png');
@@ -477,7 +507,7 @@ function createQR(idQR, userId, eventId, numberTickets) {
     //         console.log('qr create');
     //     }
     // });
-}
+// }
 
 function validQR(stringQR) {
 
