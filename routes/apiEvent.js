@@ -20,7 +20,7 @@ var Event = mongoose.model('Event');
 var User = mongoose.model('User');
 var QR = mongoose.model('QR');
 
-var superKey = "super key";
+var superKey = "*****Incredible | secure _ phrase & in $ order / to ? protect ·  our * QRs****";
 
 
 exports.save = function (req, res) {
@@ -82,30 +82,7 @@ exports.save = function (req, res) {
                         if (err) {
                             res.send(err, 400);
                         } else {
-                            var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
-
-                            text = newQr._id + " " + creator._id + " " + newEvent._id + " " + 1;
-                            textEncrypted = encrypt(superKey, text);
-                            qr = qrCode.qrcode(4, 'M');
-
-                            qr.addData(textEncrypted);
-                            qr.make();
-                            imgTag = qr.createImgTag(4);
-                            n = imgTag.indexOf('\u0020width=');
-                            imgFinal = imgTag.slice(32, n - 1);
-
-                            var buff = new Buffer(imgFinal, 'base64');
-
-                            var stream = fs.createWriteStream('public/img/' + newQr._id + '.png');
-                            console.log('public/img/' + newQr._id + '.png', 'route to QR: ');
-                            stream.write(buff);
-                            stream.on('error', function (err) {
-                                console.log(err); 
-                            });
-                            stream.on("end", function() {
-                                console.log('FINSIH!!');
-                                stream.end();
-                            });
+                            createQR(newQr._id, creator._id, newEvent._id, 1);
 
                             User.update(
                                 {
@@ -456,38 +433,42 @@ exports.uploadImage = function (req, res) {
 
 exports.create = function (req, res) {
     // createQR(11, 22, 33, 44);
-    if (validQR('rzl7HwrhvIMe7sZUu+k/oA==')) {
+    if (validQR('yCnXw7EaAd3SJ+2gIzKJRIo=')) {
         res.send('', 200);
     } else {
         res.send('Invalid QR', 400);
     }
 };
 
-// exports.createQR = function (idQR, userId, eventId, numberTickets) {
+exports.createQR = function (idQR, userId, eventId, numberTickets) {
+    var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
 
-//     var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
+    text = newQr._id + " " + creator._id + " " + newEvent._id + " " + 1;
+    textEncrypted = encrypt(superKey, text);
+    qr = qrCode.qrcode(4, 'M');
 
-//     text = idQR + " " + userId + " " + eventId + " " + numberTickets;
-//     textEncrypted = encrypt(superKey, text);
-//     qr = qrCode.qrcode(4, 'M');
+    qr.addData(textEncrypted);
+    qr.make();
+    imgTag = qr.createImgTag(4);
+    n = imgTag.indexOf('\u0020width=');
+    imgFinal = imgTag.slice(32, n - 1);
 
-//     qr.addData(textEncrypted);
-//     qr.make();
-//     imgTag = qr.createImgTag(4);
-//     n = imgTag.indexOf('\u0020width=');
-//     imgFinal = imgTag.slice(32, n - 1);
+    var buff = new Buffer(imgFinal, 'base64');
 
-//     var buff = new Buffer(imgFinal, 'base64');
+    var path = 'public/img/qr_' + newQr._id + '.png';
+    var stream = fs.createWriteStream(path);
+    console.log(path, 'route to QR: ');
+    stream.write(buff);
+    stream.on('error', function (err) {
+        console.log(err); 
+    });
+    stream.on("end", function() {
+        console.log('FINSIH!!');
+        stream.end();
+    });
+}
 
-//     var stream = fs.createWriteStream('public/qr/' + idQR + '.png');
-//     stream.write(buff);
-//     stream.on('error', function (err) {
-//         console.log(err); 
-//     });
-//     stream.on("end", function() {
-//         console.log('FINSIH!!');
-//         stream.end();
-//     });
+    // DEBUG
 
     // readStream = fs.createReadStream(imgFinal);
     // writeStream = fs.createWriteStream('public/qr/' + idQR + '.png');
@@ -516,6 +497,7 @@ function validQR(stringQR) {
 
     decryptString = decrypt(superKey, stringQR);
     elementsQR = decryptString.split(" ");
+    console.log(elementsQR, "elementsQR: ");
     idQR = elementsQR[0];
     userId = elementsQR[1];
     eventId = elementsQR[2];
@@ -539,7 +521,7 @@ function validQR(stringQR) {
 
 function encrypt (key, plaintext) {
 
-    var cipher = crypto.createCipher('aes-256-cbc', key),encryptedPassword;
+    var cipher = crypto.createCipher('aes-256-cbc', key), encryptedPassword;
 
     cipher.update(plaintext, 'utf8', 'base64');
     encryptedPassword = cipher.final('base64');
