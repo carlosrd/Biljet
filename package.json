@@ -17,6 +17,6 @@
     "crypto": "*",
     "qrcode-npm":"*",
     "jquery": "*",
-    "gridfs-stream": "*"
+    "mongodb": "*"
   }
 }
