@@ -14,10 +14,9 @@
     "jade": "*",
     "less-middleware": "*",
     "mongoose": "*",
-    "mongoose-models": "*",
     "crypto": "*",
-    "request": "*",
     "qrcode-npm":"*",
-    "jquery": "*"
+    "jquery": "*",
+    "gridfs-stream": "*"
   }
 }
