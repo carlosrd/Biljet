@@ -3,45 +3,66 @@ extends layout
 block contentBlock
 
 	.container
-		div.discovertittle
-		h1 Quieres descubrir eventos nuevos?
-		div.row.span5
-			div.formdiscover.span3
-				| Busca nuevos eventos por :
-				span
-					input(type='text', name='buscarLugar', value='Introduce un lugar', size='30%')
-				| Madrid, Barcelona, Valencia...
-				span
-					input(type='text', name='buscarPrecio', value='Introduce un rango de precios', size='30%')
-				|Menos de 30, entre 10 y 20...
-				span
-					link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css')
-					script(src='http://code.jquery.com/jquery-1.9.1.js')
-					script(src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
-					link(rel='stylesheet', href='/resources/demos/style.css')
-					script
-							$(function() {
-								$( "#datepicker" ).datepicker({
-								changeMonth: true,
-								changeYear: true
-								});
-							});
-					form.descubrirFecha
-					input#datepicker(type='text', name='buscarFecha', value='Introduce una fecha', size='30%')
-				|Esta semana, el próximo mes,
-				|una fecha en concreto...
-				span
-					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')
-				|Festival, Concierto...
-				span
-					input(type='text', name='buscarTipo', value='Introduce un tipo de evento', size='30%')
-				
-				div.botonBuscar
-				input.btn(type='button', value='Buscar coincidencias')
+		h1 ¿Quieres descubrir eventos nuevos?
+		.row.formdiscover.form(method='post', id='form_search_event')
+			p
+				div.about
+					label(for='name') Busca nuevos eventos por nombre:
+					span
+						input(type='text', name='searchName', value='Introduce un nombre', size='30%').searchName
+
+					p
+						a(title='Buscar').btn.btn-large.submit.span1.search Buscar
+		p	
+			.row
+				.events
 			
-		div.tablonEventosEncontrados
-			.linea
-			.pEvento
-				|Resultados de la búsqueda:
-			
+block javascript
+	script(type='text/javascript')
+        
+		$('.search').one('click',function () {
+			$.getJSON('/api/event/search/'+$('#form_search_event .searchName').val(), function (data) {
+				drawEvents(data);
+		});
+		});
+
+		function drawEvents (data) {
+			var eventTemplate = '' +
+				'<div class="event tile">' +
+					'<img src="#" />' +
+					'<h4 class="title"><a.link></a></h4>' +
+					'<p class="price"></p>' +
+				'</div>';
+
+			var $container = $('.events');
+			var i, len;
+			len = data.length;
+			if (len > 10) {
+				len = 10;
+			}
+			for (i = 0; i < len; i++) {
+				var event = data[i];
+				var $el = $(eventTemplate);
+
+				$el.find('img')
+					.attr('src', 'img/' + event.imageName);
+					console.log($el.find('img').attr('src'));
+
+				$el.find('.title')
+					.html('<a href="/event/' + event._id + '">' + event.title + '</a>');
+
+				$el.find('a.link')
+					.attr('href', '/event/' + event._id);
+
+				$el.find('.price')
+					.text("Precio: " + event.price + "€.");
+
+				randomInt = Math.floor(Math.random() * 10);
+				if (randomInt > 6) {
+					$el.addClass('tile-hot');
+				}
+
+				$container.append($el);
+			}
+		}
 			
