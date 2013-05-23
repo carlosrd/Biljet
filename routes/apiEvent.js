@@ -453,8 +453,8 @@ exports.getQr = function (req, res) {
                             if (err) {
                                 res.send(err, 400);
                             } else {
-                                console.log(qr.path, 'QR path: ');
-                                res.send(qr.path, 200);
+                                console.log('qr_' + qr._id, 'QR path: ');
+                                res.send('qr_' + qr.path, 200);
                             }
                         });
                     }
