@@ -1,7 +1,7 @@
 
 /*jslint node: true */
 
-"use strict";
+'use strict';
 
 var mongoose = require('mongoose');
 var fs = require('fs');
@@ -25,7 +25,7 @@ var db = mongoose.connection;
 mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
 //   // mongoose.connect('localhost', 'biljet');
 
-db.on('error', console.error.bind(console, "Connection error: "));
+db.on('error', console.error.bind(console, 'Connection error: '));
 
 // db.once('open', function () {
 //     console.log('OPEN!');
@@ -39,7 +39,7 @@ var Event = mongoose.model('Event');
 var User = mongoose.model('User');
 var QR = mongoose.model('QR');
 
-var superKey = "superKey";
+var superKey = 'superKey';
 
 
 exports.save = function (req, res) {
@@ -57,7 +57,7 @@ exports.save = function (req, res) {
         if (err) {
             res.send(err, 400);
         } else if (creator.password !== userPassword) {
-            res.send("Bad password", 401);
+            res.send('Bad password', 401);
         } else {
             var place, latitude, longitude, newEvent;
 
@@ -158,7 +158,7 @@ exports.findByTitle = function (req, res) {
             if (err) {
                 res.send(err, 400);
             } else if (event === null) {
-                res.send("[]", 200);
+                res.send('[]', 200);
             } else {
                 res.send(event, 200);
             }
@@ -173,7 +173,7 @@ exports.findById = function (req, res) {
             if (err) {
                 res.send(err, 400);
             } else if (event === null) {
-                res.send("[]", 200);
+                res.send('[]', 200);
             } else {
                 res.send(event, 200);
             }
@@ -201,7 +201,7 @@ exports.createdById = function (req, res) {
                     if (err) {
                         res.send(err, 400);
                     } else if (events === null) {
-                        res.send("[]", 200);
+                        res.send('[]', 200);
                     } else {
                         res.send(events, 200);
                     }
@@ -231,7 +231,7 @@ exports.goingById = function (req, res) {
                     if (err) {
                         res.send(err, 400);
                     } else if (events === null) {
-                        res.send("[]", 200);
+                        res.send('[]', 200);
                     } else {
                         res.send(events, 200);
                     }
@@ -248,7 +248,7 @@ exports.filterByProvince = function (req, res) {
             if (err) {
                 res.send(err, 400);
             } else if (events === null) {
-                res.send("[]", 200);
+                res.send('[]', 200);
             } else {
                 res.send(events, 200);
             }
@@ -260,7 +260,7 @@ exports.delete = function (req, res) {
         if (err) {
             res.send(err, 400);
         } else {
-            res.send("", 200);
+            res.send('', 200);
         }
     });
 };
@@ -285,12 +285,12 @@ exports.isGoing = function (req, res) {
         } else {
             if (user !== null) {
                 if (user.eventsToGo.indexOf(req.params.id) > -1) {
-                    res.send("true", 200);
+                    res.send('true', 200);
                 } else {
-                    res.send("false", 200);
+                    res.send('false', 200);
                 }
             } else {
-                res.send("false", 400);
+                res.send('false', 400);
             }
         }
     });
@@ -424,7 +424,7 @@ exports.uploadImage = function (req, res) {
         } else {
             client.putFile(req.files.eventImage.path, req.files.eventImage.name, function(err, resource){
                 if (err) {
-                    console.log(err, "err: ");
+                    console.log(err, 'err: ');
                     res.send(err, 400);
                 } else {
                     res.send(req.files.eventImage.name, 200);
@@ -439,26 +439,27 @@ exports.uploadImage = function (req, res) {
             //     res.send(err, 400);
             // });
             // readStream.on('end', function(data) {
-            //     console.log(req.files.eventImage.name, "*** end callback, name: ");
+            //     console.log(req.files.eventImage.name, '*** end callback, name: ');
             //     res.send(req.files.eventImage.name, 200);
             // });
         }
     }
 };
 
-exports.create = function (req, res) {
-    createQR(11, 22, 33, 44);
-    // if (validQR('FTGjwk23x41BdK8BhvTng+jrqrVPohlWa3Rf0KdZMmVfzqRT4VblW3ngx8Oetpj9xenUgbJ05biW4EURq+AralfPlzXqFj7MnI3hu9BbVkA=')) {
-        res.send('', 200);
-    // } else {
-        // res.send('Invalid QR', 400);
-    // }
-};
+// DEBUG
+// exports.create = function (req, res) {
+//     createQR(11, 22, 33, 44);
+//     // if (validQR('FTGjwk23x41BdK8BhvTng+jrqrVPohlWa3Rf0KdZMmVfzqRT4VblW3ngx8Oetpj9xenUgbJ05biW4EURq+AralfPlzXqFj7MnI3hu9BbVkA=')) {
+//         res.send('', 200);
+//     // } else {
+//         // res.send('Invalid QR', 400);
+//     // }
+// };
 
 
 exports.getQr = function (req, res) {
     if (!req.query.user || !req.query.event) {
-        res.send('Insuficient arguments', 400);
+        res.send('Insufficient arguments', 400);
     } else {
         User.findOne({_id: req.query.user}, function (err, user) {
             if (err) {
@@ -486,13 +487,25 @@ exports.getQr = function (req, res) {
     }
 };
 
+exports.checkQr = function (req, res) {
+    if (!req.query.qr) {
+        res.send('Insufficient arguments', 400);
+    } else {
+        if (validQR(req.query.qr)) {
+            res.send('', 200);
+        } else {
+            res.send('Invalid QR', 400);
+        }
+    }
+};
+
 
 function createQR (qrId, userId, eventId, numberTickets) {
     var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
 
-    text = qrId + " " + userId + " " + eventId + " " + 1;
+    text = qrId + ' ' + userId + ' ' + eventId + ' ' + 1;
     textEncrypted = encrypt(superKey, text);
-    qr = qrCode.qrcode(7, 'M');
+    qr = qrCode.qrcode(5, 'M');
 
     qr.addData(textEncrypted);
     qr.make();
@@ -508,7 +521,7 @@ function createQR (qrId, userId, eventId, numberTickets) {
         if (err) console.log(err, 'err: ');
         client.putFile(path, 'qr_' + qrId + '.png', function(err, resource){
             if (err) {
-                console.log(err, "err: ");
+                console.log(err, 'err: ');
                 return false;
             } else {
                 console.log('qr' + qrId + '.png', 'name of QR: ');
@@ -519,9 +532,9 @@ function createQR (qrId, userId, eventId, numberTickets) {
     stream.on('error', function (err) {
         console.log(err); 
     });
-    stream.on("end", function() {
+    stream.on('end', function() {
         stream.end();
-        console.log(path, "path: ");
+        console.log(path, 'path: ');
     });
 
 
@@ -529,16 +542,12 @@ function createQR (qrId, userId, eventId, numberTickets) {
 
 
 function validQR(stringQR) {
-
     var decryptString, elementsQR, idQR, userId, eventId, numberTickets;
 
-    // DEBUG
-    console.log(superKey, "superKey: ");
-    console.log(stringQR, "stringQR: ");
     decryptString = decrypt(superKey, stringQR);
-    elementsQR = decryptString.split(" ");
+    elementsQR = decryptString.split(' ');
     // DEBUG
-    console.log(elementsQR, "elementsQR: ");
+    console.log(elementsQR, 'elementsQR: ');
     idQR = elementsQR[0];
     userId = elementsQR[1];
     eventId = elementsQR[2];

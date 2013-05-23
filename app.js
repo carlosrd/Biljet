@@ -93,8 +93,10 @@ app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
 
-app.get('/api/qrtest', apiEvent.create);
+// DEBUG
+// app.get('/api/qrtest', apiEvent.create);
 app.get('/api/qr', apiEvent.getQr);
+app.get('/api/check-qr', apiEvent.checkQr);
 
 app.post('/upload', apiEvent.uploadImage);
 
