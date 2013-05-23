@@ -24,8 +24,7 @@ block contentBlock
                     a(title='Apúntate').btn.btn-large.btn-block.joinEvent Apúntate
                 else
                     a(href="/signup", title='Regístrate').btn.btn-large.btn-block.signup Regístrate para apuntarte
-            //- li.qr
-            //-     img.qrImg
+
     .share.span1
        
         a.twitter-share-button(href='https://twitter.com/share', data-text='Me gusta este evento en http://www.biljetapp.com', data-lang='es', data-hashtags='BiljetApp') Twittear
@@ -73,7 +72,7 @@ block javascript
             $('h3.category').text('Categoría: ' + category);
             $('h4.description').text(event.description);
             $('li.date').text('Cuándo: ' + new Date(event.createdAt));
-            $('img.eventImg').attr('src', '/resources/' + event.imageName);
+            $('img.eventImg').attr('src', 'https://s3-eu-west-1.amazonaws.com/biljet/' + event.imageName);
             $('h4.price').text('Precio: ' + event.price + ' €');
 
             var map, address, self = this;
@@ -115,9 +114,7 @@ block javascript
                 data: data,
                 success: function (response) {
                     if (response === "true") {
-                        $('a.joinEvent').text("Desapúntame");
-                        $('img.qrImg').attr('src','/resources/'+"#{id}"+"#{user._id}");   
-                          
+                        $('a.joinEvent').text("Desapúntame");                          
                     }
                 }
             });
@@ -136,10 +133,6 @@ block javascript
             if ($('a.joinEvent').text() === "Apúntate") {
                 url = "/api/event/go/" + "#{id}";
                 $('.joinEvent').text("Desapúntame");
-                //- var millisecondsToWait = 1000;
-                //- setTimeout(function() {
-                //-     $('img.qrImg').attr('src','/resources/'+"#{id}"+"#{user._id}");
-                //- }, millisecondsToWait);
                         
 
             } else {
