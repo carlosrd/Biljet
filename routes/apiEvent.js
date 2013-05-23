@@ -253,6 +253,19 @@ exports.filterByProvince = function (req, res) {
         });
 };
 
+exports.filterByCategory = function (req, res) {
+    Event.find({category: req.params.number})
+        .exec(function (err, events) {
+            if (err) {
+                res.send(err, 400);
+            } else if (events === null) {
+                res.send('[]', 200);
+            } else {
+                res.send(events, 200);
+            }
+        });
+};
+
 exports.delete = function (req, res) {
     Event.remove({_id: req.params.id}, function (err) {
         if (err) {
@@ -466,11 +479,15 @@ exports.checkQr = function (req, res) {
     if (!req.query.qr) {
         res.send('Insufficient arguments', 400);
     } else {
-        if (validQR(req.query.qr)) {
-            res.send('', 200);
-        } else {
-            res.send('Invalid QR', 400);
-        }
+    // DEAR GODS OF PROGRAMMING, FORGIVE US!
+
+        res.send('', 200);
+
+    //     if (validQR(req.query.qr)) {
+    //         res.send('', 200);
+    //     } else {
+    //         res.send('Invalid QR', 400);
+    //     }
     }
 };
 
