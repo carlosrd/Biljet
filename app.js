@@ -72,7 +72,7 @@ app.get('/discover', checkAuth, discover.index);
 app.get('/create', checkAuth, createEvent.index);
 app.get('/qrtest', qrtest.index);
 app.get('/calendar', calendar.index);
-app.get('/event/:id', eventDetails.index);
+app.get('/event/:id', checkAuth, eventDetails.index);
 
 app.post('/api/user', apiUser.save);
 app.get('/api/user', apiUser.list);

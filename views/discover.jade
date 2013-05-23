@@ -2,67 +2,73 @@ extends layout
 //By Alex
 block contentBlock
 
-	.container
-		h1 ¿Quieres descubrir eventos nuevos?
-		.row.formdiscover.form(method='post', id='form_search_event')
-			p
-				div.about
-					label(for='name') Busca nuevos eventos por nombre:
-					span
-						input(type='text', name='searchName', value='Introduce un nombre', size='30%').searchName
+    .container
+        h1 ¿Quieres descubrir eventos nuevos?
+        .row.formdiscover.form(method='post', id='form_search_event')
+            p
+                div.about
+                    label(for='name') Busca nuevos eventos por nombre:
+                    span
+                        input(type='text', name='searchName', placeholder='Introduce un nombre', size='30%').searchName
 
-					p
-						a(title='Buscar').btn.btn-large.submit.span1.search Buscar
-		p	
-			.row
-				.events
-			
+                    p
+                        a(title='Buscar').btn.btn-large.submit.span1.search Buscar
+        p   
+            .row
+                h2.message
+                .events
+            
 block javascript
-	script(type='text/javascript')
+    script(type='text/javascript')
         
-		$('.search').one('click',function () {
-			$.getJSON('/api/event/search/'+$('#form_search_event .searchName').val(), function (data) {
-				drawEvents(data);
-		});
-		});
+        $('.search').one('click',function () {
+            $.getJSON('/api/event/search/'+$('#form_search_event .searchName').val(), function (data) {
+                console.log(data, "data");
+                if (data.length === 0) {
+                    $('h2.message').text('No se han encontrado eventos.');
+                } else {
+                    drawEvents(data);
+                }
+            });
+        });
 
-		function drawEvents (data) {
-			var eventTemplate = '' +
-				'<div class="event tile">' +
-					'<img src="#" />' +
-					'<h4 class="title"><a.link></a></h4>' +
-					'<p class="price"></p>' +
-				'</div>';
+        function drawEvents (data) {
+            var eventTemplate = '' +
+                '<div class="event tile">' +
+                    '<img src="#" />' +
+                    '<h4 class="title"><a.link></a></h4>' +
+                    '<p class="price"></p>' +
+                '</div>';
 
-			var $container = $('.events');
-			var i, len;
-			len = data.length;
-			if (len > 10) {
-				len = 10;
-			}
-			for (i = 0; i < len; i++) {
-				var event = data[i];
-				var $el = $(eventTemplate);
+            var $container = $('.events');
+            var i, len;
+            len = data.length;
+            if (len > 12) {
+                len = 12;
+            }
+            for (i = 0; i < len; i++) {
+                var event = data[i];
+                var $el = $(eventTemplate);
 
-				$el.find('img')
-					.attr('src', 'img/' + event.imageName);
-					console.log($el.find('img').attr('src'));
+                $el.find('img')
+                    .attr('src', 'img/' + event.imageName);
+                    console.log($el.find('img').attr('src'));
 
-				$el.find('.title')
-					.html('<a href="/event/' + event._id + '">' + event.title + '</a>');
+                $el.find('.title')
+                    .html('<a href="/event/' + event._id + '">' + event.title + '</a>');
 
-				$el.find('a.link')
-					.attr('href', '/event/' + event._id);
+                $el.find('a.link')
+                    .attr('href', '/event/' + event._id);
 
-				$el.find('.price')
-					.text("Precio: " + event.price + "€.");
+                $el.find('.price')
+                    .text("Precio: " + event.price + "€.");
 
-				randomInt = Math.floor(Math.random() * 10);
-				if (randomInt > 6) {
-					$el.addClass('tile-hot');
-				}
+                randomInt = Math.floor(Math.random() * 10);
+                if (randomInt > 6) {
+                    $el.addClass('tile-hot');
+                }
 
-				$container.append($el);
-			}
-		}
-			
+                $container.append($el);
+            }
+        }
+            
