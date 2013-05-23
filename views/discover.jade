@@ -14,16 +14,17 @@ block contentBlock
                     p
                         a(title='Buscar').btn.btn-large.submit.span1.search Buscar
         p   
-            .row
+            .results
                 h2.message
                 .events
             
 block javascript
     script(type='text/javascript')
         
-        $('.search').one('click',function () {
+        $('.search').click(function () {
+            $('.events').empty();
+            $('.message').empty();
             $.getJSON('/api/event/search/'+$('#form_search_event .searchName').val(), function (data) {
-                console.log(data, "data");
                 if (data.length === 0) {
                     $('h2.message').text('No se han encontrado eventos.');
                 } else {
