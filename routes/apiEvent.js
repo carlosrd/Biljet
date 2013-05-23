@@ -94,7 +94,7 @@ exports.save = function (req, res) {
                         name: newEvent._id,
                         numberTickets: 1,
                         isUsed: false,
-                        path: newEvent._id + '.png',
+                        path: 'qr_' + newEvent._id + '.png',
                         event: newEvent
                     });
                     newQr.save(function (err) {
@@ -324,7 +324,7 @@ exports.goToEvent = function (req, res) {
                                     name: eventToGo._id,
                                     numberTickets: 1,
                                     isUsed: false,
-                                    path: eventToGo._id + '.png',
+                                    path: 'qr_' + eventToGo._id + '.png',
                                     event: eventToGo
                                 });
                                 newQr.save(function (err) {
@@ -456,14 +456,31 @@ exports.create = function (req, res) {
 };
 
 
-// TODO
-// exports.getQr = function (req, res) {
-//     QR.findOne({
-//         user: req.query.user
-//     }, function (err, qr) {
-//         console.log(qr, "qr: ");
-//     });
-// };
+exports.getQr = function (req, res) {
+    User.findOne({_id: req.query.user}, function (err, user) {
+        if (err) {
+            res.send(err, 400);
+        } else {
+            Event.findOne({_id: req.query.event}, function (err, event) {
+                if (err) {
+                    res.send(err, 400);
+                } else {
+                    QR.findOne({
+                        user: user,
+                        event: event
+                    }, function (err, qr) {
+                        if (err) {
+                            res.send(err, 400);
+                        } else {
+                            console.log(qr.path, 'QR path: ');
+                            res.send(qr.path, 200);
+                        }
+                    });
+                }
+            });
+        }
+    });
+};
 
 
 function createQR (qrId, userId, eventId, numberTickets) {
