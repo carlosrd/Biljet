@@ -457,29 +457,33 @@ exports.create = function (req, res) {
 
 
 exports.getQr = function (req, res) {
-    User.findOne({_id: req.query.user}, function (err, user) {
-        if (err) {
-            res.send(err, 400);
-        } else {
-            Event.findOne({_id: req.query.event}, function (err, event) {
-                if (err) {
-                    res.send(err, 400);
-                } else {
-                    QR.findOne({
-                        user: user,
-                        event: event
-                    }, function (err, qr) {
-                        if (err) {
-                            res.send(err, 400);
-                        } else {
-                            console.log(qr.path, 'QR path: ');
-                            res.send(qr.path, 200);
-                        }
-                    });
-                }
-            });
-        }
-    });
+    if (!req.query.user || !req.query.event) {
+        res.send('Insuficient arguments', 400);
+    } else {
+        User.findOne({_id: req.query.user}, function (err, user) {
+            if (err) {
+                res.send(err, 400);
+            } else {
+                Event.findOne({_id: req.query.event}, function (err, event) {
+                    if (err) {
+                        res.send(err, 400);
+                    } else {
+                        QR.findOne({
+                            user: user,
+                            event: event
+                        }, function (err, qr) {
+                            if (err) {
+                                res.send(err, 400);
+                            } else {
+                                console.log(qr.path, 'QR path: ');
+                                res.send(qr.path, 200);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
 };
 
 
