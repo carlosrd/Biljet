@@ -50,7 +50,7 @@ function checkAuth(req, res, next) {
 }
 
 app.get('/', home.index);
-app.get('/discover', checkAuth, discover.index);
+app.get('/discover', discover.index);
 app.get('/create', checkAuth, createEvent.index);
 app.get('/calendar', calendar.index);
 app.get('/event/:id', checkAuth, eventDetails.index);
@@ -74,6 +74,7 @@ app.post('/api/event/is-going/:id', apiEvent.isGoing);
 app.post('/api/event/go/:id', apiEvent.goToEvent);
 app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
+app.get('/api/event/category/:number', apiEvent.filterByCategory);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
 
 app.get('/api/qr', apiEvent.getQr);
