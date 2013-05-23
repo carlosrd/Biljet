@@ -242,8 +242,6 @@ exports.goingById = function (req, res) {
 
 exports.filterByProvince = function (req, res) {
     Event.find({province: req.params.number})
-        .populate('attendee')
-        .populate('creator')
         .exec(function (err, events) {
             if (err) {
                 res.send(err, 400);
@@ -454,7 +452,7 @@ exports.getQr = function (req, res) {
                                 res.send(err, 400);
                             } else {
                                 console.log('qr_' + qr._id, 'QR path: ');
-                                res.send('qr_' + qr._id, 200);
+                                res.send('qr_' + qr._id + '.png', 200);
                             }
                         });
                     }
