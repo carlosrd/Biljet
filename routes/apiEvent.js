@@ -359,23 +359,6 @@ exports.goToEvent = function (req, res) {
                                                     res.send(err, 400);
                                                 } else {
                                                     res.send(data, 200);
-
-                                                    // var text = 'Nombre del evento: '+eventToGo.title+' usurio: '+user.username;
-
-                                                    // var qr = qrCode.qrcode(4, 'M');
-                                                    // qr.addData(text);
-                                                    // qr.make();
-                                                    // var imgTag = qr.createImgTag(4);
-                                                    // //cosa= imgTag.replace('<img\u0020src="data:image/gif;base64,',"");
-                                                    // var n=imgTag.indexOf("\u0020width=");
-                                                    // var cosa2=imgTag.slice(32,n-1);
-                                                    // fs.writeFile("./public/img/"+req.params.id+req.body.id, cosa2 , 'base64',function(err) {
-                                                    //     if(err){
-                                                    //         console.log(err);
-                                                    //     }else{
-                                                    //          console.log('qr create');
-                                                    //     }
-                                                    // });
                                                 }
                                             }
                                         );
@@ -429,15 +412,6 @@ exports.dontGoToEvent = function (req, res) {
                                             res.send(err, 400);
                                         } else {
                                             res.send(data, 200);
-
-                                            // fs.unlink("./public/img/"+req.params.id+req.body.id, function (err) {
-                                            //     if (err){
-                                            //         console(err);
-                                            //     }
-                                            //     else{
-                                            //        console.log('Remove qr');
-                                            //     }
-                                            // });
                                         }
                                     }
                                 );
@@ -460,7 +434,7 @@ exports.uploadImage = function (req, res) {
         } else {
             var readStream, writeStream;
             readStream = fs.createReadStream(req.files.eventImage.path);
-            writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
+            writeStream = fs.createWriteStream('public/resources/' + req.files.eventImage.name);
             readStream.pipe(writeStream);
             readStream.on('error', function (err) {
                 console.log(err);
@@ -509,7 +483,7 @@ function createQR (qrId, userId, eventId, numberTickets) {
 
     var buff = new Buffer(imgFinal, 'base64');
 
-    var path = 'public/img/qr_' + qrId + '.png';
+    var path = 'public/resources/qr_' + qrId + '.png';
     var stream = fs.createWriteStream(path);
     console.log(path, 'route to QR: ');
     stream.write(buff);

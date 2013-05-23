@@ -73,7 +73,7 @@ block javascript
             $('h3.category').text('Categoría: ' + category);
             $('h4.description').text(event.description);
             $('li.date').text('Cuándo: ' + new Date(event.createdAt));
-            $('img.eventImg').attr('src', '/img/' + event.imageName);
+            $('img.eventImg').attr('src', '/resources/' + event.imageName);
             $('h4.price').text('Precio: ' + event.price + ' €');
 
             var map, address, self = this;
@@ -116,7 +116,7 @@ block javascript
                 success: function (response) {
                     if (response === "true") {
                         $('a.joinEvent').text("Desapúntame");
-                        $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");   
+                        $('img.qrImg').attr('src','/resources/'+"#{id}"+"#{user._id}");   
                           
                     }
                 }
@@ -138,7 +138,7 @@ block javascript
                 $('.joinEvent').text("Desapúntame");
                 //- var millisecondsToWait = 1000;
                 //- setTimeout(function() {
-                //-     $('img.qrImg').attr('src','/img/'+"#{id}"+"#{user._id}");
+                //-     $('img.qrImg').attr('src','/resources/'+"#{id}"+"#{user._id}");
                 //- }, millisecondsToWait);
                         
 
