@@ -1,13 +1,13 @@
 {
   "name": "Biljet",
-  "version": "0.0.1",
+  "version": "0.0.1-1",
   "private": true,
   "engines": {
     "node": "0.8.x",
-    "npm":  "1.2.x"
+    "npm": "1.2.x"
   },
   "scripts": {
-    "start": "node app"
+    "start": "app.js"
   },
   "dependencies": {
     "express": "3.0.2",
@@ -15,8 +15,9 @@
     "less-middleware": "*",
     "mongoose": "*",
     "crypto": "*",
-    "qrcode-npm":"*",
+    "qrcode-npm": "*",
     "jquery": "*",
     "mongodb": "*"
-  }
+  },
+  "subdomain": "Biljet"
 }
