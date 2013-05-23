@@ -133,25 +133,55 @@ block javascript
     script(type='text/javascript', src='http://code.jquery.com/ui/1.10.1/jquery-ui.js')
     script(type='text/javascript', src='js/jquery.ui.timepicker.js')
     script(type='text/javascript', src='js/jquery.numeric.js')
+    //- DEBUG
+    //- script(type='text/javascript', src='http://maps.google.com/maps/api/js?sensor=false')
+
     script(type='text/javascript')
         $(document).ready(function() {
             $('a.create_event').click( function () {
 
-                var arrayDate = $('#form_create_event .field_date').val().split('/');
-                var arrayTime = $('#form_create_event .field_time').val().split(':');
-                var date = new Date(arrayDate[2], arrayDate[1], arrayDate[0], arrayTime[0], arrayTime[1]);
-                var imageName = $('#upload .file_chooser').val().split(/(\\|\/)/g).pop();
+                var arrayDate, arrayTime, date, imageName, address, latitude, longitude, geocoder, data;
+
+                arrayDate = $('#form_create_event .field_date').val().split('/');
+                arrayTime = $('#form_create_event .field_time').val().split(':');
+                date = new Date(arrayDate[2], arrayDate[1], arrayDate[0], arrayTime[0], arrayTime[1]);
+                
+                imageName = $('#upload .file_chooser').val().split(/(\\|\/)/g).pop();
                 if (imageName === '') {
                     imageName = 'eventDefault.png';
                 }
-                var data = {
+
+                address = $('#form_create_event .field_address').val();
+
+                //- DEBUG
+                //- geocoder = new google.maps.Geocoder();
+                //- var self = this;
+                //- geocoder.geocode( { 'address': address}, function(results, status) {
+                //-     if (status == google.maps.GeocoderStatus.OK) {
+                //-         var latitude = results[0].geometry.location.lat();
+                //-         var longitude = results[0].geometry.location.lng();
+
+                //-         console.log(results, "results: ");
+                //-         console.log(status, 'status: ');
+                //-         console.log(latitude, 'latitude: ');
+                //-         console.log(longitude, 'longitude: ');
+                //-     }
+                //- });
+
+                //- console.log(latitude, 'latitude: ');
+                //- console.log(longitude, 'longitude: ');
+
+                data = {
                     title: $('#form_create_event .field_name').val(),
                     finishAt: date.getTime(),
                     price: $('#form_create_event .field_price').val(),
                     city: $('#form_create_event .field_city').val(),
                     province: $('#form_create_event .field_province').val(),
                     postalCode: $('#form_create_event .field_postalCode').val(),
-                    address: $('#form_create_event .field_address').val(),
+                    address: address,
+                    //- DEBUG
+                    //- latitude: latitude,
+                    //- longitude: longitude,
                     category: $('#form_create_event .field_category').val(),
                     imageName: imageName,
                     capacity: $('#form_create_event .field_capacity').val(),

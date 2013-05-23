@@ -126,9 +126,10 @@ block javascript
             var $container = $('.events');
             var i, len;
             len = data.length;
-            if (len > 10) {
-                len = 10;
-            }
+            //- DEBUG
+            //- if (len > 10) {
+            //-     len = 10;
+            //- }
             for (i = 0; i < len; i++) {
                 var event = data[i];
                 var $el = $(eventTemplate);
