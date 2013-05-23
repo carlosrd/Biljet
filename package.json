@@ -1,5 +1,6 @@
 {
   "name": "Biljet",
+  "version": "0.0.1-1",
   "private": true,
   "engines": {
     "node": "0.8.x",
@@ -16,6 +17,7 @@
     "crypto": "*",
     "qrcode-npm": "*",
     "jquery": "*",
+    "mongodb": "*",
     "pkgcloud": "*"
   }
 }
