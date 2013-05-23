@@ -25,12 +25,11 @@ var express = require('express'),
 // MongoDB conection
 // var mongoose = require('mongoose');
 
-// DEBUG
-// // WARNING!!!
-// // This line connect to the remote Mongo Database, use carefully!!
-// // For testing purposes, use the localhost DB (the line commented below)
+// WARNING!!!
+// This line connect to the remote Mongo Database, use carefully!!
+// For testing purposes, use the localhost DB (the line commented below)
 // mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
-//   // mongoose.connect('localhost', 'biljet');
+ // mongoose.connect('localhost', 'biljet');
 
 // var db = mongoose.connection;
 // db.on('error', console.error.bind(console, "Connection error: "));
@@ -71,7 +70,7 @@ app.get('/discover', checkAuth, discover.index);
 app.get('/create', checkAuth, createEvent.index);
 app.get('/qrtest', qrtest.index);
 app.get('/calendar', calendar.index);
-app.get('/event/:id', eventDetails.index);
+app.get('/event/:id', checkAuth, eventDetails.index);
 
 app.post('/api/user', apiUser.save);
 app.get('/api/user', apiUser.list);
