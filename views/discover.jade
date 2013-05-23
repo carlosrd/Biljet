@@ -4,27 +4,136 @@ block contentBlock
 
     .container
         h1 ¿Quieres descubrir eventos nuevos?
-        .row.formdiscover.form(method='post', id='form_search_event')
             p
-                div.about
-                    label(for='name') Busca nuevos eventos por nombre:
-                    span
+                .span2
+                    label(for='name') Por título:
+
                         input(type='text', name='searchName', placeholder='Introduce un nombre', size='30%').searchName
+                    p
+                        a(title='Buscar').btn.btn-large.submit.span1.name_search Buscar
+                .span2.offset1
+                    label(for="province") Por provincia:
+                    span
+                        select(name='province').searchProvince
+                            option(value='0') - selecciona -
+                            option(value='1') A Coruña
+                            option(value='2') Álava
+                            option(value='3') Albacete
+                            option(value='4') Alicante
+                            option(value='5') Almería
+                            option(value='6') Asturias
+                            option(value='7') Ávila
+                            option(value='8') Badajoz
+                            option(value='9') Baleares
+                            option(value='10') Barcelona
+                            option(value='11') Burgos
+                            option(value='12') Cáceres
+                            option(value='13') Cádiz
+                            option(value='14') Cantabria
+                            option(value='15') Castellón
+                            option(value='16') Ceuta
+                            option(value='17') Ciudad Real
+                            option(value='18') Córdoba
+                            option(value='19') Cuenca
+                            option(value='99') Extranjero
+                            option(value='20') Girona
+                            option(value='21') Granada
+                            option(value='22') Guadalajara
+                            option(value='23') Guipúzcoa
+                            option(value='24') Huelva
+                            option(value='25') Huesca
+                            option(value='26') Jaén
+                            option(value='27') La rioja
+                            option(value='28') Las palmas
+                            option(value='29') León
+                            option(value='30') Lleida
+                            option(value='31') Lugo
+                            option(value='32') Madrid
+                            option(value='33') Málaga
+                            option(value='34') Melilla
+                            option(value='35') Murcia
+                            option(value='36') Navarra
+                            option(value='37') Ourense
+                            option(value='38') Palencia
+                            option(value='39') Pontevedra
+                            option(value='40') Salamanca
+                            option(value='41') Santa cruz de tenerife
+                            option(value='42') Segovia
+                            option(value='43') Sevilla
+                            option(value='44') Soria
+                            option(value='45') Tarragona
+                            option(value='46') Teruel
+                            option(value='47') Toledo
+                            option(value='48') Valencia
+                            option(value='49') Valladolid
+                            option(value='50') Vizcaya
+                            option(value='51') Zamora
+                            option(value='52') Zaragoza
+                    p
+                        a(title='Buscar').btn.btn-large.submit.span1.province_search Buscar
+                .span2.offset1
+                    label(for="category") Por categoría:
+                    span
+                        select(name='category').searchCategory
+                            option(value='leisure') Ocio
+                            option(value='comedy') Comedia/Monólogos
+                            option(value='cinema') Cine
+                            option(value='concert') Concierto
+                            option(value='conference') Conferencia
+                            option(value='cultural') Cultural
+                            option(value='competition') Concurso
+                            option(value='sport') Deportivo
+                            option(value='trip') Excursión
+                            option(value='exhibition') Exposición
+                            option(value='party') Fiesta
+                            option(value='musical') Musical
+                            option(value='meeting') Reunión
+                            option(value='theatre') Teatro
 
                     p
-                        a(title='Buscar').btn.btn-large.submit.span1.search Buscar
+                        a(title='Buscar').btn.btn-large.submit.span1.category_search Buscar
+
+    .results
         p   
-            .results
-                h2.message
-                .events
+            h2.message
+            .events
             
 block javascript
     script(type='text/javascript')
         
-        $('.search').click(function () {
+        $('.name_search').click(function () {
             $('.events').empty();
             $('.message').empty();
-            $.getJSON('/api/event/search/'+$('#form_search_event .searchName').val(), function (data) {
+            $.getJSON('/api/event/search/'+$('.searchName').val(), function (data) {
+                console.log(data, "data: ");
+                if (data.length === 0) {
+                    $('h2.message').text('No se han encontrado eventos.');
+                } else {
+                    drawEvents(data);
+                }
+            });
+        });
+
+        $('.province_search').click(function () {
+            $('.events').empty();
+            $('.message').empty();
+            var province = $('.searchProvince option:selected').val();
+            console.log(province, "province: ");
+            $.getJSON('/api/event/province/' + province, function (data) {
+                if (data.length === 0) {
+                    $('h2.message').text('No se han encontrado eventos.');
+                } else {
+                    drawEvents(data);
+                }
+            });
+        });
+
+        $('.category_search').click(function () {
+            $('.events').empty();
+            $('.message').empty();
+            var category = $('.searchCategory option:selected').val();
+            console.log(category, "category: ");
+            $.getJSON('/api/event/category/' + category, function (data) {
                 if (data.length === 0) {
                     $('h2.message').text('No se han encontrado eventos.');
                 } else {
@@ -52,7 +161,7 @@ block javascript
                 var $el = $(eventTemplate);
 
                 $el.find('img')
-                    .attr('src', 'img/' + event.imageName);
+                    .attr('src', 'https://s3-eu-west-1.amazonaws.com/biljet/' + event.imageName);
                     console.log($el.find('img').attr('src'));
 
                 $el.find('.title')
