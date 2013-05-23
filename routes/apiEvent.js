@@ -8,9 +8,38 @@ var fs = require('fs');
 var util = require('util');
 var jQuery = require('jquery');
 var crypto = require('crypto');
-// var Schema = mongoose.Schema;
+
+var Db = require('mongodb').Db,
+    MongoClient = require('mongodb').MongoClient,
+    Server = require('mongodb').Server,
+    ReplSetServers = require('mongodb').ReplSetServers,
+    ObjectID = require('mongodb').ObjectID,
+    Binary = require('mongodb').Binary,
+    GridStore = require('mongodb').GridStore,
+    Grid = require('mongodb').Grid,
+    Code = require('mongodb').Code,
+    BSON = require('mongodb').pure().BSON,
+    assert = require('assert');
+
+
 var db = mongoose.connection;
+
+// var db2 = Db.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223', function (err, db) {
+//     if (err) console.log(err, 'err: ');
+// });
+// // var db2 = new Db('test', new Server('locahost', 27017));
+
+// // WARNING!!!
+// // This line connect to the remote Mongo Database, use carefully!!
+// // For testing purposes, use the localhost DB (the line commented below)
+mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
+//   // mongoose.connect('localhost', 'biljet');
+
 db.on('error', console.error.bind(console, "Connection error: "));
+
+// db.once('open', function () {
+//     console.log('OPEN!');
+// })
 
 var allSchemas = require('../models/allSchemas'),
     fs = require('fs'),
@@ -454,13 +483,16 @@ exports.create = function (req, res) {
     }
 };
 
-exports.getQr = function (req, res) {
-    QR.findOne({
-        user: req.query.user
-    }, function (err, qr) {
-        console.log(qr, "qr: ");
-    });
-};
+
+// TODO
+// exports.getQr = function (req, res) {
+//     QR.findOne({
+//         user: req.query.user
+//     }, function (err, qr) {
+//         console.log(qr, "qr: ");
+//     });
+// };
+
 
 function createQR (qrId, userId, eventId, numberTickets) {
     var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
