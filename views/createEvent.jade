@@ -120,7 +120,7 @@ block contentBlock
         form(action='/upload', id='upload', method='POST', enctype='multipart/form-data')
             .upload.span3
                 div.photocreateevent
-                    img(src='img/eventDefault.png', alt='').image
+                    img(src='https://s3-eu-west-1.amazonaws.com/biljet/eventDefault.png', alt='').image
                     p.text Imagen por defecto
                 div.filechooser
                     input(type='file', name='eventImage').file_chooser
@@ -201,7 +201,7 @@ block javascript
             // bind 'myForm' and provide a simple callback function
             var options = {
                 success: function(name) {
-                    $('img.image').attr('src', 'img/' + name);
+                    $('img.image').attr('src', 'https://s3-eu-west-1.amazonaws.com/biljet/' + name);
                     $('p.text').text('Imagen subida con éxito');
                 },
                 error: function(text) {
