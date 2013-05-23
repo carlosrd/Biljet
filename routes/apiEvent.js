@@ -505,7 +505,7 @@ function createQR (qrId, userId, eventId, numberTickets) {
 
     text = qrId + ' ' + userId + ' ' + eventId + ' ' + 1;
     textEncrypted = encrypt(superKey, text);
-    qr = qrCode.qrcode(5, 'M');
+    qr = qrCode.qrcode(7, 'M');
 
     qr.addData(textEncrypted);
     qr.make();
