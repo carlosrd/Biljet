@@ -51,8 +51,6 @@ block javascript
     script(type='text/javascript')
         var path = "/api/event/" + "#{id}";
         $.getJSON(path, function (event) {
-            // DEBUG
-            console.log(event, "event: ");
             $('h1.title').text(event.title);
             var category;
             if (event.category === 'leisure') category = 'Ocio';

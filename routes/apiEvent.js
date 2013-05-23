@@ -430,32 +430,9 @@ exports.uploadImage = function (req, res) {
                     res.send(req.files.eventImage.name, 200);
                 }
             });
-            // var readStream, writeStream;
-            // readStream = fs.createReadStream(req.files.eventImage.path);
-            // writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
-            // readStream.pipe(writeStream);
-            // readStream.on('error', function (err) {
-            //     console.log(err);
-            //     res.send(err, 400);
-            // });
-            // readStream.on('end', function(data) {
-            //     console.log(req.files.eventImage.name, '*** end callback, name: ');
-            //     res.send(req.files.eventImage.name, 200);
-            // });
         }
     }
 };
-
-// DEBUG
-// exports.create = function (req, res) {
-//     createQR(11, 22, 33, 44);
-//     // if (validQR('FTGjwk23x41BdK8BhvTng+jrqrVPohlWa3Rf0KdZMmVfzqRT4VblW3ngx8Oetpj9xenUgbJ05biW4EURq+AralfPlzXqFj7MnI3hu9BbVkA=')) {
-//         res.send('', 200);
-//     // } else {
-//         // res.send('Invalid QR', 400);
-//     // }
-// };
-
 
 exports.getQr = function (req, res) {
     if (!req.query.user || !req.query.event) {
