@@ -1,10 +1,10 @@
 {
   "name": "Biljet",
-  "version": "0.0.1",
+  "version": "0.0.1-2",
   "private": true,
   "engines": {
     "node": "0.8.x",
-    "npm":  "1.2.x"
+    "npm": "1.2.x"
   },
   "scripts": {
     "start": "node app"
@@ -14,10 +14,10 @@
     "jade": "*",
     "less-middleware": "*",
     "mongoose": "*",
-    "mongoose-models": "*",
     "crypto": "*",
-    "request": "*",
-    "qrcode-npm":"*",
-    "jquery": "*"
+    "qrcode-npm": "*",
+    "jquery": "*",
+    "mongodb": "*",
+    "knox": "*"
   }
 }

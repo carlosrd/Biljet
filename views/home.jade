@@ -122,20 +122,20 @@ block javascript
                     '<h4 class="title"><a.link></a></h4>' +
                     '<p class="price"></p>' +
                 '</div>';
-
             var $container = $('.events');
             var i, len;
             len = data.length;
-            if (len > 10) {
-                len = 10;
-            }
+            //- DEBUG
+            //- if (len > 10) {
+            //-     len = 10;
+            //- }
             for (i = 0; i < len; i++) {
                 var event = data[i];
+                console.log(event, "event: ");
                 var $el = $(eventTemplate);
 
                 $el.find('img')
-                    .attr('src', 'img/' + event.imageName);
-                    console.log($el.find('img').attr('src'));
+                    .attr('src', 'https://s3-eu-west-1.amazonaws.com/biljet/' + event.imageName);
 
                 $el.find('.title')
                     .html('<a href="/event/' + event._id + '">' + event.title + '</a>');
@@ -146,8 +146,7 @@ block javascript
                 $el.find('.price')
                     .text("Precio: " + event.price + "€.");
 
-                randomInt = Math.floor(Math.random() * 10);
-                if (randomInt > 6) {
+                if (event.attendee.length > 3) {
                     $el.addClass('tile-hot');
                 }
 

@@ -23,18 +23,16 @@ var express = require('express'),
 
 
 // MongoDB conection
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
-
+// var mongoose = require('mongoose');
 
 // WARNING!!!
 // This line connect to the remote Mongo Database, use carefully!!
 // For testing purposes, use the localhost DB (the line commented below)
-mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
-  // mongoose.connect('localhost', 'biljet');
+// mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
+ // mongoose.connect('localhost', 'biljet');
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, "Connection error: "));
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, "Connection error: "));
 
 var app = express();
 
@@ -95,8 +93,10 @@ app.post('/api/event/dont-go/:id', apiEvent.dontGoToEvent);
 app.get('/api/event/province/:number', apiEvent.filterByProvince);
 app.get('/api/event/title/:title', apiEvent.findByTitle);
 
-app.get('/api/qrtest', apiEvent.create);
+// DEBUG
+// app.get('/api/qrtest', apiEvent.create);
 app.get('/api/qr', apiEvent.getQr);
+app.get('/api/check-qr', apiEvent.checkQr);
 
 app.post('/upload', apiEvent.uploadImage);
 
