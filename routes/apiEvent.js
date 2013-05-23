@@ -9,25 +9,15 @@ var util = require('util');
 var jQuery = require('jquery');
 var crypto = require('crypto');
 
-var Db = require('mongodb').Db,
-    MongoClient = require('mongodb').MongoClient,
-    Server = require('mongodb').Server,
-    ReplSetServers = require('mongodb').ReplSetServers,
-    ObjectID = require('mongodb').ObjectID,
-    Binary = require('mongodb').Binary,
-    GridStore = require('mongodb').GridStore,
-    Grid = require('mongodb').Grid,
-    Code = require('mongodb').Code,
-    BSON = require('mongodb').pure().BSON,
-    assert = require('assert');
+var knox = require('knox');
 
+var client = knox.createClient({
+    key: 'AKIAINMJFHXOZ3RKNLNA',
+    secret: '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',
+    bucket: 'biljet'
+});
 
 var db = mongoose.connection;
-
-// var db2 = Db.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223', function (err, db) {
-//     if (err) console.log(err, 'err: ');
-// });
-// // var db2 = new Db('test', new Server('locahost', 27017));
 
 // // WARNING!!!
 // // This line connect to the remote Mongo Database, use carefully!!
@@ -432,29 +422,37 @@ exports.uploadImage = function (req, res) {
         if (req.files.eventImage.size > 307200) {
             res.send('La imagen no puede superar los 200kb.', 400);
         } else {
-            var readStream, writeStream;
-            readStream = fs.createReadStream(req.files.eventImage.path);
-            writeStream = fs.createWriteStream('public/resources/' + req.files.eventImage.name);
-            readStream.pipe(writeStream);
-            readStream.on('error', function (err) {
-                console.log(err);
-                res.send(err, 400);
+            client.putFile(req.files.eventImage.path, req.files.eventImage.name, function(err, resource){
+                if (err) {
+                    console.log(err, "err: ");
+                    res.send(err, 400);
+                } else {
+                    res.send(req.files.eventImage.name, 200);
+                }
             });
-            readStream.on('end', function(data) {
-                console.log(req.files.eventImage.name, "*** end callback, name: ");
-                res.send(req.files.eventImage.name, 200);
-            });
+            // var readStream, writeStream;
+            // readStream = fs.createReadStream(req.files.eventImage.path);
+            // writeStream = fs.createWriteStream('public/img/' + req.files.eventImage.name);
+            // readStream.pipe(writeStream);
+            // readStream.on('error', function (err) {
+            //     console.log(err);
+            //     res.send(err, 400);
+            // });
+            // readStream.on('end', function(data) {
+            //     console.log(req.files.eventImage.name, "*** end callback, name: ");
+            //     res.send(req.files.eventImage.name, 200);
+            // });
         }
     }
 };
 
 exports.create = function (req, res) {
-    // createQR(11, 22, 33, 44);
-    if (validQR('FTGjwk23x41BdK8BhvTng+jrqrVPohlWa3Rf0KdZMmVfzqRT4VblW3ngx8Oetpj9xenUgbJ05biW4EURq+AralfPlzXqFj7MnI3hu9BbVkA=')) {
+    createQR(11, 22, 33, 44);
+    // if (validQR('FTGjwk23x41BdK8BhvTng+jrqrVPohlWa3Rf0KdZMmVfzqRT4VblW3ngx8Oetpj9xenUgbJ05biW4EURq+AralfPlzXqFj7MnI3hu9BbVkA=')) {
         res.send('', 200);
-    } else {
-        res.send('Invalid QR', 400);
-    }
+    // } else {
+        // res.send('Invalid QR', 400);
+    // }
 };
 
 
@@ -482,8 +480,7 @@ function createQR (qrId, userId, eventId, numberTickets) {
     imgFinal = imgTag.slice(32, n - 1);
 
     var buff = new Buffer(imgFinal, 'base64');
-
-    var path = 'public/resources/qr_' + qrId + '.png';
+    var path = 'public/img/qr_' + qrId + '.png';
     var stream = fs.createWriteStream(path);
     console.log(path, 'route to QR: ');
     stream.write(buff);
@@ -491,9 +488,19 @@ function createQR (qrId, userId, eventId, numberTickets) {
         console.log(err); 
     });
     stream.on("end", function() {
-        console.log('FINSIH!!');
         stream.end();
+        console.log(path, "path: ");
     });
+    client.putFile(path, 'qr_' + qrId + '.png', function(err, resource){
+        if (err) {
+            console.log(err, "err: ");
+            return false;
+        } else {
+            console.log('qr' + qrId + '.png', 'name of QR: ');
+            return true;
+        }
+    });
+
 }
 
 
