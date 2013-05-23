@@ -483,7 +483,18 @@ function createQR (qrId, userId, eventId, numberTickets) {
     var path = 'public/img/qr_' + qrId + '.png';
     var stream = fs.createWriteStream(path);
     console.log(path, 'route to QR: ');
-    stream.write(buff);
+    stream.write(buff, function (err) {
+        if (err) console.log(err, 'err: ');
+        client.putFile(path, 'qr_' + qrId + '.png', function(err, resource){
+            if (err) {
+                console.log(err, "err: ");
+                return false;
+            } else {
+                console.log('qr' + qrId + '.png', 'name of QR: ');
+                return true;
+            }
+        });
+    });
     stream.on('error', function (err) {
         console.log(err); 
     });
@@ -491,15 +502,7 @@ function createQR (qrId, userId, eventId, numberTickets) {
         stream.end();
         console.log(path, "path: ");
     });
-    client.putFile(path, 'qr_' + qrId + '.png', function(err, resource){
-        if (err) {
-            console.log(err, "err: ");
-            return false;
-        } else {
-            console.log('qr' + qrId + '.png', 'name of QR: ');
-            return true;
-        }
-    });
+
 
 }
 
