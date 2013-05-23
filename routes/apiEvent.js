@@ -478,11 +478,17 @@ exports.checkQr = function (req, res) {
 
 
 function createQR (qrId, userId, eventId, numberTickets) {
-    var text, textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
+    var text1,text2, textEncrypted1,textEncrypted2,textEncrypted, qr, imgTag, n, imgFinal, readStream, writeStream;
 
-    text = qrId + ' ' + userId + ' ' + eventId + ' ' + 1;
-    textEncrypted = encrypt(superKey, text);
-    qr = qrCode.qrcode(7, 'M');
+    text1 = qrId + ' ' + userId;
+    text2 = eventId + ' ' + 1;
+    textEncrypted1 = encrypt(superKey, text1);
+    textEncrypted2 = encrypt(superKey, text2);
+    textEncrypted = textEncrypted1 + ' ' + textEncrypted2;
+
+   // var cosa1 = decrypt(superKey,cosa[0]);
+    //var cosa2 = decrypt(superKey, textEncrypted);
+    qr = qrCode.qrcode(8, 'M');
 
     qr.addData(textEncrypted);
     qr.make();
@@ -552,7 +558,7 @@ function encrypt (key, plaintext) {
     cipher = crypto.createCipher('aes-256-cbc', key);
 
     firstPart = cipher.update(plaintext, 'utf8', 'base64');
-    secondPart = encryptedPassword = cipher.final('base64');
+    secondPart = cipher.final('base64');
     encryptedPassword = firstPart + secondPart;
     console.log('encrypted :', encryptedPassword);
 
@@ -561,13 +567,23 @@ function encrypt (key, plaintext) {
 
 function decrypt(key, encryptedPassword) {
 
-    var decipher,firstPart,secondPart, decryptedPassword;
-    decipher = crypto.createDecipher('aes-256-cbc', key);
-    // decipher.setAutoPadding(true);
+    var decipher,firstPart,secondPart, decryptedPassword,text, decryptedPassword1, decryptedPassword2;
+    text = encryptedPassword.split(' ');
 
-    firstPart = decipher.update(encryptedPassword, 'base64', 'utf8'); 
-    secondPart = decryptedPassword = decipher.final('utf8');
-    decryptedPassword = firstPart + secondPart;
+    decipher = crypto.createDecipher('aes-256-cbc', key);
+    //decipher.setAutoPadding(true);
+
+    firstPart = decipher.update(text[0], 'base64', 'utf8'); 
+    secondPart =  decipher.final('utf8');
+    decryptedPassword1 = firstPart + secondPart;
+
+    decipher = crypto.createDecipher('aes-256-cbc', key);
+    decipher.setAutoPadding(true);
+
+    firstPart = decipher.update(text[1], 'base64', 'utf8'); 
+    secondPart =  decipher.final('utf8');
+    decryptedPassword2 = firstPart + secondPart;
+    decryptedPassword =  decryptedPassword1 +' '+ decryptedPassword2;
     console.log('decrypted :', decryptedPassword);
 
     return decryptedPassword;
