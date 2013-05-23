@@ -10,29 +10,14 @@
 var express = require('express'),
     home = require('./routes/home'),
     user = require('./routes/user'),
-    social = require('./routes/social'),
     eventDetails = require('./routes/eventDetails'),
     discover = require('./routes/discover'),
     createEvent = require('./routes/createEvent'),
-    qrtest = require('./routes/qrtest'),
     calendar = require('./routes/calendar'),
     apiUser = require('./routes/apiUser'),
     apiEvent = require('./routes/apiEvent'),
     http = require('http'),
     path = require('path');
-
-
-// MongoDB conection
-// var mongoose = require('mongoose');
-
-// WARNING!!!
-// This line connect to the remote Mongo Database, use carefully!!
-// For testing purposes, use the localhost DB (the line commented below)
-// mongoose.connect('mongodb://admin:admin@alex.mongohq.com:10075/app12832223');
- // mongoose.connect('localhost', 'biljet');
-
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, "Connection error: "));
 
 var app = express();
 
@@ -65,10 +50,8 @@ function checkAuth(req, res, next) {
 }
 
 app.get('/', home.index);
-app.get('/social', social.index);
 app.get('/discover', checkAuth, discover.index);
 app.get('/create', checkAuth, createEvent.index);
-app.get('/qrtest', qrtest.index);
 app.get('/calendar', calendar.index);
 app.get('/event/:id', checkAuth, eventDetails.index);
 
