@@ -20,7 +20,7 @@ var Event = mongoose.model('Event');
 var User = mongoose.model('User');
 var QR = mongoose.model('QR');
 
-var superKey = "****Incredible|_secure_phrase&in$order/to?_protect·our*QRs***";
+var superKey = "superKey";
 
 
 exports.save = function (req, res) {
@@ -447,11 +447,19 @@ exports.uploadImage = function (req, res) {
 
 exports.create = function (req, res) {
     // createQR(11, 22, 33, 44);
-    if (validQR('yCnXw7EaAd3SJ+2gIzKJRIo=')) {
+    if (validQR('FTGjwk23x41BdK8BhvTng+jrqrVPohlWa3Rf0KdZMmVfzqRT4VblW3ngx8Oetpj9xenUgbJ05biW4EURq+AralfPlzXqFj7MnI3hu9BbVkA=')) {
         res.send('', 200);
     } else {
         res.send('Invalid QR', 400);
     }
+};
+
+exports.getQr = function (req, res) {
+    QR.findOne({
+        user: req.query.user
+    }, function (err, qr) {
+        console.log(qr, "qr: ");
+    });
 };
 
 function createQR (qrId, userId, eventId, numberTickets) {
@@ -459,7 +467,7 @@ function createQR (qrId, userId, eventId, numberTickets) {
 
     text = qrId + " " + userId + " " + eventId + " " + 1;
     textEncrypted = encrypt(superKey, text);
-    qr = qrCode.qrcode(4, 'M');
+    qr = qrCode.qrcode(7, 'M');
 
     qr.addData(textEncrypted);
     qr.make();
@@ -517,12 +525,12 @@ function validQR(stringQR) {
 
 function encrypt (key, plaintext) {
 
-    var cipher, firstPart, seconPart, encryptedPassword;
+    var cipher, firstPart, secondPart, encryptedPassword;
     cipher = crypto.createCipher('aes-256-cbc', key);
 
     firstPart = cipher.update(plaintext, 'utf8', 'base64');
-    seconPart = encryptedPassword = cipher.final('base64');
-    encryptedPassword = firstPart + seconPart;
+    secondPart = encryptedPassword = cipher.final('base64');
+    encryptedPassword = firstPart + secondPart;
     console.log('encrypted :', encryptedPassword);
 
     return encryptedPassword;
@@ -530,13 +538,13 @@ function encrypt (key, plaintext) {
 
 function decrypt(key, encryptedPassword) {
 
-    var decipher,firstPart,seconPart, decryptedPassword;
+    var decipher,firstPart,secondPart, decryptedPassword;
     decipher = crypto.createDecipher('aes-256-cbc', key);
     // decipher.setAutoPadding(true);
 
     firstPart = decipher.update(encryptedPassword, 'base64', 'utf8'); 
-    seconPart = decryptedPassword = decipher.final('utf8');
-    decryptedPassword = firstPart + seconPart;
+    secondPart = decryptedPassword = decipher.final('utf8');
+    decryptedPassword = firstPart + secondPart;
     console.log('decrypted :', decryptedPassword);
 
     return decryptedPassword;
